@@ -2,7 +2,7 @@
 
 更过特效，请关注我的公众号
 
-![](qr)
+![][qr]
 
 ## 当前包含：
 
@@ -30,7 +30,7 @@
 * [css-华为手机充电效果.html](http://suohb.com/demo/win/huawei.html)
 * [css-向日葵.html](http://suohb.com/demo/win/sunflower.html)
 * [css-四叶草.html](http://suohb.com/demo/win/fourleaf.html)
-* [css-大海落日.html(http://suohb.com/demo/win/sun.html)
+* [css-大海落日.html](http://suohb.com/demo/win/sun.html)
 * [css-小米手机3.html](http://suohb.com/demo/2/M3.html)
 * [css-玫瑰花.html](http://suohb.com/demo/win/flower2.htm)
 
