@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>消灭病毒-飞船</title>
+  <style>
+    .box{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 0;
+      height: 0;
+    }
+    .body{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+    }
+    .body__circle{
+      position: absolute;
+      top: -80px;
+      left: -50px;
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(#43d8de,#cdf8ff);
+      border-radius: 50%;
+      box-shadow: 0 0 6px #cdf8ff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .body__circle-min{
+      transform: scale(.12);
+      background: #cdf8ff;
+    }
+    .body__circle__circle{
+      position: absolute;
+      border-radius: 50%;
+      border:solid 10px #cdf8ff;
+      box-shadow: 0 0 10px #cdf8ff;
+      animation: bigger 500ms ease-in infinite;
+    }
+    @keyframes bigger {
+      0%{
+        width: 0;
+        height: 0;
+      }
+      100%{width: 80px;height: 80px;;}
+    }
+    .body__header{
+      position: absolute;
+      left: -55px;
+      width: 110px;
+    }
+    .body__header::before{
+      position: absolute;
+      top: -5px;
+      content: '';
+      width: 100%;
+      box-sizing: border-box;
+      border-left: solid 5px transparent;
+      border-right: solid 5px transparent;
+      border-bottom: 5px solid #69686e;
+    }
+    .body__header::after{
+      position: absolute;
+      top: 0;
+      content: '';
+      width: 100%;
+      box-sizing: border-box;
+      border-left: solid 5px transparent;
+      border-right: solid 5px transparent;
+      border-top: 8px solid #69686e;
+    }
+    .body__middle{
+      position: absolute;
+      top: 18px;
+      width: 100px;
+      left: -50px;
+    }
+    .body__middle::before{
+      position: absolute;
+      top: -10px;
+      content: '';
+      width: 100%;
+      height: 10px;
+      background: #222222;
+    }
+    .body__middle::after{
+      position: absolute;
+      top: 0;
+      left: 10px;
+      content: '';
+      width: 80px;
+      height: 9px;
+      background: #222222;
+    }
+    .body__body{
+      position: absolute;
+      left: -55px;
+      top: 45px;
+      width: 110px;
+      height: 50px;
+      background: #222222;
+    }
+    .body__body::before{
+      position: absolute;
+      top: -18px;
+      content: '';
+      width: 100%;
+      box-sizing: border-box;
+      border-left: solid 15px transparent;
+      border-right: solid 15px transparent;
+      border-bottom: 18px solid #222222;
+    }
+    .body__body__body{
+      position: absolute;
+      left:5px;
+      width: 100px;
+      height: 70px;
+      background: #69686e;
+    }
+    .body__body__body::before{
+      position: absolute;
+      top: -13px;
+      content: '';
+      width: 100%;
+      box-sizing: border-box;
+      border-left: solid 11px transparent;
+      border-right: solid 11px transparent;
+      border-bottom: 13px solid #69686e;
+    }
+    .body__body__body::after{
+      position: absolute;
+      bottom: -8px;
+      content: '';
+      width: 100%;
+      box-sizing: border-box;
+      border-left: solid 5px transparent;
+      border-right: solid 5px transparent;
+      border-top: 8px solid #69686e;
+    }
+    .body__body__header{
+      position: absolute;
+      left: 34px;
+      top: -20px;
+      width: 42px;
+    }
+    .body__body__header::before{
+      position: absolute;
+      top: -36px;
+      content: '';
+      width: 100%;
+      box-sizing: border-box;
+      border-left: solid 8px transparent;
+      border-right: solid 8px transparent;
+      border-bottom: 36px solid #07100b;
+    }
+    .body__body__header::after{
+      position: absolute;
+      top: 0;
+      content: '';
+      width: 100%;
+      box-sizing: border-box;
+      border-left: solid 8px transparent;
+      border-right: solid 8px transparent;
+      border-top: 22px solid #07100b;
+    }
+    .body__body__header_9{
+      transform: scale(.9);
+    }
+    .body__body__header_9::before{
+      border-bottom-color: #69686e;
+    }
+    .body__body__header_9::after{
+      border-top-color: #69686e;
+    }
+    .body__body__header_6{
+      transform: scale(.6);
+    }
+    .body__body__header_6::before{
+      border-bottom-color: #3b6942;
+    }
+    .body__body__header_6::after{
+      border-top-color: #3b6942;
+    }
+    .body__body__header_4{
+      transform: scale(.36);
+    }
+    .body__body__header_4::before{
+      border-bottom-color: #1f3331;
+    }
+    .body__body__header_4::after{
+      border-top-color: #1f3331;
+    }
+    .body__body__header_3{
+      transform: scaleX(.3) scaleY(.13);
+    }
+    .body__body__header_3::before{
+      border-bottom-color: #79ec1d;
+    }
+    .body__body__header_3::after{
+      border-top-color: #79ec1d;
+    }
+    .body__body__middle{
+      position: absolute;
+      top: -5px;
+      left: 16px;
+      width: 78px;
+      height: 88px;
+      background: linear-gradient(to left,#65a769, #79ec1d, #65a769);
+      border-top-right-radius: 39px;
+      border-top-left-radius: 39px;
+    }
+    .body__body__middle__body{
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      width: 50px;
+      height: 74px;
+      background: #1e491e;
+      border-top-right-radius: 25px;
+      border-top-left-radius: 25px;
+    }
+    .body__body__middle__body__body{
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      width: 30px;
+      height: 58px;
+      background: #7aee57;
+      border-radius: 15px;
+    }
+    .body__body__middle__body__body_circle{
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate3d(-50%,-50%,0);
+      border-top:solid 10px #1e491e;
+      border-bottom:solid 10px #1e491e;
+      width: 30px;
+      height: 10px;
+      background: #7aee57;
+      border-radius: 15px;
+    }
+    .body__body__middle__fire1{
+      position: absolute;
+      left: 23px;
+      width: 32px;
+      height: 50px;
+      bottom: -50px;
+      background:linear-gradient(to bottom,rgba(255,255,255,.5), rgba(77,105,204,.6));
+      filter: blur(5px);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      box-shadow: 0 0 10px #4d69cc;
+    }
+    .body__body__middle__fire2{
+      position: absolute;
+      left: 23px;
+      width: 32px;
+      height: 50px;
+      bottom: -50px;
+      background:linear-gradient(to right,rgba(77,105,204,.6),rgba(255,255,255,.8), rgba(77,105,204,.6));
+      filter: blur(3px);
+      border-top-left-radius: 12px;
+      border-top-right-radius: 12px;
+      border-bottom-left-radius: 50%;
+      border-bottom-right-radius: 50%;
+      box-shadow: 0 0 10px #4d69cc;
+      animation: scale 120ms ease-in-out infinite;
+      transform-origin: center top;
+    }
+    @keyframes scale{
+      0%{transform: scale3d(1,.8,1);}
+      50%{transform: scale3d(.8,1.1,1);opacity: .8;}
+      100%{transform: scale3d(1,.8,1);}
+    }
+    .side{
+      position: absolute;
+      width: 0;
+      height: 0;
+    }
+    .side.left{
+      left: -95px;
+    }
+    .side.right{
+      left: 95px;
+    }
+    .side__header{
+      position: absolute;
+      left: -25px;
+      top: -30px;
+      width: 50px;
+      height: 43px;
+      background: linear-gradient(to right,#302a38,#464652,#37504c,#515b5c,#808a8b,#515b5c,#37504c,#464652,#302a38);
+      border-radius: 6px;
+      transform: scale3d(.94,.92,1);
+    }
+    .side__header::before{
+      position: absolute;
+      top: -1px;
+      left: 8px;
+      width: 30px;
+      background: #70ea3d;
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      border:solid 2px #132f19;
+      border-top: 0;
+      content: "";
+      height: 6px;
+    }
+    .side__header-blank{
+      position: absolute;
+      left: -25px;
+      top: -30px;
+      width: 50px;
+      height: 43px;
+      background: #1e1323;
+      border-radius: 6px;
+    }
+    .side__header-mini{
+      position: absolute;
+      left: -25px;
+      top: 0px;
+      width: 50px;
+      height: 43px;
+      background: linear-gradient(to right,#302a38,#464652,#37504c,#515b5c,#808a8b,#515b5c,#37504c,#464652,#302a38);
+      border-radius: 6px;
+      transform: scale3d(.5,.92,1);
+    }
+    .side__circle{
+      position: absolute;
+      left: -38px;
+      top: 20px;
+      border-radius: 50%;
+      background: #1d1009;
+      width: 76px;
+      height: 76px;
+    }
+    .side__circle-color2{
+      background: #27343a;
+      transform: scale(.94);
+    }
+    .side__circle-color3{
+      background: #474552;
+      transform: scale(.75);
+    }
+    .side__circle-color4{
+      transform: scale(.56);
+    }
+    .side__circle-color5{
+      background: #1c2723;
+      transform: scale(.52);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .side__circle-quarter{
+      width: 0;
+      height: 0;
+      border: solid 30px transparent;
+      border-left-color: #78ed2f;
+      border-radius: 50%;
+      filter: blur(4px);
+      animation: rotate-left 300ms linear infinite;
+    }
+    .right .side__circle-quarter{
+      width: 0;
+      height: 0;
+      border: solid 30px transparent;
+      border-right-color: #78ed2f;
+      border-radius: 50%;
+      filter: blur(4px);
+      animation: rotate-right 300ms linear infinite;
+    }
+    @keyframes rotate-left{
+      0%{transform: rotate(0)}
+      100%{transform: rotate(360deg)}
+    }
+    @keyframes rotate-right{
+      0%{transform: rotate(0)}
+      100%{transform: rotate(-360deg)}
+    }
+    .side__bottom{
+      top: 64px;
+      transform: scaleX(1.05);
+    }
+    .side__header.side__bottom::before{
+      position: absolute;
+      top: 35px;
+      left: 8px;
+      width: 30px;
+      background: #70ea3d;
+      border-radius: 0;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border:solid 2px #132f19;
+      border-bottom: 0;
+      content: "";
+      height: 6px;
+    }
+    .side__bottom::after{
+      position: absolute;
+      bottom: 0;
+      left: 18px;
+      width: 10px;
+      background: #132f19;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+      border:solid 2px #132f19;
+      border-bottom: 0;
+      content: "";
+      height: 6px;
+    }
+    .side__circle-top{
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      left: -25px;
+      top: -82px;
+      border-radius: 50%;
+      background: radial-gradient(#4fdb1a,#69e769);
+      box-shadow: #69e769 0 0 5px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: shake 130ms ease-in-out infinite;
+      /* transform-origin: center bottom; */
+    }
+    .side__circle-top__line{
+      position: absolute;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      border:solid 0 transparent;
+      border-top: solid 5px #21211f;
+      border-right-width: 5px;
+      filter: blur(1px)
+    }
+    .rotate_120{
+      transform: rotate(120deg);
+    }
+    .rotate_240{
+      transform: rotate(240deg);
+    }
+    @keyframes shake{
+      0%{transform: rotate(0deg) scale3d(1,.97,1) }
+      100%{transform: rotate(360deg) scale3d(1,1,1) }
+    }
+  </style>
+</head>
+<body bgcolor="#000000">
+  <div class="box">
+    <div class="body">
+      <div class="body__circle">
+        <div class="body__circle__circle"></div>
+      </div>
+      <div class="body__circle body__circle-min"></div>
+      <div class="body__header"></div>
+      <div class="body__middle"></div>
+      <div class="body__body">
+        <div class="body__body__body"></div>
+        <div class="body__body__header"></div>
+        <div class="body__body__header body__body__header_9"></div>
+        <div class="body__body__header body__body__header_6"></div>
+        <div class="body__body__header body__body__header_4"></div>
+        <div class="body__body__header body__body__header_3"></div>
+        <div class="body__body__middle">
+          <div class="body__body__middle__body">
+            <div class="body__body__middle__body__body">
+              <div class="body__body__middle__body__body_circle"></div>
+            </div>
+          </div>
+          <div class="body__body__middle__fire1"></div>
+          <div class="body__body__middle__fire2"></div>
+        </div>
+      </div>
+    </div>
+    <div class="side left">
+      <div class="side__circle-top">
+        <div class="side__circle-top__line"></div>
+        <div class="side__circle-top__line rotate_120"></div>
+        <div class="side__circle-top__line rotate_240"></div>
+      </div>
+      <div class="side__header-mini"></div>
+      <div class="side__header-blank"></div>
+      <div class="side__header"></div>
+      <div class="side__header side__bottom"></div>
+      <div class="side__circle"></div>
+      <div class="side__circle side__circle-color2"></div>
+      <div class="side__circle side__circle-color3"></div>
+      <div class="side__circle side__circle-color4"></div>
+      <div class="side__circle side__circle-color5">
+          <div class="side__circle-quarter"></div>
+      </div>
+    </div>
+    <div class="side right">
+      <div class="side__circle-top">
+          <div class="side__circle-top__line"></div>
+          <div class="side__circle-top__line rotate_120"></div>
+          <div class="side__circle-top__line rotate_240"></div>
+        </div>
+      <div class="side__header-mini"></div>
+      <div class="side__header-blank"></div>
+      <div class="side__header"></div>
+      <div class="side__header side__bottom"></div>
+      <div class="side__circle"></div>
+      <div class="side__circle side__circle-color2"></div>
+      <div class="side__circle side__circle-color3"></div>
+      <div class="side__circle side__circle-color4"></div>
+      <div class="side__circle side__circle-color5">
+          <div class="side__circle-quarter"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
