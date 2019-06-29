@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	position:absolute;
+	height: 24px;
+	background:#FFF;
+	line-height: 24px;
+	font-size:16px;
+	text-align:center;
+}
+
+</style>
+</head>
+<body bgcolor="#000000">
+<div id="tips">鼠标在屏幕上点击</div>
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+var pageWidth = window.innerWidth ;
+var pageHeight = window.innerHeight ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+var list = [] ;
+var timer = 0 ;
+var hasTouch = false ;
+var colors = ["#8b008b","#ff69b4","#1e90ff","#00bfff","#0FF","#7fff00","#0f0","#7cfc00","#ffd700","#ffdead","#f00","#800000"];
+
+function drawLine(){
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	for(var i = 0 ; i < list.length ; i ++){
+		cxt.strokeStyle = list[i].color ;
+		for(var j = 1 ; j < list[i].list.length ; j ++){
+			cxt.beginPath();
+			var width = Math.min(3,0.2 * j);
+			cxt.lineWidth = width
+			cxt.moveTo(list[i].list[j-1].x,list[i].list[j-1].y);
+			cxt.lineTo(list[i].list[j].x,list[i].list[j].y);
+			cxt.stroke();
+		}
+	}
+}
+function addFire(x,y,len,color){
+	var speed = 2.5+Math.random() ;
+	var meanDeg = 2*Math.PI/len ;
+	for(var i = 0 ; i < len ; i ++){
+		var deg = i * meanDeg + Math.random()*meanDeg ;
+		var fire = {
+			x: x,
+			y: y,
+			color: color,
+			sx: speed*Math.cos(deg),
+			sy: speed*Math.sin(deg),
+			g: 0.09,
+			len: 10+ Math.random()*5,
+			limit: 25 + Math.random()*15,
+			list:[{x:x, y:y, sy: speed*Math.sin(deg)}]
+		};
+		list.push(fire);
+	}
+}
+function step(){
+	for(var i = 0 ; i < list.length ; i ++){
+		var fire = list[i] ;
+		for(var j = 0 ; j < fire.list.length ; j ++){
+			fire.list[j].x += fire.sx ;
+			fire.list[j].y += fire.list[j].sy ;
+			fire.list[j].sy += fire.g ;
+		}
+		if(fire.limit > 0){
+			fire.limit -- ;
+			if(fire.list.length < fire.len){
+				fire.list.unshift({x: fire.x,y: fire.y,sy: fire.sy});
+			}
+		}else{
+			if(fire.list.length){
+				fire.list.shift();
+			}else{
+				list.splice(i,1);
+				i --;
+			}
+		}
+	}
+	drawLine();
+	requestAnimationFrame(step)
+}
+requestAnimationFrame(step)
+document.addEventListener("mousedown",function(e){
+	var color = colors[Math.floor(Math.random()*colors.length)];
+	addFire(e.pageX,e.pageY,30+Math.random()*15,color);
+});
+document.addEventListener("touchstart",function(e){
+	if(hasTouch)return ;
+	hasTouch = true ;
+	setTimeout(function(){
+		hasTouch = false ;
+	},300);
+	var color = colors[Math.floor(Math.random()*colors.length)];
+	addFire(e.touches[0].pageX,e.touches[0].pageY,30+Math.random()*15,color);
+});
+setInterval(function(){
+	if(list.length > 150)return ;
+	var color = colors[Math.floor(Math.random()*colors.length)];
+	addFire(pageWidth/4+Math.random()*pageWidth/2,pageHeight/6+Math.random()*pageHeight/2,30+Math.random()*15,color);
+},100);
+</script>
+</html>

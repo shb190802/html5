@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	position:absolute;
+	height: 24px;
+	background:#FFF;
+	line-height: 24px;
+	font-size:16px;
+	text-align:center;
+}
+
+</style>
+</head>
+<body bgcolor="#000000">
+<div id="tips">按下鼠标鼠标在屏幕上滑动</div>
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var color = "#F00" ;
+var cxt = canvas.getContext("2d");
+var list = [] ;
+var limit = 20 ;
+var maxLen = 20 ;
+function drawLine(){
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	cxt.shadowColor = color;
+	var width = 0 ;
+	var drawList = [] ;
+	var len = Math.min(list.length,limit);
+	for(var i = 0 ; i < list.length ; i++){
+		drawList.push({
+			x:list[i].x,
+			y: list[i].y,
+			w: i == 1 ? (len - i)/5 : i == 2 ? (len - i)/2.6 : i == 3 ? (len - i)/2 : (len - i)/1.6,
+			ww:  i == 1 ? (len - i)/6 : i == 2 ? (len - i)/4 : i == 3 ? (len - i)/3 : (len - i)/2.6
+		})
+	}
+	for(var i = 1 ;i < limit ; i ++){
+		if(list.length > i){
+				cxt.beginPath();
+				cxt.strokeStyle = "#F00";
+				cxt.fillStyle = "#F00" ;
+				cxt.lineWidth = drawList[i].w ;
+				cxt.moveTo(drawList[i-1].x,drawList[i-1].y);
+				cxt.lineTo(drawList[i].x,drawList[i].y);
+				cxt.stroke();
+				cxt.arc(drawList[i].x,drawList[i].y,drawList[i].w/2,0,2*Math.PI);
+				cxt.fill();
+		}
+	}
+	for(var i = 1 ;i < limit ; i ++){
+		if(list.length > i){
+				cxt.beginPath();
+				cxt.strokeStyle = "#FF0";
+				cxt.fillStyle = "#FF0";
+				cxt.lineWidth =  drawList[i].ww ;
+				cxt.moveTo(drawList[i-1].x,drawList[i-1].y);
+				cxt.lineTo(drawList[i].x,drawList[i].y);
+				cxt.stroke();
+				cxt.arc(drawList[i].x,drawList[i].y,drawList[i].ww/2,0,2*Math.PI);
+				cxt.fill();
+		}
+	}
+}
+var down = false;
+var timer = 0 ;
+function addList(obj){
+	if(list.length){
+		var x = obj.x - list[0].x ;
+		var y = obj.y - list[0].y ;
+		if(x*x + y*y > maxLen*maxLen){
+			list.unshift({x:list[0].x + Math.round(x/2),y:list[0].y + Math.round(y/2)});
+		}
+	}
+	list.unshift(obj);
+	list = list.slice(0,limit);
+	drawLine();
+}
+function clearKnife(){
+	if(list.length){
+		list.pop();
+		drawLine();
+		timer = requestAnimationFrame(clearKnife)
+	}
+}
+canvas.addEventListener('mousedown', function(e){
+	list = [];
+	cancelAnimationFrame(timer);
+	down = true ;
+}) ;
+canvas.addEventListener('mousemove', function(e){
+	if(!down)return ;
+	addList({x:e.clientX,y:e.clientY});
+}) ;
+canvas.addEventListener('mouseup', function(e){
+	down = false ;
+	timer = requestAnimationFrame(clearKnife);
+}) ;
+canvas.addEventListener('touchsatrt', function(e){
+	list = [];
+	cancelAnimationFrame(timer);
+}) ;
+canvas.addEventListener('touchmove', function(e){
+	e.preventDefault();
+	addList({x:e.touches[0].screenX,y:e.touches[0].screenY-50});
+}) ;
+canvas.addEventListener('touchend', function(e){
+	timer = requestAnimationFrame(clearKnife);
+}) ;
+
+</script>
+</html>

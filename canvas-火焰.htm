@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+
+</style>
+</head>
+<body bgcolor="#000000">
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var color = "#F00" ;
+var cxt = canvas.getContext("2d");
+var list = [] ;
+var limit = 20 ;
+var maxLen = 20 ;
+function drawLine(){
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	var drawList = [] ;
+	var len = Math.min(list.length,limit);
+	for(var i = 0 ; i < list.length ; i++){
+		drawList.push({
+			x:list[i].x,
+			y: list[i].y+list[i].speed,
+			w: (i == 1 ? (len - i)/5 : i == 2 ? (len - i)/2.6 : i == 3 ? (len - i)/2 : (len - i)/1.6)*4,
+			ww: (i == 1 ? (len - i)/6 : i == 2 ? (len - i)/4 : i == 3 ? (len - i)/3 : (len - i)/2.6)*4
+		})
+	}
+	for(var i = 1 ;i < limit ; i ++){
+		if(list.length > i){
+				cxt.beginPath();
+				cxt.strokeStyle = "#F00";
+				cxt.shadowBlur = 2;
+				cxt.shadowColor = "#F00";
+				cxt.fillStyle = "#F00" ;
+				cxt.lineWidth = drawList[i].w ;
+				cxt.moveTo(drawList[i-1].x,drawList[i-1].y);
+				cxt.lineTo(drawList[i].x,drawList[i].y);
+				cxt.stroke();
+				cxt.arc(drawList[i].x,drawList[i].y,drawList[i].w/2,0,2*Math.PI);
+				cxt.fill();
+		}
+	}
+	for(var i = 1 ;i < limit; i ++){
+		if(list.length > i){
+				cxt.beginPath();
+				cxt.strokeStyle = "#FF0";
+				cxt.fillStyle = "#FF0";
+				cxt.shadowBlur = 1;
+				cxt.shadowColor = "#FF0";
+				cxt.lineWidth =  drawList[i].ww ;
+				cxt.moveTo(drawList[i-1].x,drawList[i-1].y);
+				cxt.lineTo(drawList[i].x,drawList[i].y);
+				cxt.stroke();
+				cxt.arc(drawList[i].x,drawList[i].y,drawList[i].ww/2,0,2*Math.PI);
+				cxt.fill();
+		}
+	}
+	for(var i = 1 ;i < limit/2.5 ; i ++){
+		if(list.length > i){
+				cxt.beginPath();
+				cxt.strokeStyle = "rgba(255,255,255,0.5)";
+				cxt.fillStyle = "rgba(255,255,255,0.5)";
+				cxt.shadowBlur = 1;
+				cxt.shadowColor = "rgba(255,255,255,0.5)";
+				cxt.lineWidth =  drawList[i].ww/3 ;
+				cxt.moveTo(drawList[i-1].x,drawList[i-1].y);
+				cxt.lineTo(drawList[i].x,drawList[i].y);
+				cxt.stroke();
+				cxt.arc(drawList[i].x,drawList[i].y,drawList[i].ww/5,0,2*Math.PI);
+				cxt.fill();
+		}
+	}
+}
+var down = false;
+var timer = 0 ;
+function addList(obj){
+	list.unshift(obj);
+	list = list.slice(0,limit);
+	for(var i =0  ;i < list.length ; i ++){
+		list[i].y += list[i].speed ;
+		list[i].x += list[i].speedX ;
+		list[i].speedX += list[i].g ;
+		list[i].speed += list[i].gY ;
+		if(Math.abs(list[i].speedX) > 1){
+			list[i].speedX = list[i].speedX/Math.abs(list[i].speedX)*1
+		}
+		list[i].limit += list[i].gLimit ;
+		if(Math.abs(list[i].x-canvas.width/2) > list[i].limit){
+			list[i].g = -list[i].g;
+		}
+	}
+	drawLine();
+}
+function step(){
+	var gX = Math.random()*0.24;
+	gX *= [1,-1][Math.round(Math.random())]
+	var obj = {x:canvas.width/2,y:350,speed:-6,speedX:0,limit:Math.random()+1,g:gX,gLimit:-0.15,gY:-0.1}
+	addList(obj);
+	//requestAnimationFrame(step)
+}
+setInterval(step,26)
+</script>
+</html>

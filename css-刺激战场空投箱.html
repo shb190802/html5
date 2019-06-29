@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>空投箱</title>
+</head>
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height: 100%;
+    }
+    .container{
+        position: relative;
+        width: 100%;
+        height: 100%;
+        transform-style: preserve-3d;
+        perspective: 600px;
+        perspective-origin: 50% 50% ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .box{
+        position: relative;
+        width: 200px;
+        height: 200px;
+        transform-origin: center;
+        transform-style: preserve-3d;
+        animation: rotate 7s linear infinite;
+    }
+    @keyframes rotate{
+        0%{
+            transform: rotateX(-28deg) rotateY(0);
+        }
+        100%{
+            transform: rotateX(-28deg) rotateY(360deg);
+        }
+    }
+    .surface{
+        position: absolute;
+        width: 200px;
+        height: 200px;
+        background: rgb(234, 21, 15);
+        transform-origin: center;
+        font-size: 60px;
+        line-height: 200px;
+        text-align: center;
+    }
+    .front{
+        transform: translateZ(100px);
+    }
+    .right{
+        transform:  rotateY(90deg) translateZ(100px);
+    }
+    .back{
+        transform:  rotateY(180deg) translateZ(100px);
+    }
+    .left{
+        transform:  rotateY(270deg) translateZ(100px);
+    }
+    .up{
+        transform: rotateX(90deg) translateZ(100px);
+    }
+    .down{
+        transform: rotateX(270deg) translateZ(100px);
+    }
+    .surface > .full{
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        box-shadow: inset 0 0 22px rgba(0, 0, 0, .4);
+    }
+    .surface > .full > .canvas{
+        position: absolute;
+        left: 0 ;
+        top: 0 ;
+        width: 100%;
+        height: 35%;
+        background: #1889d9;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, .5);
+    }
+    .surface > .full > .line{
+        position: absolute;
+        width: 8px;
+        height: 100%;
+        background: #000;
+        box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+    }
+    .surface > .full > .line-horizontal{
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        height: 8px;
+        background: #000;
+        box-shadow: 0 0 3px rgba(0, 0, 0, .5);
+    }
+    .surface > .full > .corner{
+        position: absolute;
+        top: 0;
+        width:100px;
+        height: 80px;
+        background: #1889d9;
+        box-shadow: 0 0 3px #000 ;
+    }
+    .surface > .full > .corner-left{
+        position: absolute;
+        left: 0;
+        transform-origin: 0 0;
+        transform: rotate(70deg);
+    }
+    .surface > .full > .corner-right{
+        position: absolute;
+        right: 0;
+        transform-origin: 100% 0;
+        transform: rotate(-70deg);
+    }
+</style>
+<body bgcolor='#666666'>
+<div class="container">
+    <div class="box" id="box">
+        <div class="surface front">
+            <div class="full">
+                <div class="canvas"></div>
+                <div class="corner corner-left"></div>
+                <div class="corner corner-right"></div>
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+                <div class="line-horizontal"></div>
+            </div>
+        </div>
+        <div class="surface right">
+            <div class="full">
+                <div class="canvas"></div>
+                <div class="corner corner-left"></div>
+                <div class="corner corner-right"></div>
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+                <div class="line-horizontal"></div>
+            </div>        
+        </div>
+            <div class="canvas"></div>
+        <div class="surface back">
+            <div class="full">
+                <div class="canvas"></div>
+                <div class="corner corner-left"></div>
+                <div class="corner corner-right"></div>
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+                <div class="line-horizontal"></div>
+            </div>
+        </div>
+        <div class="surface left">
+            <div class="full">
+                <div class="canvas"></div> 
+                <div class="corner corner-left"></div>
+                <div class="corner corner-right"></div>
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+                <div class="line-horizontal"></div>
+            </div>           
+        </div>
+        <div class="surface up">
+            <div class="full">
+                <div class="canvas" style="height:100%;box-shadow: none;"></div>
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+            </div>       
+            <div class="full" style="transform:rotate(90deg)">
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+            </div>    
+        </div>
+        <div class="surface down">
+            <div class="full">
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+            </div>       
+            <div class="full" style="transform:rotate(90deg)">
+                <div class="line" style="left:30%;"></div>
+                <div class="line" style="right:30%;"></div>
+            </div>    
+        </div>
+    </div>
+</div>
+</body>
+</html>

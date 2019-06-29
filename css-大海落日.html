@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>落 日</title>
+</head>
+<style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        height: 100%;
+    }
+    .container{
+        position: relative;
+        width: 375px;
+        height: 100%;
+        overflow: hidden;
+        filter: contrast(20);
+        display: flex;
+        justify-content: center;
+        margin: 0 auto;
+    }
+    .sun{
+        position: absolute;
+        width: 220px;
+        height: 220px;
+        bottom: 300px;
+        border-radius: 50%;
+        background: linear-gradient(#ff7400 50%,#ff7400) ;
+        filter: blur(8px);
+    }
+    .sun::after{
+        position: absolute;
+        content: "";
+        left: 10%;
+        border-radius: 50%;
+        width: 80%;
+        height: 65%;
+        top: 75%;
+        background:#ff8400;
+        border: #ff7400 dashed 10px;
+    }
+    .blank{
+        position: absolute;
+        left: -50px;
+        bottom: 320px;
+        width: 90px;
+        height: 13px;
+        background: #000;
+        animation-name: move;
+        animation-iteration-count: infinite;
+        filter: blur(5px);
+        border-radius: 50%;
+    }
+    @keyframes move{
+        50%{
+            transform: translateX(350px);
+        }
+    }
+</style>
+<body bgcolor='#000000'>
+<div class="container">
+    <div class="sun"></div>
+</div>
+<script>
+var box = document.querySelector('.container');
+var fragment = document.createDocumentFragment();
+for(var i = 0 ;i < 46 ; i ++){
+    var div = document.createElement('div');
+    div.className = 'blank' ;
+    div.style.bottom = 160 + 4*i + 'px' ;
+    div.style.animationDelay = - Math.random()*4 + 's' ;
+    div.style.width = 80 + ~~(Math.random()*100) + 'px' ;
+    div.style.height = 8 + ~~(Math.random()*7) + "px" ;
+    div.style.animationDuration = 3 + Math.random()*3 + 's' ;
+    div.style.animationTimingFunction = 'ease-in'
+    fragment.appendChild(div);
+}
+box.appendChild(fragment);
+</script>
+</body>
+</html>

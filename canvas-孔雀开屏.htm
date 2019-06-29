@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	position:absolute;
+	height: 24px;
+	background:#FFF;
+	line-height: 24px;
+	font-size:16px;
+	text-align:center;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+cxt.strokeStyle = "#FFF" ;
+cxt.translate(canvas.width/5,canvas.height/2);
+cxt.rotate(Math.PI/2);
+
+
+function draw(x,y,deg,step,type){
+	var nodeLen = 2+Math.random()-0.2 ;
+	var x1 = x + Math.cos(deg)*nodeLen;
+	var y1 = y - Math.sin(deg)*nodeLen;
+	cxt.beginPath();
+	step -- ;
+	cxt.lineWidth = type+1 ;
+	cxt.strokeStyle = "rgba(255,255,255,"+step*0.016+")"
+	cxt.moveTo(x,y);
+	cxt.lineTo(x1,y1);
+	cxt.stroke();
+	if(step%20 == 0 && type == 1){
+		circle(x,y,11);
+	}
+	if(step > 0){
+		draw(x1,y1,deg,step,type);
+		if(type == 1){
+			draw(x1,y1,deg-(Math.PI/3),10+Math.random()*5,0);
+			draw(x1,y1,deg+(Math.PI/3),10+Math.random()*5,0);
+		}
+	}
+}
+function circle(x,y,step){
+	var len = 3 ;
+	cxt.beginPath();
+	cxt.strokeStyle = "rgba(255,255,255,0.15)";
+	cxt.moveTo(x,y);
+	cxt.bezierCurveTo(x+step*len,y-step*len,x-step*len,y-step*len,x,y);
+	cxt.stroke();
+	if(step > 5){
+		circle(x,y,--step);
+	}
+}
+function init(){
+	var len = 18 ; 
+	for(var i = 0 ; i < len ; i ++){
+		cxt.save();
+		cxt.rotate(Math.PI/len*i-Math.PI/2+Math.PI/len/2);
+		draw(0,0,Math.PI/2,100,1);
+		cxt.restore();
+	}
+}
+init();
+</script>
+</html>

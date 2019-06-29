@@ -1,0 +1,274 @@
+<!doctype html>
+<html>
+<head>
+<style type="text/css">
+html,body,div,img{
+	margin: 0;
+	padding: 0;
+}
+#box{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+#head{
+	position: absolute;
+	left:135px;
+	top:10px;
+	background: #121214;
+	width:127px;
+	height: 134px;
+	border-radius: 50%/49%;
+	z-index:1;
+}
+#body{
+	position: absolute;
+	left:128px;
+	top:68px;
+	background: #121214;
+	width: 141px;
+	height: 138px;
+	border-radius: 50%;
+}
+#belly{
+	position: absolute;
+	left:144px;
+	top:79px;
+	background: #fbfbfb;
+	width: 110px;
+	height: 123px;
+	border-radius: 50%;
+}
+.foot{
+	position: absolute;
+	top:186px;
+	background: #febf18;
+	width: 63px;
+	height: 30px;
+	border-radius: 50%;
+	box-shadow: 0 3px #dc9111;
+	z-index: -1;
+}
+#leftFoot{
+	left: 132px;
+	transform:rotate(-3deg);
+}
+#rightFoot{
+	left: 202px;
+	transform:rotate(3deg);
+}
+.eye{
+	position: absolute;
+	top: 44px;
+	width:24px;
+	height: 35px;
+	background: #fff;
+	border-radius: 50%;
+	z-index: 2;
+}
+#leftEye{
+	left: 170px;
+}
+#rightEye{
+	left: 203px;
+}
+#leftEyeBall{
+	position: absolute;
+	left: 180px;
+	top: 53px;
+	width: 6px;
+	height: 14px;
+	border-radius: 50%;
+	background: #171718;
+	border:solid 2px #040305;
+	z-index: 2;
+}
+#leftEyeBall > div{
+	position:absolute;
+	left:2px;
+	top:1px;
+	width:3px;
+	height:7px;
+	border-radius: 50%;
+	background:#fff;
+}
+#rightEyeBall{
+	position: absolute;
+	left: 206px;
+	top: 53px;
+	width: 13px;
+	height: 13px;
+	overflow:hidden;
+	z-index: 2;
+}
+#rightEyeBall > div{
+	width: 7px;
+	height: 14px;
+	border-radius: 50%;
+	border:solid 3px #040305;
+}
+.hand{
+	position: absolute;
+	top:130px;
+	width:70px;
+	height:23px;
+	border-radius: 50%;
+	background:#121214;
+}
+#leftHand{
+	left:91px;
+	transform:rotate(-70deg);
+}
+#rightHand{
+	left:235px;
+	transform:rotate(70deg);
+}
+#scarf{
+	position:absolute;
+	left:123px;
+	top:89px;
+	width:148px;
+	height:55px;
+	z-index: 2;
+	border:solid 1px transparent;
+	overflow:hidden;
+}
+#scarf1{
+	position:absolute;
+	left:152px;
+	top:117px;
+	width:27px;
+	height:50px;
+	z-index: 2;
+	background:#e32a0e;
+	border-bottom-right-radius:5px;
+	border-bottom-left-radius:6px;
+	transform:skewY(8deg) rotate(2deg);
+}
+#scarf > #circle{
+	position:absolute;
+	left:-40px;
+	top:-233px;
+	width:186px;
+	height:243px;
+	border-radius: 50%;
+	border:solid 22px #e32a0e;
+}
+#scarf > .clip{
+	position:absolute;
+	top: -30px;
+	width:20px;
+	height:55px;
+	background:#fff;
+}
+#leftClip{
+	left: -7px;
+	transform:rotate(20deg);
+}
+#rightClip{
+	left: 136px;
+	transform:rotate(-20deg);
+}
+#mouth{
+	position:absolute;
+	left:157px;
+	top:84px;
+	width:83px;
+	height:22px;
+	border-radius: 50%;
+	background:#fdbe18;
+	z-index:2;
+}
+#mouth > #m_child_0{
+	margin: 0 auto;
+	width:76px;
+	height:24px;
+	border-radius: 50%;
+	background:#fdbe18;
+}
+#mouth #m_child_1{
+	margin: 0 auto;
+	width:60px;
+	height:27px;
+	border-radius: 50%;
+	background:#fdbe18;
+}
+#mouth #m_child_2{
+	margin: 0 auto;
+	width:50px;
+	height:29px;
+	border-radius: 50%;
+	background:#fdbe18;
+}
+#mouth #m_child_3{
+	position:absolute;
+	left:9px;
+	top:2px;
+	width:66px;
+	height:20px;
+	overflow:hidden;
+	border-radius: 50%;
+}
+#mouth #m_child_4{
+	position:absolute;
+	left:-1px;
+	top:-9px;
+	width:68px;
+	height:26px;
+	border-radius: 50%;
+	box-shadow:0px 1px 1px #8f3201;
+	background:#fdbe18;
+}
+#mouth #m_child_5{
+	position:absolute;
+	left:21px;
+	top:2px;
+	width:42px;
+	height:22px;
+	border-radius: 50%;
+	background:#8f3201;
+}
+#mouth #m_child_6{
+	margin: 1px auto;
+	width:30px;
+	height:23px;
+	border-radius: 50%;
+	background:#8f3201;
+}
+</style>
+</head>
+<body>
+<div id="box">
+	<div id="head"></div>
+	<div id="body"></div>
+	<div id="belly"></div>
+	<div id="leftFoot" class="foot"></div>
+	<div id="rightFoot" class="foot"></div>
+	<div id="leftEye" class="eye"></div>
+	<div id="rightEye" class="eye"></div>
+	<div id="leftEyeBall"><div></div></div>
+	<div id="rightEyeBall"><div></div></div>
+	<div id="leftHand" class="hand"></div>
+	<div id="rightHand" class="hand"></div>
+	<div id="scarf">
+		<div id="circle"></div>
+		<div id="leftClip" class="clip"></div>
+		<div id="rightClip" class="clip"></div>
+	</div>
+	<div id="scarf1"></div>
+	<div id="mouth">
+		<div id="m_child_0">
+			<div id="m_child_1">
+				<div id="m_child_2"></div>
+			</div>
+		</div>
+		<div id="m_child_5">
+			<div id="m_child_6"></div>
+		</div>
+		<div id="m_child_3">
+			<div id="m_child_4"></div>
+		</div>
+	</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>黑洞</title>
+    <style type="text/css">
+        #box{
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 100px auto;
+        }
+        .red-box{
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            width: 100px;
+            height: 100px;
+            filter: blur(20px);
+            opacity: .7;
+        }
+        .red{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #f00;
+        }
+        .yellow-box{
+            position: absolute;
+            left: 50px;
+            top: 50px;
+            width: 80px;
+            height: 80px;
+            filter: blur(12px) brightness(1.1);
+            animation: move 2s linear infinite;
+        }
+        .yellow{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: yellow;
+        }
+        .white{
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: #FFF;
+        }
+        .blank-box{
+            position: absolute;
+            left: 70px;
+            top: 60px;
+            width: 60px;
+            height: 60px;
+            filter: blur(13px);
+        }
+        .blank{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #000;
+        }
+        @keyframes move{
+            0%{
+                transform: translateX(0)
+            }
+            50%{
+                transform: translateX(3px)
+            }
+            100%{
+                transform: translateX(0)
+            }
+        }
+    </style>
+</head>
+<body bgcolor="#000000">
+    <div id="box">
+        <div class="red-box" style="opacity: .2;">
+            <div class="red" style="transform: rotate(-45deg) translateY(-150px) scaleX(.5);"></div>
+            <div class="red" style="transform: rotate(-80deg) translateY(-120px) scaleX(.7);opacity: .6;"></div>
+            <div class="red" style="transform: rotate(-130deg) translateY(-100px) scaleX(1);opacity: .6;"></div>
+            <div class="red" style="transform: rotate(-180deg) translateY(-110px) scaleX(1);opacity: .6;"></div>
+            <div class="red" style="transform: rotate(-230deg) translateY(-120px) scaleX(.8);opacity: .6;"></div>
+            <div class="red" style="transform: rotate(-280deg) translateY(-130px) scaleX(.4);opacity: .6;"></div>
+            <div class="red" style="transform: rotate(-340deg) translateY(-110px) scaleX(2);opacity: .8;"></div>
+        </div>
+        <div class="red-box">
+            <div class="red" style="transform:translateY(-25px) scale(1.25);"></div>
+            <div class="red" style="transform:translateX(-40px) scale(1.1);"></div>
+            <div class="red" style="transform:translateY(30px) scale(1.0);"></div>
+            <div class="red" style="transform:translateX(50px) scale(1.0);"></div>
+            <div class="red" style="transform: rotate(-45deg) translateY(-120px) scaleX(.4);opacity: .6;"></div>
+        </div>
+        <div class="yellow-box">
+            <div class="yellow" style="transform:  rotate(-45deg) scaleX(.5);left:-30px;top:30px;">
+                <div class="white"></div>
+            </div>
+            <div class="yellow" style="transform:  rotate(45deg) scaleX(.6) scaleY(1.2);left:40px;top:25px;">
+                <div class="white"></div>
+            </div>
+        </div>
+        <div class="blank-box">
+            <div class="blank" style="transform:  rotate(14deg) scaleY(1.3) scaleX(1);"></div>
+        </div>
+    </div>
+
+</div>
+</body>
+</html>

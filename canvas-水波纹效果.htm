@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	bottom: 0;
+	position:absolute;
+	height: 54px;
+	background:#FFF;
+	line-height: 54px;
+	font-size:20px;
+	text-align:center;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<div id="tips">手指在图片上点击出现水波纹</div>
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+var cxt = canvas.getContext("2d");
+var imgData;
+var radius = 2 ;
+var LIMIT = 50 ;
+var SPEED = 2 ;
+var timer = 0 ;
+var point = null;
+var refractivity = 1.3333;//水折射率
+var depth = 15 ;//水深
+var wavelength = Math.PI*3 ;//波长
+var waveheight = 2 ;//波峰高度
+
+canvas.addEventListener("mousedown",function(e){
+	point = {x:e.pageX,y:e.pageY};
+	radius = 2 ;
+	clearInterval(timer);
+	timer = setInterval(function(){
+		radius += SPEED ;
+		var tempImgData = copyImgData();
+		for(var x = 0 ; x < canvas.width ; x ++){
+			for(var y = 0; y < canvas.height ; y++){
+				var temp = (point.x-x)*(point.x-x) + (point.y-y)*(point.y-y);
+				if(temp < radius*radius){
+					if(radius < LIMIT){
+						var imgObj = getPoint(x,y,temp);
+						setPoint(tempImgData,imgObj,x,y);
+					}else if(temp > (radius-LIMIT)*(radius-LIMIT)){
+						var imgObj = getPoint(x,y,temp);
+						setPoint(tempImgData,imgObj,x,y);
+					}
+				}
+			}
+		}
+		cxt.putImageData(tempImgData,0,0);
+	},50);
+});
+function getPoint(x,y,temp){
+	var toOriginWidth = (radius - Math.sqrt(temp))/wavelength;
+	var wHeight = Math.sin(toOriginWidth) * waveheight;
+	var angle = Math.atan(Math.abs(Math.cos(toOriginWidth)))/refractivity;
+	var shiftLen = Math.tan(angle)*(wHeight + depth);
+	var shift_x  = Math.round(x + Math.sin(Math.atan(y/x)*shiftLen));
+	var shift_y  = Math.round(y + Math.cos(Math.atan(y/x)*shiftLen));
+	var index = (shift_y*canvas.width+shift_x)*4 ;
+	var imgPoint = [imgData.data[index],imgData.data[index+1],imgData.data[index+2],imgData.data[index+3]];
+	return imgPoint;
+}
+function setPoint(img,obj,x,y){
+	var i = (y*canvas.width+x)*4 ;
+	img.data[i] = obj[0];
+	img.data[i+1] = obj[0+1];
+	img.data[i+2] = obj[0+2];
+	img.data[i+3] = obj[0+3];
+}
+function copyImgData(){
+	var img = cxt.createImageData(imgData);
+	for(var i = 0 ;i < imgData.data.length ; i ++){
+		img.data[i] = imgData.data[i];
+	}
+	return img ;
+}
+function loadImg(src,callback){
+	var img = new Image();
+	img.onload = callback;
+	img.src = src ;
+}
+function init(){
+	loadImg("3.jpg",function(){
+		canvas.width = this.width ;
+		canvas.height = this.height ;
+		cxt.drawImage(this,0,0);
+		imgData = cxt.getImageData(0,0,this.width,this.height);
+	});
+}
+init();
+</script>
+</html>

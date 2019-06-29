@@ -1,0 +1,184 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+.petal{
+	position:absolute;
+	width:50px;
+	height:130px;
+	transform-origin:50% 150%;
+	opacity:.9;
+}
+.petal > div:nth-child(1){
+	position:absolute;
+	left:0;
+	top:0;
+	width:50%;
+	height:100%;
+	overflow:hidden;
+}
+.petal > div:nth-child(1) > div{
+	position:absolute;
+	left:0;
+	top:-20px;
+	width:160px;
+	height:250px;
+	background-image:linear-gradient(95deg,#fef10c 0%,#ffc701 8%,#fef10c 15%,#ffc701 20%);
+	box-shadow:0 0 10px rgba(0,0,0,.3);
+	border-radius:50%;
+}
+.petal > div:nth-child(2){
+	position:absolute;
+	left:50%;
+	top:0;
+	width:50%;
+	height:100%;
+	overflow:hidden;
+}
+.petal > div:nth-child(2) > div{
+	position:absolute;
+	right:0;
+	top:-20px;
+	width:160px;
+	height:250px;
+	background-image:linear-gradient(-95deg,#fef10c 0%,#ffc701 8%,#fef10c 15%,#ffc701 20%);
+	box-shadow:0 0 10px rgba(0,0,0,.3);
+	border-radius:50%;
+}
+#box{
+	width:370px;
+	height:370px;
+	margin: 0 auto;
+	position: relative;
+}
+.pistilShadow{
+	position:absolute;
+	left: 180px;
+	top:195px;
+	width:120px;
+	height:120px;
+	border-radius:50%;
+	transform:translate(-50%,-50%);
+	box-shadow: -5px 5px 80px #bd3d0e;
+}
+.pistil{
+	position:absolute;
+	left: 180px;
+	top:195px;
+	width:160px;
+	height:160px;
+	border-radius:50%;
+	transform:translate(-50%,-50%);
+	box-shadow: 0 0 80px #bd3d0e inset;
+	background:#325302;
+	overflow:hidden;
+}
+.pistilLine{
+	position:absolute;
+	left:20%;
+	top:-50%;
+	transform-origin: center bottom;
+	width:60%;
+	height:100%;
+	border-radius:50%;
+	border:solid 1px #2f1307;
+}
+.pistil2{
+	position:absolute;
+	left: 180px;
+	top:195px;
+	width:60px;
+	height:60px;
+	border-radius:50%;
+	transform:translate(-50%,-50%);
+	box-shadow: 0 0 25px #bd3d0e inset;
+	background:#325302;
+}
+.dot{
+	position:absolute;
+	left:28px;
+	top:0;
+	width:4px;
+	height:4px;
+	border-radius:50%;
+	background:#fded00;
+	box-shadow: 0 0 15px #fded00 inset;
+	transform-origin:center 30px;
+}
+</style>
+</head>
+<body>
+<div id="box"></div>
+<script>
+
+function addPetal(){
+	var len = 21 ,
+		layer = 3 ,
+		i = 0 ,
+		j = 0 ,
+		changeScale = 0.1 ,
+		scale = 1 ,
+		div;
+	var fragment = document.createDocumentFragment();
+	var pistil = document.createElement("div");
+	pistil.className = "pistil" ;
+	var pistil2 = document.createElement("div");
+	pistil2.className = "pistil2" ;
+
+	for(j = 0 ; j < layer ; j ++){
+		for(i = 0 ; i < len ; i ++){
+			fragment.appendChild(getOnePetal(scale,Math.round(360/len*i + Math.random()*10)));
+		}
+		div = document.createElement("div");
+		div.className = "pistilShadow" ;
+		fragment.appendChild(div);
+		len -= 5 ;
+		scale -= changeScale ;
+		changeScale += changeScale ;
+	}
+	len = 40 ;
+	for(var i = 0 ;i < len ; i ++){
+		div = document.createElement("div");
+		div.className = "pistilLine" ;
+		div.style.transform = "rotate("+Math.round(360/len*i)+"deg)" ;
+		pistil.appendChild(div);
+	}
+	len = 30;
+	scale = 1 ;
+	changeScale = 0.15 ;
+	for(j = 0 ; j < layer ; j ++){
+		for(i = 0 ; i < len ; i ++){
+			pistil2.appendChild(getOneDot(scale,Math.round(360/len*i+j*10)));
+		}
+		len -= 4 ;
+		scale -= changeScale ;
+	}
+	fragment.appendChild(pistil);
+	fragment.appendChild(pistil2);
+
+	box.appendChild(fragment);
+}
+function getOnePetal(size,deg){
+	var div = document.createElement("div");
+	div.className = "petal" ;
+	div.innerHTML = "<div><div></div></div><div><div></div></div>";
+	div.style.left = 155 + "px";
+	div.style.top = 0 ;
+	div.style.transform = "rotate("+deg+"deg) scale("+size+")";
+	return div ;
+}
+function getOneDot(size,deg){
+	var div = document.createElement("div");
+	div.className = "dot" ;
+	div.style.transform = "rotate("+deg+"deg) scale("+size+")";
+	return div ;
+}
+addPetal();
+</script>
+</body>
+</html>

@@ -1,0 +1,366 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+	font-size:10px;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+img{
+	position:absolute;
+}
+#box{
+	position:relative;
+	right:0;
+	top:0;
+	width:600px;
+	height:300px;
+	transform-origin:150px 150px;
+}
+#left{
+	position:absolute;
+	left:30px;
+	top:150px;
+	width:151px;
+	height:56px;
+	box-shadow:0 0 30px #FFF;
+	transform:skew(30deg) rotate(-2deg);
+	border-top-left-radius:2px;
+	border-top-right-radius:60%;
+	border-bottom-left-radius:20px;
+	border-bottom-right-radius:2px;
+	background:#fff;
+	border-left:5px solid #000;
+	border-top:8px solid #000;
+	border-right:1px solid #000;
+	border-bottom:1px solid #000;
+	overflow:hidden;
+}
+#right{
+	position:absolute;
+	right:50px;
+	top:150px;
+	width:151px;
+	height:56px;
+	box-shadow:0 0 30px #FFF;
+	transform:skew(-30deg) rotateZ(2deg);
+	border-top-right-radius:2px;
+	border-top-left-radius:60%;
+	border-bottom-right-radius:20px;
+	border-bottom-left-radius:2px;
+	background:#fff;
+	border-right:5px solid #000;
+	border-top:8px solid #000;
+	border-left:1px solid #000;
+	border-bottom:1px solid #000;
+	overflow:hidden;
+}
+#left > .eyeball{
+	position:absolute;
+	left:30px;
+	top:-10px;
+	width:80px;
+	height:80px;
+	border-radius:50%;
+	border:solid 1px #000;
+	transform:skew(-30deg) rotate(2deg);
+	visibility:hidden;
+}
+#right > .eyeball{
+	position:absolute;
+	left:30px;
+	top:-10px;
+	width:80px;
+	height:80px;
+	border-radius:50%;
+	border:solid 1px #000;
+	transform:skew(30deg) rotate(-2deg);
+	visibility:hidden;
+}
+.black{
+	background:-moz-radial-gradient(#000,#222 30%,#000);
+	background:-webkit-radial-gradient(#000,#222 30%,#000);
+	background:radial-gradient(#000,#222 30%,#000);
+}
+.red{
+	background:-moz-radial-gradient(#f33b24,#5b0300);
+	background:-webkit-radial-gradient(#f33b24,#5b0300);
+	background:radial-gradient(#f33b24,#5b0300);
+}
+.write{
+	position:absolute;
+	left:20%;
+	top:20%;
+	width:15%;
+	height:15%;
+	background:#FFF;
+	border-radius:50%;
+}
+.center{
+	position:absolute;
+	left:50%;
+	top:50%;
+	transform:translateX(-50%) translateY(-50%);
+}
+.c1{
+	width:15%;
+	height:15%;
+	border-radius:50%;
+	background:#000;
+}
+.c2{
+	width:65%;
+	height:65%;
+	border-radius:50%;
+	border:solid 1px #000;
+}
+.c3{
+	position:absolute;
+	right:11%;
+	top:50%;
+	width:15%;
+	height:15%;
+	border-radius:50%;
+	background:#000;
+	transform:rotate(190deg);
+	transform-origin:-19px 0;
+}
+.c3 > div{
+	position:absolute;
+	width:9px;
+	height:18px;
+	border-radius:50%;
+	border-right: 4px #000 solid;
+}
+#right .c3 > div{
+	position:absolute;
+	width:9px;
+	height:18px;
+	border-radius:50%;
+	border-right: 4px #000 solid;
+}
+.c4{
+	position:absolute;
+	left:20px;
+	top:30px;
+	width:40%;
+	height:40%;
+	border-radius:50%;
+	border-top: 22px transparent solid;
+	border-right: 19px #000 solid;
+	transform:rotate(-60deg);
+}
+.c5{
+	position:absolute;
+	left:50%;
+	top:0;
+	width:15%;
+	height:40%;
+	background:#000;
+	transform:translateX(-50%) rotate(0deg);
+	transform-origin:center 125%;
+}
+.c6{
+	position:absolute;
+	left:50%;
+	top:0;
+	width:35%;
+	height:76px;
+	border:solid 2px #000;
+	border-radius:50%;
+	transform:translateX(-50%);
+}
+.c7{
+	position:absolute;
+	left:50%;
+	top:10%;
+	width:12%;
+	height:12%;
+	border:solid 4px #000;
+	border-radius:50%;
+	transform:translateX(-50%);
+	transform-origin:center 180%;
+}
+.c8{
+	position:absolute;
+	left:50%;
+	top:0;
+	width:15%;
+	height:20%;
+	background:#000;
+	transform:translateX(-50%) rotate(0deg);
+	transform-origin:center 250%;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<div id="box">
+	<div id="left">
+		<div class="eyeball black" style="visibility:visible;"></div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2"></div>
+			<div class="c3"><div></div></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2"></div>
+			<div class="c3"><div></div></div>
+			<div class="c3" style="transform:rotate(10deg)"><div></div></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2"></div>
+			<div class="c3"><div></div></div>
+			<div class="c3" style="transform:rotate(310deg)"><div></div></div>
+			<div class="c3" style="transform:rotate(70deg)"><div></div></div>
+		</div>
+		<div class="eyeball red">
+			<div class="c4"></div>
+			<div class="c4" style="transform:rotate(60deg);left:-2px;top:8px;"></div>
+			<div class="c4" style="transform:rotate(180deg);left:27px;top:2px;"></div>
+			<div class="center c2" style="background:#000;width:37%;height:37%;"></div>
+			<div class="center c1" style="background:#f33b24;"></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c2" style="border-width:14px;width:15%;height:15%;"></div>
+			<div class="c5"></div>
+			<div class="c5" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c5" style="transform:translateX(-50%) rotate(240deg);"></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2" style="border-width:3px;width:55%;height:55%;"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(60deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(180deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(300deg);"></div>
+		</div>
+		<div class="eyeball black">
+			<div class="c6 red"></div>
+			<div class="c6 red" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c6 red" style="transform:translateX(-50%) rotate(240deg);"></div>
+			<div class="c6"></div>
+			<div class="c6" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c6" style="transform:translateX(-50%) rotate(240deg);"></div>
+			<div class="center c1"></div>
+			<div class="center c2" style="width:30%;height:30%;border-width:4px;"></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2" style="border-width:4px;width:54%;height:54%;"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(60deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(180deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(300deg);"></div>
+			<div class="c8"></div>
+			<div class="c8" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c8" style="transform:translateX(-50%) rotate(240deg);"></div>
+		</div>
+	</div>	
+	<div id="right">
+		<div class="eyeball black" style="visibility:visible;"></div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2"></div>
+			<div class="c3" style="transform:rotate(-50deg)"><div></div></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2"></div>
+			<div class="c3" style="transform:rotate(-50deg)"><div></div></div>
+			<div class="c3" style="transform:rotate(130deg)"><div></div></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2"></div>
+			<div class="c3" style="transform:rotate(-50deg)"><div></div></div>
+			<div class="c3" style="transform:rotate(70deg)"><div></div></div>
+			<div class="c3" style="transform:rotate(190deg)"><div></div></div>
+		</div>
+		<div class="eyeball red">
+			<div class="c4"></div>
+			<div class="c4" style="transform:rotate(60deg);left:-2px;top:8px;"></div>
+			<div class="c4" style="transform:rotate(180deg);left:27px;top:2px;"></div>
+			<div class="center c2" style="background:#000;width:37%;height:37%;"></div>
+			<div class="center c1" style="background:#f33b24;"></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c2" style="border-width:14px;width:15%;height:15%;"></div>
+			<div class="c5"></div>
+			<div class="c5" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c5" style="transform:translateX(-50%) rotate(240deg);"></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2" style="border-width:3px;width:55%;height:55%;"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(60deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(180deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(300deg);"></div>
+		</div>
+		<div class="eyeball black">
+			<div class="c6 red"></div>
+			<div class="c6 red" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c6 red" style="transform:translateX(-50%) rotate(240deg);"></div>
+			<div class="c6"></div>
+			<div class="c6" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c6" style="transform:translateX(-50%) rotate(240deg);"></div>
+			<div class="center c1"></div>
+			<div class="center c2" style="width:30%;height:30%;border-width:4px;"></div>
+		</div>
+		<div class="eyeball red">
+			<div class="center c1"></div>
+			<div class="center c2" style="border-width:4px;width:54%;height:54%;"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(60deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(180deg);"></div>
+			<div class="c7 red" style="transform:translateX(-50%) rotate(300deg);"></div>
+			<div class="c8"></div>
+			<div class="c8" style="transform:translateX(-50%) rotate(120deg);"></div>
+			<div class="c8" style="transform:translateX(-50%) rotate(240deg);"></div>
+		</div>
+	</div>
+</div>
+
+</body>
+<script>
+var id = 0 ;
+function showEye(){
+	var eyes = left.querySelectorAll(".eyeball");
+	for(var i = 0 ; i < eyes.length ; i ++){
+		if(id == i){
+			eyes[i].style.visibility = "visible" ;
+		}else{
+			eyes[i].style.visibility = "hidden" ;
+		}
+	}
+	var eyes = right.querySelectorAll(".eyeball");
+	for(var i = 0 ; i < eyes.length ; i ++){
+		if(id == i){
+			eyes[i].style.visibility = "visible" ;
+		}else{
+			eyes[i].style.visibility = "hidden" ;
+		}
+	}
+	id ++ ;
+	if(id == eyes.length) id = 0 ;
+}
+setInterval(showEye,1000);
+var ua = navigator.userAgent.toLowerCase();
+if(ua.indexOf("android") != -1 || ua.indexOf("iphone") != -1 || ua.indexOf("ipad") != -1){
+box.style.width = window.innerHeight + "px" ;
+box.style.height = window.innerWidth + "px" ;
+box.style.transformOrigin = window.innerWidth/2 + "px " + window.innerWidth/2 + "px" ;
+box.style.transform = "rotate(90deg)";
+document.addEventListener("touchmove",function(e){
+	e.preventDefault();
+})
+}
+</script>
+</html>

@@ -1,0 +1,132 @@
+<!doctype html>
+<html>
+<head>
+<title>圣诞节快乐</title>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html,body,div,canvas{
+	margin:0;
+	padding:0;
+}
+#box{
+	width:300px;
+	height:450px;
+	margin:0 auto;
+	transform-style: preserve-3d;
+	position:relative;
+	perspective:1000px;
+	perspective-origin:50% 100%;
+}
+#inner{
+	width:300px;
+	height:450px;
+	margin:0 auto;
+	transform-style: preserve-3d;
+	position:relative;
+}
+#inner > canvas{
+	transform-origin:0 50%;
+}
+</style>
+</head>
+<body bgcolor="#30c2f1">
+<div id="box"><div id="inner"></div></div>
+</body>
+<script>
+var box = document.getElementById("box");
+var inner = document.getElementById("inner");
+var width = 300 ;
+var height = 450 ;
+
+
+function drawTree(canvas,index){
+	canvas.style.position = "absolute" ;
+	canvas.style.left = width/2 + "px" ;
+	canvas.style.top = 0 ;
+	canvas.width = width/2 ;
+	canvas.height = height ;
+	var cxt = canvas.getContext("2d");
+	if(index % 10 == 0 || index % 10 == 1){
+		drawStar(22,10,0,53,cxt,'#FF0')
+	}
+	function drawLine(x,y,deg,width){
+		if(x < 0)return ;
+		var x1 = x+width*2*Math.cos(deg) ;
+		var y1 = y-2-width*3*Math.sin(deg) ;
+		cxt.beginPath();
+		if(width < 5){
+			cxt.strokeStyle = "rgba(0,"+Math.min(255,~~(100+width*30))+",0,.4)";
+			if(Math.random() < 0.02){
+				ornament(cxt,x,y,width);
+			}
+		}else{
+			cxt.strokeStyle = "#FFF";
+		}
+		cxt.lineWidth = width ;
+		cxt.moveTo(x,y);
+		cxt.lineTo(x1,y1);
+		cxt.stroke();
+		width -= 0.4;
+		if(width > 1){
+			drawLine(x1,y1,deg,width);
+			if(Math.random()*width > 0.6){
+				var dir = [1,-1][Math.round(Math.random())]*0.12*width;
+				width *= 0.8;
+				drawLine(x1,y1,deg+dir,width);
+				if(Math.random() > 0.7)
+					drawLine(x1,y1,deg-dir,width);
+			}
+		}
+	}
+	drawLine(0,height,Math.PI/2,9.5);
+}
+function ornament(cxt,x,y,width){
+	var type = Math.floor(Math.random()*3);
+	var colors = ['#f00','#00f','#0ff','#fff','#ff0'];
+	if(type == 0){
+		cxt.arc(x,y,width*2,0,Math.PI*2)
+	}else{
+		drawStar(width*3,width,x,y,cxt,colors[Math.floor(Math.random()*colors.length)])
+	}
+	cxt.fillStyle = colors[Math.floor(Math.random()*colors.length)]
+	cxt.fill();
+}
+function drawStar(R,r,x,y,ctx,fillStyle) {
+    ctx.beginPath();
+    for(var i = 0; i < 5; i ++) {
+        var x1 = Math.cos((18+72*i+36)/180*Math.PI)*R,
+            y1 = Math.sin((18+72*i+36)/180*Math.PI)*R,
+            x2 = Math.cos((54+72*i+36)/180*Math.PI)*r,
+            y2 = Math.sin((54+72*i+36)/180*Math.PI)*r;
+            
+        ctx.lineTo(x1 + x, y1 + y);
+        ctx.lineTo(x2 + x, y2 + y);
+    }
+    ctx.closePath();
+    ctx.fillStyle = fillStyle;
+    ctx.fill();
+}
+
+var len = 20 ;
+var fragment = document.createDocumentFragment();
+for(var i = 0 ;i < len ; i ++){
+	var newCanvas = document.createElement("canvas");
+	newCanvas.style.transform = "rotateY("+Math.round(i*360/len)+"deg)";
+	drawTree(newCanvas,i);
+	fragment.appendChild(newCanvas);
+}
+inner.appendChild(fragment);
+
+var step = 0 ;
+function changeRotate(){
+	step ++ ;
+	inner.style.transform = "rotateY("+step+"deg)";
+	requestAnimationFrame(changeRotate);
+}
+changeRotate();
+</script>
+</html>

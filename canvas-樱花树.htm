@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+
+<style type="text/css">
+canvas{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<canvas id="tree"></canvas>
+<canvas id="canvas"></canvas>
+<script>
+var treeCanvas = document.getElementById("tree");
+treeCanvas.width = window.innerWidth;
+treeCanvas.height = window.innerHeight ;
+var tCxt = treeCanvas.getContext("2d");
+var canvas = document.getElementById("canvas");
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+var flowerList = [];
+var rootTop = 450 ;
+var flowerColor = "rgba(255,192,203,.3)" ;
+var flowerColorDeep = "rgba(241,158,194,.5)" ;
+var treeColor2 = "rgba(255,192,203,.5)" ;
+var treeColor = "#FFF" ;
+var fallList = [];
+var g = 0.01 ;
+var gWind = 0.005;
+var limitSpeedY = 1;
+var limitSpeedX = 1 ;
+
+cxt.shadowColor= "#FFF" ;
+cxt.shadowBlur = 10 ;
+
+function drawTree(x,y,deg,step,type){
+	var deg1 = step%2 == 0 ? 0.1 : -0.1 ;
+	var x1 = x + Math.cos(deg+deg1) * (step+4) * 0.8 ;
+	var y1 = y + Math.sin(deg+deg1) * (step-1) * 0.8 ;
+	tCxt.beginPath();
+	tCxt.lineWidth = step/3;
+	tCxt.lineJoin = "round";
+	tCxt.moveTo(x,y);
+	tCxt.lineTo(x1,y1);
+	tCxt.strokeStyle = (step > 5 ) ? treeColor : treeColor2 ;
+	tCxt.stroke();
+	if(step > 20){
+		tCxt.fillStyle = treeColor ;
+		tCxt.arc(x,y,step/6,0,Math.PI*2)
+		tCxt.fill();
+	}
+	if(step < 3 || (step < 23 && Math.random() > 0.1)){
+		var color = [flowerColorDeep,flowerColor,flowerColor][Math.round(Math.random()+0.2)] ;
+		var r = 2+Math.random()*2
+		tCxt.fillStyle = color ;
+		tCxt.arc(x1+Math.random()*3,y1+Math.random()*3,r,0,Math.PI)
+		tCxt.fill();
+		flowerList.push({x:x,y:y,sx:(Math.random()-0.5),sy:0,color:color,r:r,deg:deg});
+	}
+	step -- ;
+	if(step > 0){
+		drawTree(x1,y1,deg,step,type);
+		if(step%3 == 1 && step > 0 && step < 30)
+			drawTree(x1,y1,deg+0.2 + 0.3 * Math.random(),Math.round(step/1.13));
+		if(step%3 == 0 && step > 0 && step < 30)
+			drawTree(x1,y1,deg-0.2 - 0.3 * Math.random(),Math.round(step/1.13));
+	}
+}
+
+drawTree(canvas.width/2,rootTop,-Math.PI/2,30,1);
+var len = flowerList.length ;
+function step(){
+	if(Math.random() > 0.3)	fallList.push(flowerList[Math.floor(Math.random()*len)]);
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	for(var i = 0 ;i < fallList.length ; i ++){
+		if(fallList[i].sy < limitSpeedY) fallList[i].sy += g ;
+		fallList[i].sx += gWind ;
+		fallList[i].x += fallList[i].sx ;
+		fallList[i].y += fallList[i].sy ;
+		if(fallList[i].y > rootTop){
+			fallList.splice(i,1);
+			i -- ;
+			continue ;
+		}
+		cxt.beginPath();
+		cxt.fillStyle = fallList[i].color ;
+		fallList[i].deg += fallList[i].sx*0.05 ;
+		cxt.arc(fallList[i].x,fallList[i].y,fallList[i].r,fallList[i].deg,fallList[i].deg+Math.PI*1.3);
+		cxt.fill();
+	}
+	requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+</script>
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	bottom: 0;
+	position:absolute;
+	height: 54px;
+	background:#FFF;
+	line-height: 54px;
+	font-size:20px;
+	text-align:center;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+var list = [];
+var list2 = [];
+var g = 0.05;
+cxt.textAlign = "center" ;
+
+cxt.strokeStyle = "#FFF" ;
+cxt.fillStyle = "#FFF" ;
+cxt.font = "12px SimHei";
+function draw(){
+	for(var i = 0 ; i < list.length ; i ++){
+		if(list[i].e == 0){
+			list[i].list.push({x:list[i].x,y:list[i].y});
+		}else{
+			if(list[i].list.length){
+				list[i].list.shift();
+			}else{
+				list2.push({
+					x:list[i].x,
+					y:list[i].y,
+					sy:list[i].sy,
+					sx:list[i].sx,
+					a:8
+				});
+				list.splice(i,1);
+				i --;
+				continue;
+			}
+		}
+		if(list[i].list.length > 12)
+			list[i].list.shift();
+		list[i].x += list[i].sx ;
+		list[i].y += list[i].sy ;
+		list[i].sy += g ;
+		if(list[i].sy > 1+Math.random()){
+			list[i].e = 1 ;
+		}
+	}
+	var x = canvas.width/2-10,y = canvas.height-70;
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	cxt.beginPath();
+	cxt.fillStyle = "#F00" ;
+	cxt.fillRect(x,y,20,50);
+	cxt.beginPath();
+	cxt.fillStyle = "#a00" ;
+	cxt.moveTo(x,y);
+	cxt.quadraticCurveTo(x+10,y+8,x+20,y);
+	cxt.quadraticCurveTo(x+10,y-8,x,y);
+	cxt.closePath();
+	cxt.fill();
+	cxt.beginPath();
+	cxt.fillStyle = "#F00" ;
+	cxt.moveTo(x,y+50);
+	cxt.quadraticCurveTo(x+10,y+6+50,x+20,y+50);
+	cxt.closePath();
+	cxt.fill();
+	cxt.beginPath();
+	cxt.fillStyle = "#FFF" ;
+	cxt.fillText("福",x+10,y+30);
+	for(var i = 0 ; i < list.length ; i ++){
+			cxt.beginPath();
+		for(var j = 0 ; j < list[i].list.length ; j ++){
+			if(j == 0)
+			cxt.moveTo(list[i].list[j].x,list[i].list[j].y);
+			else
+			cxt.lineTo(list[i].list[j].x,list[i].list[j].y);
+		}
+			cxt.strokeStyle = list[i].c ;
+			cxt.stroke();
+	}
+	for(var i = 0 ; i < list2.length ; i ++){
+		cxt.beginPath();
+		cxt.fillStyle = "rgba(255,255,255,"+0.1*list2[i].a+")";
+		cxt.arc(list2[i].x,list2[i].y,8-list2[i].a,0,Math.PI*2);
+		cxt.fill();
+		list2[i].a -= 1 ;
+		if(list2[i].a <= 0){
+			list2.splice(i,1);
+			i -- ;
+		}
+	}
+}
+function addFire(){
+	for(var i = 0 ; i < 2 ; i ++){
+		var p = {
+			x: canvas.width/2 ,
+			y: canvas.height-70,
+			sx: Math.random()-0.5,
+			sy: -(Math.random() + 5),
+			c: "rgba(255,"+Math.round(Math.random()*155+100)+","+Math.round(Math.random()*155+100)+",1)",
+			e: 0,
+			list:[]
+		}
+		list.push(p);
+	}
+}
+function step(){
+	addFire();
+	draw();
+	requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+</script>
+</html>

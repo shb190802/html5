@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	position:absolute;
+	height: 24px;
+	background:#FFF;
+	line-height: 24px;
+	font-size:16px;
+	text-align:center;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+cxt.strokeStyle = "rgba(200,200,200,.4)";
+cxt.lineWidth = 1.5;
+var list = [];
+var limitSpeed = 10 ;
+var g = 0.3 ;
+var limit = 250 ;
+function draw(){
+	init();
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	for(var i = 0 ; i < list.length ; i ++){
+		if(list[i].list[0].y < 0 || list.length - i > limit){
+			list[i].sx *= 0.8;
+			list[i].list.shift();
+		}
+		if(!list[i].list.length){
+			list.splice(i,1);
+			i--;
+			continue;
+		}
+		var first = list[i].list[0];
+		list[i].list.unshift({x:first.x+list[i].sx,y:first.y+list[i].sy});
+		list[i].list.pop();
+		list[i].sx += (((first.x>list[i].cx)?-1:1)*g);
+		if(list[i].sx*list[i].sx +  list[i].sy*list[i].sy < limitSpeed*limitSpeed){
+			list[i].sx += (((first.x>list[i].cx)?-1:1)*g);
+		}
+		//cxt.strokeStyle = "rgba("+Math.round(Math.abs(20*list[i].sx)+100)+",100,100,1)";
+		for(var j = 1 ; j < list[i].list.length ; j ++){
+			cxt.beginPath();
+			cxt.moveTo(list[i].list[j-1].x,list[i].list[j-1].y);
+			cxt.lineTo(list[i].list[j].x,list[i].list[j].y);
+			cxt.stroke();
+		}
+	}
+}
+function getPoint(){
+	var x = canvas.width/2 ;
+	var y = canvas.height/4*3;
+	var point = {
+		sx:(Math.random()-0.5)*limitSpeed,
+		sy:-(Math.random()*0.7+1),
+		cx:x,
+		list:[]
+	};
+	var len = Math.random()*5 + 5;
+	for(var j = 0 ; j < len ; j ++){
+		point.list.push({x:x,y:y});
+	}
+	return point ;
+}
+function init(){
+	var len =  2;
+	for(var i = 0 ; i < len; i ++){
+		list.push(getPoint());
+	}
+}
+init();
+function step(){
+	draw();
+	requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+</script>
+</html>

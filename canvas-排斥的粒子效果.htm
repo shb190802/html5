@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	position:absolute;
+	height: 24px;
+	background:#FFF;
+	line-height: 24px;
+	font-size:16px;
+	text-align:center;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<div id="tips">鼠标在屏幕上滑动</div>
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+cxt.fillStyle = "#ccc" ;
+var RADIUS = 50 ;
+var SPEED = 10 ;
+var SPEED2 = 1 ;
+
+var point = null
+var list = [];
+function draw(){
+	cxt.clearRect(0,0,canvas.width,canvas.height)
+	for(var i = 0 ; i < list.length ; i ++){
+		cxt.fillRect(list[i].x,list[i].y,1,1);
+	}
+}
+function resetList(){
+	if(!point)return ;
+	for(var i = 0 ; i < list.length ; i ++){
+		var x = list[i].x - point.x ;
+		var y = list[i].y - point.y ;
+		if(x*x + y*y < RADIUS*RADIUS){
+			var deg = Math.atan2(y,x);
+			list[i].x += Math.cos(deg)*SPEED;
+			list[i].y += Math.sin(deg)*SPEED;
+		}else{
+			var x1 = list[i].x - list[i].x1 ;
+			var y1 = list[i].y - list[i].y1 ;
+			if(x1*x1 + y1*y1 > SPEED2*SPEED2){
+				var deg = Math.atan2(y1,x1);
+				list[i].x -= Math.cos(deg)*SPEED2;
+				list[i].y -= Math.sin(deg)*SPEED2;
+			}else{
+				list[i].x = list[i].x1 ;
+				list[i].y = list[i].y1 ;
+			}
+		}
+	}
+}
+function init(){
+	var w = canvas.width ;
+	var h = canvas.height ;
+	for(var i = 0 ; i < w/4 ; i ++){
+		for(var j = 0 ; j < h/4 ; j ++){
+			list.push({
+				x: i*4,
+				y: j*4,
+				x1: i*4,
+				y1: j*4
+			});
+		}
+	}
+}
+init();
+function step(){
+	resetList();
+	draw();
+	requestAnimationFrame(step)
+}
+requestAnimationFrame(step)
+canvas.addEventListener('mousemove', function(e){
+	point = {
+		x: e.pageX,
+		y: e.pageY
+	}
+}) ;
+canvas.addEventListener('touchmove', function(e){
+	e.preventDefault();
+	point = {x: e.touches[0].pageX,y: e.touches[0].pageY}
+});
+canvas.addEventListener('touchend', function(e){
+	point = {x: -RADIUS,y: -RADIUS}
+});
+</script>
+</html>

@@ -1,0 +1,85 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+</head>
+<body bgcolor="#000000">
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+var w = window.innerWidth ;
+var h = window.innerHeight ;
+canvas.width = w;
+canvas.height = h ;
+cxt = canvas.getContext("2d");
+cxt.strokeStyle = "#ccc" ;
+var p = {
+	x:w/3,
+	y:h/3,
+	sx:0.1,
+	sy:0.1
+};//水母身体中心位置
+var count = 17 ;//触手数量
+var len = 30 ;//每根触手长度
+var times = 0 ;//动画运行周期
+var list = [];//记录移动状态的二维数组
+
+function draw(){
+	cxt.clearRect(0,0,w,h);
+	var line = null ;
+	var r = 30 + 15 * Math.sin(times ++ /10);//水母身体半径
+	for(var i = 0 ; i < count ; i ++){
+		list[i].unshift({
+			x:p.x+Math.cos(Math.PI*2/count*i)*r,
+			y:p.y+Math.sin(Math.PI*2/count*i)*r
+		});//水母周围每一条触须跟水母身体连接点位置。
+		if(list[i].length > len)
+			list[i] = list[i].slice(0,len);//限制水母触手长度
+		if(p.x < 0)p.sx = 0.1;
+		else if(p.x > w)p.sx = -0.1;
+		if(p.y < 0)p.sy = 0.1;
+		else if(p.y > h)p.sy = -0.1;
+		p.x += p.sx ;//水母移动
+		p.y += p.sy ;
+		cxt.beginPath();
+		cxt.moveTo(p.x,p.y);
+		cxt.lineTo(list[i][0].x,list[i][0].y);
+		cxt.stroke();
+		line = list[i];
+		for(var j = 0,len1 = line.length ;j < len1; j ++){
+			cxt.beginPath();
+			if(j > 0){
+				cxt.moveTo(line[j-1].x,line[j-1].y);
+				cxt.lineTo(line[j].x,line[j].y);
+			}
+			cxt.arc(line[j].x,line[j].y,(len-j)/6,0,Math.PI*2);//在水母经过的每个点画一个圆
+			cxt.stroke();
+		}
+	}
+}
+function init(){
+	var r = 30 + 15 * Math.sin(times ++ /10);//水母身体半径
+	for(var i = 0 ; i < count ; i ++){
+		list[i] = [];
+		list[i].unshift({
+			x:p.x+Math.cos(Math.PI*2/count*i)*r,
+			y:p.y+Math.sin(Math.PI*2/count*i)*r
+		});//水母周围每一条触须跟水母身体连接点位置。
+	}
+	
+}
+init();
+function step(){
+	draw();
+	requestAnimationFrame(step);
+}
+requestAnimationFrame(step);
+</script>
+</html>

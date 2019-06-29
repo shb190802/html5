@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+#tips{
+	width:100%;
+	position:absolute;
+	height: 24px;
+	background:#FFF;
+	line-height: 24px;
+	font-size:16px;
+	text-align:center;
+}
+</style>
+</head>
+<body bgcolor="#000000">
+<canvas id="knife"></canvas>
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+cxt.font = "200px Arial";
+cxt.textAlign = "center" ;
+var list = [];
+var R = 5 ;
+var num = (new Date()).getSeconds();
+var listIndex = 0 ;
+
+function draw(){
+	if(num != (new Date()).getSeconds()){
+		num = (new Date()).getSeconds() ;
+		for(var i = 0 ; i < list.length ;i ++){
+			list[i].ax = list[i].bx ;
+			list[i].ay = list[i].by ;
+			list[i].f = 0;
+		}
+		getTextPoint(num);
+	}
+	for(var i = 0 ; i < list.length ; i ++){
+		if(Math.abs(list[i].x-list[i].ax) < list[i].round){
+			list[i].x += list[i].sx ;
+		}else{
+			list[i].x += (list[i].ax - list[i].x)/4;
+		}
+		if(Math.abs(list[i].y-list[i].ay) < list[i].round){
+			list[i].y += list[i].sy ;
+		}else{
+			list[i].y += (list[i].ay - list[i].y)/4;
+		}
+	}
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	for(var i = 0 ; i < list.length ; i ++){
+		cxt.beginPath();
+		cxt.fillStyle = "rgba(255,255,255,"+list[i].a+")";
+		cxt.arc(list[i].x,list[i].y,list[i].r,0,Math.PI*2);
+		cxt.fill();
+	}
+	requestAnimationFrame(draw);
+}
+
+function getTextPoint(txt){
+	cxt.clearRect(0,0,canvas.width,canvas.height);
+	cxt.beginPath();
+	cxt.fillStyle = "rgba(255,255,255,0.01)" ;
+	cxt.fillText(txt,canvas.width/2,canvas.height/2);
+	var imgData = cxt.getImageData(0,0,canvas.width,canvas.height);
+	for(var i = 0 ; i < canvas.width ; i+=R*2){
+		for(var j = 0 ; j < canvas.height ; j+=R*2){
+			var index = (j*canvas.width + i)*4 ;
+			if(imgData.data[index] > 0){
+				list[listIndex].ax = i ;
+				list[listIndex].ay = j ;
+				list[listIndex].f = 1;
+				listIndex ++ ;
+				if(listIndex >= list.length) listIndex = 0 ;
+			}
+		}
+	}
+}
+function init(){
+	var len =  130;
+	for(var i = 0 ; i < len; i ++){
+		var p = getPoint();
+		point = {
+			x: p.x,
+			y: p.y,
+			sx: (Math.random() - 0.5)*0.5,
+			sy: (Math.random() - 0.5)*0.5,
+			ax: p.x,
+			ay: p.y,
+			bx: p.x,
+			by: p.y,
+			round: Math.random()*2+2,
+			r: Math.random()+R,
+			a: Math.random()*0.2 + 0.5,
+			f:0
+		}
+		list.push(point);
+	}
+}
+function getPoint(){
+	var x = Math.random() * canvas.width ;
+	var y = Math.random() * canvas.height ;
+	while(x > canvas.width/2-50 && x < canvas.width/2 + 50 && y > canvas.height/2-50 && y < canvas.height/2 + 50){
+		x = Math.random() * canvas.width ;
+		y = Math.random() * canvas.height ;
+	}
+	return {x:x,y:y};
+}
+init();
+requestAnimationFrame(draw);
+</script>
+</html>

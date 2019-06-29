@@ -1,0 +1,420 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<meta name="keywords" content="小猪佩奇,HTML5,canvas" />
+<meta name="description" content="小猪佩奇" />
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<title>小猪佩奇</title>
+<style type="text/css">
+*{
+	margin:0;
+	padding:0;
+}
+#box{
+	margin:0 auto;
+	width:375px;
+	height:375px;
+	/*background:url('1.png');*/
+}
+#qr{
+	position:absolute;
+	bottom:0;
+	left:0;
+	width:140px;
+	height:200px;
+	text-align:center;
+}
+#qr > img{
+	width:100px;
+	height:100px;
+}
+</style>
+</head>
+<body>
+<div id="box">
+<canvas id="canvas1"></canvas>
+</div>
+<div id="qr">
+长按二维码关注我，了解更多特效
+<img src="../images/qr.jpg" style="">
+</div>
+<script>
+var canvas = document.getElementById('canvas1');
+var cxt = canvas.getContext('2d');
+canvas.width = 375 ;
+canvas.height = 375 ;
+var headLineColor = "#ea9cc3";
+var headColor = "#f4c7dc" ;
+var headLineWidth = 4.5 ;
+cxt.lineCap = "round";
+var timer = 0 ;
+
+function d_nose(fill){
+	cxt.fillStyle = headColor ;
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = headLineWidth;
+	cxt.beginPath();
+	cxt.moveTo(122,90);
+	cxt.bezierCurveTo(135,70,162,88,146,108);
+	cxt.bezierCurveTo(132,128,104,117,122,90);
+	fill&&cxt.fill();
+	cxt.stroke();
+}
+function d_nares(){
+	cxt.fillStyle = "#ca79a4" ;
+	cxt.beginPath();
+	cxt.arc(128,98,3.8,0,Math.PI*2);
+	cxt.arc(140,100,3.8,0,Math.PI*2);
+	cxt.fill();
+}
+function d_head(fill){
+	cxt.beginPath();
+	cxt.fillStyle = headColor ;
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = headLineWidth;
+	cxt.moveTo(143,82);
+	cxt.bezierCurveTo(210,90,252,110,242,170);
+	cxt.bezierCurveTo(226,228,110,206,153,136);
+	cxt.bezierCurveTo(135,129,135,127,123,117);
+	fill&&cxt.fill();
+	cxt.stroke();
+}
+function d_left_ear(fill){
+	cxt.fillStyle = headColor ;
+	cxt.beginPath();
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = headLineWidth;
+	cxt.moveTo(196,97);
+	cxt.bezierCurveTo(194,58,238,59,206,102);
+	fill&&cxt.fill();
+	cxt.stroke();
+}
+function d_right_ear(fill){
+	cxt.fillStyle = headColor ;
+	cxt.beginPath();
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = headLineWidth;
+	cxt.moveTo(218,108);
+	cxt.bezierCurveTo(230,70,268,88,228,117);
+	fill&&cxt.fill();
+	cxt.stroke();
+}
+function d_eye(){
+	cxt.fillStyle = "#fff";
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = 4;
+	cxt.beginPath();
+	cxt.moveTo(180,96);
+	cxt.bezierCurveTo(170,90,160,102,168,108);
+	cxt.bezierCurveTo(180,116,188,103,180,96);
+	cxt.closePath();
+	cxt.fill();
+	cxt.stroke();
+	cxt.beginPath();
+	cxt.moveTo(200,105);
+	cxt.bezierCurveTo(186,104,186,117,198,124);
+	cxt.bezierCurveTo(207,126,212,113,200,105);
+	cxt.closePath();
+	cxt.fill();
+	cxt.stroke();
+}
+function d_eyeball(){
+	cxt.beginPath();
+	cxt.arc(175,105,4,0,Math.PI*2);
+	cxt.arc(200,118,4,0,Math.PI*2);
+	cxt.fillStyle = "#000" ;
+	cxt.fill();
+}
+function d_blush(){
+	cxt.beginPath();
+	cxt.fillStyle = "#f2a7c8" ;
+	cxt.moveTo(206,148);
+	cxt.bezierCurveTo(200,160,216,178,231,161);
+	cxt.bezierCurveTo(241,140,218,130,206,148);
+	cxt.fill();
+}
+function d_mouth(){
+	cxt.beginPath();
+	cxt.strokeStyle = "#ea448c" ;
+	cxt.lineWidth = 5;
+	cxt.moveTo(157,153);
+	cxt.bezierCurveTo(159,172,183,184,197,163);
+	cxt.stroke();
+}
+function d_body(fill){
+	cxt.beginPath();
+	cxt.strokeStyle = "#e61609" ;
+	cxt.fillStyle = "#ec5e52";
+	cxt.lineWidth = 5;
+	cxt.moveTo(153,190);
+	cxt.bezierCurveTo(134,222,136,224,129,268);
+	cxt.bezierCurveTo(180,272,186,272,251,269);
+	cxt.bezierCurveTo(248,223,240,203,229,193);
+	fill&&cxt.fill();
+	cxt.stroke();
+}
+function d_left_hand(){
+	cxt.beginPath();
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = 5;
+	cxt.moveTo(142,206);
+	cxt.bezierCurveTo(128,209,128,209,113,216);
+	cxt.bezierCurveTo(109,211,109,211,105,210);
+	cxt.moveTo(113,216);
+	cxt.bezierCurveTo(107,219,107,219,105,223);
+	cxt.moveTo(113,216);
+	cxt.bezierCurveTo(114,221,114,221,113,224);
+	cxt.stroke();
+}
+function d_right_hand(){
+	cxt.beginPath();
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = 5;
+	cxt.moveTo(236,204);
+	cxt.bezierCurveTo(251,208,251,209,266,216);
+	cxt.bezierCurveTo(272,211,272,211,275,211);
+	cxt.moveTo(266,216);
+	cxt.bezierCurveTo(272,219,272,219,275,222);
+	cxt.moveTo(266,216);
+	cxt.bezierCurveTo(267,222,267,222,267,224);
+	cxt.stroke();
+}
+function d_tail(){
+	cxt.beginPath();
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = 5;
+	cxt.moveTo(250,248);
+	cxt.bezierCurveTo(261,250,263,249,264,243);
+	cxt.bezierCurveTo(264,232,255,234,255,242);
+	cxt.bezierCurveTo(256,254,270,252,273,244);
+	cxt.stroke();
+}
+function d_leg(){
+	cxt.beginPath();
+	cxt.strokeStyle = headLineColor ;
+	cxt.lineWidth = 6;
+	cxt.moveTo(168,272);
+	cxt.lineTo(169,294);
+	cxt.moveTo(221,271);
+	cxt.lineTo(222,294);
+	cxt.stroke();
+}
+function d_foot(){
+	cxt.fillStyle  = "#000" ;
+	cxt.beginPath();
+	cxt.lineWidth = 1;
+	cxt.moveTo(158,292);
+	cxt.bezierCurveTo(138,288,134,302,157,300);
+	cxt.bezierCurveTo(179,300,180,292,158,292);
+	cxt.fill();
+	cxt.beginPath();
+	cxt.lineWidth = 1;
+	cxt.moveTo(211,291);
+	cxt.bezierCurveTo(189,288,189,302,210,300);
+	cxt.bezierCurveTo(234,301,233,293,211,291);
+	cxt.fill();
+}
+function d_shadow(){
+	cxt.beginPath();
+	cxt.fillStyle = "#c0c0c0" ;
+	cxt.lineWidth = 1;
+	cxt.moveTo(187,285);
+	cxt.bezierCurveTo(100,287,100,302,188,305);
+	cxt.bezierCurveTo(273,302,273,287,187,285);
+	cxt.fill();
+}
+function step1(){
+	d_nose();
+}
+function step2(){
+	d_nose();
+	d_nares();
+}
+function step3(){
+	d_nose();
+	d_nares();
+	d_head();
+}
+function step4(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+}
+function step5(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+}
+function step6(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+	d_mouth();
+}
+function step7(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+	d_mouth();
+	d_left_ear();
+	d_right_ear();
+}
+function step8(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+	d_mouth();
+	d_left_ear();
+	d_right_ear();
+	d_body();
+}
+function step9(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+	d_mouth();
+	d_left_ear();
+	d_right_ear();
+	d_body();
+	d_left_hand();
+}
+function step10(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+	d_mouth();
+	d_left_ear();
+	d_right_ear();
+	d_body();
+	d_left_hand();
+	d_right_hand();
+}
+function step11(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+	d_mouth();
+	d_left_ear();
+	d_right_ear();
+	d_body();
+	d_left_hand();
+	d_right_hand();
+	d_tail();
+}
+function step12(){
+	d_nose();
+	d_nares();
+	d_head();
+	d_eye();
+	d_eyeball();
+	d_mouth();
+	d_left_ear();
+	d_right_ear();
+	d_body();
+	d_left_hand();
+	d_right_hand();
+	d_tail();
+	d_leg();
+	d_foot();
+}
+function step13(){
+	d_left_hand();
+	d_tail();
+	d_leg();
+	d_body();
+	d_right_hand();
+	d_foot();
+	d_left_ear();
+	d_head();
+	d_nose(1);
+	d_nares();
+	d_right_ear();
+	d_eye();
+	d_eyeball();
+	d_blush();
+	d_mouth();
+}
+function step14(){
+	d_left_hand();
+	d_tail();
+	d_leg();
+	d_body();
+	d_right_hand();
+	d_foot();
+	d_left_ear();
+	d_head(1);
+	d_nose(1);
+	d_nares();
+	d_right_ear();
+	d_eye();
+	d_eyeball();
+	d_blush();
+	d_mouth();
+}
+function step15(){
+	d_left_hand();
+	d_tail();
+	d_leg();
+	d_body();
+	d_right_hand();
+	d_foot();
+	d_left_ear(1);
+	d_head(1);
+	d_nose(1);
+	d_nares();
+	d_right_ear(1);
+	d_eye();
+	d_eyeball();
+	d_blush();
+	d_mouth();
+}
+function step16(){
+	d_shadow();
+	d_left_hand();
+	d_tail();
+	d_leg();
+	d_body(1);
+	d_right_hand();
+	d_foot();
+	d_left_ear(1);
+	d_head(1);
+	d_nose(1);
+	d_nares();
+	d_right_ear(1);
+	d_eye();
+	d_eyeball();
+	d_blush();
+	d_mouth();
+}
+var step = 1 ;
+function draw(){
+	cxt.clearRect(0,0,375,375);
+	window["step"+step]();
+	step ++ ;
+	if(step > 16){
+		clearInterval(timer);
+	}
+}
+timer = setInterval(draw,160);
+</script>
+</body>
+</html>

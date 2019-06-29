@@ -1,0 +1,113 @@
+<!doctype html>
+<html>
+<head>
+<meta http-equiv="Pragma" content="no-cache" />
+<meta http-equiv="Cache-Control" content="no-cache" />
+<meta http-equiv="Expires" content="0" />
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+<title>焰火特效-长按二维码关注公众号，了解更多特效</title>
+<style type="text/css">
+html{
+	height: 100%;
+}
+html,body,ul,li,canvas{
+	margin: 0;
+	padding: 0;
+}
+
+</style>
+</head>
+<body bgcolor="#000000">
+<canvas id="knife"></canvas>
+<img src="../images/qr.jpg" style="position:fixed;bottom:0;width:100px;height:100px;right:0;">
+</body>
+<script>
+var canvas = document.getElementById("knife");
+canvas.style.position = "absolute" ;
+canvas.style.top = 0 ;
+var pageWidth = window.innerWidth ;
+var pageHeight = window.innerHeight ;
+canvas.width = window.innerWidth ;
+canvas.height = window.innerHeight ;
+var cxt = canvas.getContext("2d");
+var list = [] ;
+var G = 0.036 ;
+var colors = ["#8b008b","#ff69b4","#7fff00","#1e90ff","#00bfff","#0FF","#7cfc00","#ffd700","#ffdead","#f00"];
+var curLevel = 0 ;
+var curColor = 0 ;
+
+function addFire(x,y,color,level){
+	curLevel = level ;
+	var lineLen = 10+level*20 + Math.random()*10,
+		deg ,
+		speed = 1 + Math.random()*level*.4 ,
+		len = 15 + Math.random()*level*6,
+		limit = len + 4 + Math.random()*level;
+	for(var i = 0 ; i < lineLen ; i ++){
+		deg = i*(Math.PI*2/lineLen)+Math.random() ;
+		var curSpeed = speed + Math.random();
+		var obj = {
+			x: x,
+			y: y,
+			sx: Math.cos(deg)*curSpeed,
+			sy: Math.sin(deg)*curSpeed,
+			len: len + level*10*Math.random(),
+			limit: limit + level*10*Math.random(),
+			color: color,
+			level: level,
+			list:[{x:x,y:y}]
+		};
+		list.push(obj);
+	}
+}
+function reviewFire(){
+	for(var i = 0 ; i <list.length ; i++){
+		let obj = list[i];
+		if(obj.limit-- < 0 && obj.len -- < 1){
+			if(obj.level > 1 && Math.random() > 0.3){
+				setTimeout(function(){
+					addFire(obj.x,obj.y,colors[obj.color],obj.level - 1);//Math.floor(colors.length*Math.random())
+				},450);
+			}
+			list.splice(i,1);
+			i -- ;
+			continue ;
+		}
+		obj.x += obj.sx ;
+		obj.y += obj.sy ;
+		obj.sy += G ;
+		obj.list.push({x:obj.x,y:obj.y});
+		obj.list = obj.list.slice(-obj.len);
+	}
+}
+function drawFire(){
+	cxt.clearRect(0,0,pageWidth,pageHeight);
+	var obj ;
+	for(var i = 0 ; i < list.length ; i ++){
+		obj = list[i] ;
+		cxt.beginPath();
+		for(var j = 0 ; j < obj.list.length ; j++){
+			if(i == 0)
+				cxt.moveTo(obj.list[j].x ,obj.list[j].y);
+			else{
+				cxt.lineTo(obj.list[j].x ,obj.list[j].y);
+			}
+		}
+		cxt.strokeStyle = obj.color ;
+		cxt.lineWidth = obj.level ;
+		cxt.stroke();
+	}
+}
+function step(){
+	if(curLevel == 1 && list.length == 0){
+		addFire(pageWidth/2,100,colors[curColor ++ % colors.length],2);
+	}
+	reviewFire();
+	drawFire();
+	requestAnimationFrame(step)
+}
+requestAnimationFrame(step)
+addFire(pageWidth/2,100,colors[curColor ++ % colors.length],2);
+</script>
+</html>
