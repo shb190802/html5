@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0,user-scalable=no"
+    />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>纸牌-点击纸牌出牌</title>
+  </head>
+  <style lang="">
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: rgb(11, 46, 88);
+    }
+
+    .box {
+      position: relative;
+      margin: 0 auto;
+      width: 320px;
+      height: 100%;
+    }
+
+    .first-box {
+      position: absolute;
+      left: 60px;
+      bottom: 60px;
+      transform-origin: center bottom;
+      transition: 500ms ease-out;
+      z-index: 999;
+    }
+
+    .second-box {
+      transition: 500ms;
+    }
+
+    .up > .second-box {
+      transform: translateY(-50px);
+    }
+
+    .first-box.play0,
+    .first-box.play1,
+    .first-box.play2,
+    .first-box.play3 {
+      transform: translate(0, -300px);
+    }
+    .first-box.play0 .third-box,
+    .first-box.play1 .third-box,
+    .first-box.play2 .third-box,
+    .first-box.play3 .third-box {
+      animation: none;
+    }
+    .play0 > .second-box {
+      transform: rotate(420deg);
+      animation: rotate 800ms ease-out 1;
+    }
+    @keyframes rotate {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(420deg);
+      }
+    }
+    .play1 > .second-box {
+      transform: rotate(140deg);
+      animation: rotate1 800ms ease-out 1;
+    }
+    @keyframes rotate1 {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(140deg);
+      }
+    }
+    .play2 > .second-box {
+      transform: rotate(340deg);
+      animation: rotate2 800ms ease-out 1;
+    }
+    @keyframes rotate2 {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(340deg);
+      }
+    }
+    .play3 > .second-box {
+      transform: rotate(220deg);
+      animation: rotate3 800ms ease-out 1;
+    }
+    @keyframes rotate3 {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(220deg);
+      }
+    }
+    .third-box {
+      animation: shake 2s infinite ease-in-out;
+    }
+
+    @keyframes shake {
+      0% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(10px);
+      }
+
+      100% {
+        transform: translateY(0);
+      }
+    }
+
+    .card-box {
+      width: 200px;
+      height: 300px;
+    }
+
+    .card {
+      position: relative;
+      width: 200px;
+      height: 300px;
+      border: solid 1px #ccc;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: rgba(0, 0, 0, 0.4) 0 0 4px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .center {
+      position: relative;
+      width: 0;
+      height: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .heart {
+      position: absolute;
+      width: 60px;
+    }
+
+    .heart::before {
+      position: absolute;
+      top: -34px;
+      left: 0;
+      width: 38px;
+      height: 60px;
+      background: #f00;
+      content: "";
+      border-radius: 50% 50% 50% 2px;
+      transform-origin: 30px center;
+      transform: rotate(-45deg);
+    }
+
+    .heart::after {
+      position: absolute;
+      top: -34px;
+      right: 0;
+      width: 38px;
+      height: 60px;
+      background: #f00;
+      content: "";
+      border-radius: 50% 50% 2px 50%;
+      transform-origin: 8px center;
+      transform: rotate(45deg);
+    }
+
+    .spade {
+      position: absolute;
+      width: 60px;
+    }
+
+    .spade::before {
+      position: absolute;
+      top: -30px;
+      left: 0;
+      width: 38px;
+      height: 60px;
+      background: #000;
+      content: "";
+      border-radius: 2px 50% 50% 50%;
+      transform-origin: 30px center;
+      transform: rotate(45deg);
+    }
+
+    .spade::after {
+      position: absolute;
+      top: -30px;
+      right: 0;
+      width: 38px;
+      height: 60px;
+      background: #000;
+      content: "";
+      border-radius: 50% 2px 50% 50%;
+      transform-origin: 8px center;
+      transform: rotate(-45deg);
+    }
+
+    .triangle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 0;
+      height: 0;
+      border-top: 0px solid transparent;
+      border-left: 7px solid transparent;
+      border-right: 7px solid transparent;
+      border-bottom: 34px solid #000;
+    }
+
+    .club {
+      position: absolute;
+      width: 60px;
+    }
+
+    .club::before {
+      position: absolute;
+      top: -20px;
+      left: -6px;
+      width: 38px;
+      height: 38px;
+      background: #000;
+      content: "";
+      border-radius: 50%;
+    }
+
+    .club::after {
+      position: absolute;
+      top: -20px;
+      right: -6px;
+      width: 38px;
+      height: 38px;
+      background: #000;
+      content: "";
+      border-radius: 50%;
+    }
+
+    .circle {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      top: -46px;
+      width: 38px;
+      height: 38px;
+      background: #000;
+      border-radius: 50%;
+    }
+
+    .diamond {
+      position: absolute;
+      width: 60px;
+    }
+
+    .diamond::before {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      content: "";
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      border-bottom: 40px solid #f00;
+    }
+
+    .diamond::after {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 0;
+      height: 0;
+      content: "";
+      border-left: 30px solid transparent;
+      border-right: 30px solid transparent;
+      border-top: 40px solid #f00;
+    }
+
+    .left-top {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+    }
+
+    .left-top .num {
+      width: 18px;
+      font-size: 18px;
+      line-height: 18px;
+      text-align: center;
+      color: #000;
+    }
+    .left-top .num.red {
+      color: #f00;
+    }
+    .left-top .spade,
+    .left-top .heart,
+    .left-top .club,
+    .left-top .diamond {
+      margin-top: 18px;
+      transform-origin: 0 0;
+      transform: scale(0.3);
+    }
+
+    .left-top .heart {
+      margin-top: 12px;
+    }
+
+    .left-top.right-bottom {
+      transform-origin: 90px 140px;
+      transform: rotate(180deg);
+    }
+
+    .rotate0 {
+      transform: rotate(-18deg);
+    }
+    .rotate1 {
+      transform: rotate(-8deg);
+    }
+    .rotate2 {
+      transform: rotate(2deg);
+    }
+    .rotate3 {
+      transform: rotate(12deg);
+    }
+  </style>
+
+  <body>
+    <div class="box">
+      <div class="first-box card-box">
+        <div class="second-box card-box">
+          <div class="third-box card-box" style="animation-delay: 0s;">
+            <div class="card">
+              <div class="left-top">
+                <div class="num red">A</div>
+                <div class="diamond"></div>
+              </div>
+              <div class="left-top right-bottom">
+                <div class="num red">A</div>
+                <div class="diamond"></div>
+              </div>
+              <div class="center">
+                <div class="diamond"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="first-box card-box">
+        <div class="second-box card-box">
+          <div class="third-box card-box" style="animation-delay: -0.3s;">
+            <div class="card">
+              <div class="left-top">
+                <div class="num">A</div>
+                <div class="club">
+                  <div class="circle"></div>
+                  <div class="triangle"></div>
+                </div>
+              </div>
+              <div class="left-top right-bottom">
+                <div class="num">A</div>
+                <div class="club">
+                  <div class="circle"></div>
+                  <div class="triangle"></div>
+                </div>
+              </div>
+              <div class="center">
+                <div class="club">
+                  <div class="circle"></div>
+                  <div class="triangle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="first-box card-box">
+        <div class="second-box card-box">
+          <div class="third-box card-box" style="animation-delay: -0.5s;">
+            <div class="card">
+              <div class="left-top">
+                <div class="num red">A</div>
+                <div class="heart"></div>
+              </div>
+              <div class="left-top right-bottom">
+                <div class="num red">A</div>
+                <div class="heart"></div>
+              </div>
+              <div class="center">
+                <div class="heart"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="first-box card-box">
+        <div class="second-box card-box">
+          <div class="third-box card-box" style="animation-delay: -0.7s;">
+            <div class="card">
+              <div class="left-top">
+                <div class="num">A</div>
+                <div class="spade">
+                  <div class="triangle"></div>
+                </div>
+              </div>
+              <div class="left-top right-bottom">
+                <div class="num">A</div>
+                <div class="spade">
+                  <div class="triangle"></div>
+                </div>
+              </div>
+              <div class="center">
+                <div class="spade">
+                  <div class="triangle"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      let zIndex = 0
+      let list = document.querySelectorAll(".first-box")
+      list.forEach((elem, index) => {
+        elem.classList.add("rotate" + index)
+        elem.onclick = function() {
+          let isUP = this.className.indexOf("up")
+          let isPlay = this.className.indexOf("play")
+          if (isUP == -1 && isPlay == -1) {
+            list.forEach(elem => {
+              elem.classList.remove("up")
+            })
+            this.classList.add("up")
+          } else if (isUP != -1 && isPlay == -1) {
+            this.classList.remove("up")
+            this.classList.add("play" + index)
+            this.style.zIndex = zIndex++
+          } else {
+            this.classList.remove("up")
+            this.classList.remove("play" + index)
+            this.style.zIndex = 999
+          }
+        }
+      })
+    </script>
+  </body>
+</html>
