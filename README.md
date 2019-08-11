@@ -6,6 +6,7 @@
 
 ## 当前包含：
 
+- [css-羽毛.html](http://suohb.com/work/feather.html)
 - [css-玫瑰花.html](http://suohb.com/work/heart-flower.html)
 - [css-古典六角灯笼.html](http://suohb.com/demo/win/lantern.html)
 - [css-纸牌.html](http://suohb.com/demo/win/card.html)

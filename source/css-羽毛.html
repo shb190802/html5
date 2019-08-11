@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,user-scalable=no"
+    />
+    <title>CSS-羽毛</title>
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #box {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .center {
+        position: relative;
+        width: 0;
+        height: 0;
+      }
+      .feather {
+        position: absolute;
+        left: -60px;
+        bottom: 0;
+        width: 120px;
+        height: 230px;
+        border-radius: 0 0 50% 50%;
+        overflow: hidden;
+      }
+      .feather > div {
+        position: absolute;
+        left: 0px;
+        top: 0;
+        width: 50%;
+        height: 100%;
+        overflow: hidden;
+      }
+      .feather > .right {
+        left: auto;
+        right: 0;
+      }
+      .feather > div > div {
+        position: absolute;
+        top: -20px;
+        left: 26px;
+        width: 140px;
+        height: 320px;
+        border-radius: 50%;
+        background: #e7eaef;
+      }
+      .feather > .right > div {
+        left: auto;
+        right: 26px;
+      }
+      /* .feather > div.left > div::before {
+        position: absolute;
+        left: -17px;
+        top: 115px;
+        border-left: solid 3px #000;
+        content: '';
+        width: 59px;
+        height: 100px;
+        transform: rotate(-13deg);
+        border-radius: 50%;
+      }
+      .feather > div.left > div::after {
+        position: absolute;
+        left: -19px;
+        top: 35px;
+        border-left: solid 2px #000;
+        content: '';
+        width: 59px;
+        height: 100px;
+        transform: rotate(-13deg);
+        border-radius: 50%;
+      } */
+      .feather-handle {
+        height: 280px;
+        bottom: -50px;
+        width: 84px;
+      }
+      .feather-handle::before {
+        position: absolute;
+        top: 5px;
+        left: 22px;
+        width: 40px;
+        transform: rotate(4deg);
+        height: 320px;
+        border-radius: 0 50% 50% 0;
+        border-right: #ddd 4px solid;
+        content: '';
+      }
+      .feather-handle::after {
+        position: absolute;
+        top: 3px;
+        left: 24px;
+        width: 40px;
+        transform: rotate(4deg);
+        height: 320px;
+        border-radius: 0 50% 50% 0;
+        border-right: #fff 4px solid;
+        content: '';
+      }
+    </style>
+  </head>
+  <body bgcolor="#000000">
+    <div id="box">
+      <div class="center">
+        <div class="feather">
+          <div class="left"><div></div></div>
+          <div class="right"><div></div></div>
+        </div>
+        <div class="feather feather-handle"></div>
+      </div>
+    </div>
+  </body>
+</html>
