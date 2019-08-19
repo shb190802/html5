@@ -13,6 +13,7 @@
 - [css-消灭病毒的太空飞船.html](http://suohb.com/demo/win/airship.html)
 - [css-刺激战场空投箱.html](http://suohb.com/demo/win/airdrop.html)
 - [css-华为手机充电效果.html](http://suohb.com/demo/win/huawei.html)
+- [css-华为手机充电效果（溶解）.html](http://suohb.com/demo/win/huawei_dissolve.html)
 - [css-向日葵.html](http://suohb.com/demo/win/sunflower.html)
 - [css-四叶草.html](http://suohb.com/demo/win/fourleaf.html)
 - [css-大海落日.html](http://suohb.com/demo/win/sun.html)
