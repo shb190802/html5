@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>华为手机充电效果</title>
+    <style type="text/css">
+    *{
+        margin: 0;
+        padding: 0;
+    }
+    html,body{
+        background: #000;
+        height: 100%;
+    }
+    .dissolve{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        filter: contrast(20);
+        background: #000;
+    }
+    .container{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        
+    }
+    .back{
+        position: absolute;
+        width: 150px;
+        height: 180px;
+        border-radius: 50%;
+        background:rgb(10,255,10);
+        animation: rotate 4s infinite;
+        z-index: 1;
+        filter: blur(8px);
+        opacity: .4;
+        transform-origin: 40% 40%;
+    }
+    .front{
+        position: relative;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        background: #000;
+        z-index: 1;
+        color: #DDD;
+        font-size: 40px;
+        line-height: 160px;
+        text-align: center;
+    }
+    .front::before {
+      position: absolute;
+      left: 24px;
+      top: 58px;
+      content: '';
+      width: 0;
+      height: 0;
+      border-left: 10px solid #0f0;
+      border-top: 22px solid transparent;
+      border-bottom: 9px solid transparent;
+      transform: rotate(30deg);
+    }
+    .front::after {
+      position: absolute;
+      left: 24px;
+      top: 70px;
+      content: '';
+      width: 0;
+      height: 0;
+      border-right: 10px solid #0f0;
+      border-top: 9px solid transparent;
+      border-bottom: 22px solid transparent;
+      transform: rotate(30deg);
+    }
+    .footer{
+        position: absolute;
+        bottom: -85px;
+        width: 120px;
+        height: 110px;
+        border-radius: 50%;
+        background:rgb(0,255,0);
+        animation: rotate 4s infinite;
+        z-index: 1;
+        filter: blur(8px);
+        opacity: .4;
+    }
+    .ball{
+        position: absolute;
+        bottom: -40px;
+        animation: up 4s infinite ease-in;
+        filter: blur(8px);
+    }
+    .ball-inner{
+        background:rgb(0,255,0);
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        animation: swing 1.3s infinite ease-in-out;
+    }
+    @keyframes rotate{
+        0%{
+            transform: rotate(0deg);
+        }
+        100%{
+            transform: rotate(360deg);
+        }
+    }
+    @keyframes up{
+        0%{
+            transform: translate3d(0,0,0);
+        }
+        100%{
+            transform: translate3d(0,-360px,0);
+        }
+    }
+    @keyframes swing{
+        0%{
+            transform: translate3d(-6px,0,0);
+        }
+        50%{
+            transform: translate3d(6px,0,0);
+        }
+        100%{
+            transform: translate3d(-6px,0,0);
+        }
+    }
+    </style>
+</head>
+<body>
+    <div id="dissolve" class="container dissolve">
+        <div class="ball" style="animation-delay: 0s;">
+            <div class="ball-inner" style="width:30px;height:30px;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -0.4s;">
+            <div class="ball-inner" style="animation-delay: -1s;width:32px;height:32px;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -0.8s;">
+            <div class="ball-inner" style="animation-delay: -2s;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -1.2s;">
+            <div class="ball-inner" style="animation-delay: -3s;width:30px;height:30px;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -1.6s;">
+            <div class="ball-inner" style="animation-delay: -4s;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -2s;">
+            <div class="ball-inner" style="width:28px;height:28px;animation-delay: -5s;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -2.4s;">
+            <div class="ball-inner" style="width:30px;height:30px;animation-delay: -6s;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -2.8s;">
+            <div class="ball-inner" style="width:27px;height:27px;animation-delay: -7s;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -3.2s;">
+            <div class="ball-inner" style="width:30px;height:30px;animation-delay: -8s;"></div>
+        </div>
+        <div class="ball" style="animation-delay: -3.6s;">
+            <div class="ball-inner" style="width:33px;height:33px;animation-delay: -10s;"></div>
+        </div>
+        
+        <div class="back" style="animation-delay: -1s;transform-origin: 55% 45%;"></div>
+        <div class="back" style="animation-delay: -2s;transform-origin: 45% 55%;"></div>
+        <div class="back" style="animation-delay: -3s;transform-origin: 55% 55%;"></div>
+        <div class="back"></div>
+
+        <div class="footer" style="animation-delay: -1s;transform-origin: 60% 40%;"></div>
+        <div class="footer" style="animation-delay: -2s;transform-origin: 40% 60%;"></div>
+        <div class="footer" style="animation-delay: -3s;transform-origin: 60% 60%;"></div>
+        <div class="footer"></div>
+    </div>
+    <div class="container">
+        <div class="front">&nbsp;&nbsp;46%</div>
+    </div>
+</body>
+</html>
