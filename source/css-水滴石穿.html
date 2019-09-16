@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>水滴石穿</title>
+  <style>
+    *{
+      margin: 0;
+      padding: 0;
+    }
+    html,body{
+      height: 100%;
+    }
+    .container{
+      position: relative;
+      margin: 0 auto;
+      width: 100%;
+      height: 100%;
+      filter: contrast(12);
+      background: #000;
+    }
+.top {
+  position: absolute;
+  top: 100px;
+  left: 0;
+  width: 210px;
+  height: 30px;
+  background: #fff;
+  transform-origin: left bottom;
+  transform: skewY(10deg);
+  border-radius: 0 10% 5% 0/50% 50% 50% 50%;
+  filter: blur(5px);
+}
+.bottom {
+  position: absolute;
+  left: 0;
+  top: 500px;
+  width: 100%;
+  height: 60px;
+  background:#FFF;
+  filter: blur(5px);
+}
+.bottom::after{
+  position: absolute;
+  left: 185px;
+  top: -10px;
+  width: 20px;
+  height: 18px;
+  border-radius: 50%;
+  background: #000;
+  content: '';
+}
+.water-run {
+  position: absolute;
+  top: 120px;
+  left: -20px;
+  width: 20px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 50%;
+  animation: run 2s ease-in infinite;
+  filter: blur(5px);
+}
+@keyframes run {
+  0%{transform: translate3d(0,0,0)}
+  100%{transform: translate3d(200px,30px,0)}
+}
+.water-top {
+  position: absolute;
+  left: 185px;
+  top: 150px;
+  width: 20px;
+  height: 20px;
+  background: #ccc;
+  border-radius: 50%;
+  transform-origin: top center;
+  animation: largen 8s linear infinite;
+  filter: blur(5px);
+}
+@keyframes largen {
+  0%{transform: scale(1);}
+  22%{transform: scale(1);}
+  25%{transform: scale(1.2);}
+  47%{transform: scale(1.2);}
+  50%{transform: scale(1.4);}
+  72%{transform: scale(1.4);}
+  75%{transform: scale(1.6);}
+  97%{transform: scale(1.6);}
+  100%{transform: scale(1.8);}
+}
+.water-fall{
+  position: absolute;
+  left: 185px;
+  top: 150px;
+  width: 20px;
+  height: 24px;
+  border-radius: 50%/70% 70% 35% 35%;
+  background: #ccc;
+  transform-origin: top center;
+  animation: fall 8s ease-in infinite;
+  filter: blur(5px);
+}
+@keyframes fall {
+  0%{transform: translate3d(0,0,0) scale(1.8);}
+  10%{transform: translate3d(0,345px,0) scale(1.8);}
+  11%{transform: translate3d(0,345px,0) scale(0);}
+  100%{transform: translate3d(0,345px,0) scale(0);}
+}
+.splash{
+  position: absolute;
+  left: 185px;
+  top: 495px;
+}
+.inner {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ccc;
+  filter: blur(5px);
+}
+@keyframes parabola-y40 {
+  0% {transform: translateY(0) scale(0);}
+  9% {transform: translateY(0) scale(0);}
+  10% {transform: translateY(0) scale(.5);}
+  14% {transform: translateY(-40px) scale(1);}
+  18% {transform: translateY(0) scale(.8);}
+  100% {transform: translateY(0) scale(0);}
+}
+.inner40 {
+  animation: parabola-y40 8s ease infinite;
+}
+.left60{
+  animation:  left60 8s linear infinite;
+}
+.right60{
+  animation:  right60 8s linear infinite;
+}
+@keyframes left60 {
+  0% {transform: translateX(0);}
+  10% {transform: translateX(0);}
+  18% {transform: translateX(-80px);}
+  100% {transform: translateX(-80px);}
+}
+@keyframes right60 {
+  0% {transform: translateX(0);}
+  10% {transform: translateX(0);}
+  18% {transform: translateX(80px);}
+  100% {transform: translateX(80px);}
+}
+    .inner80 {
+      animation: parabola-y80 8s ease infinite;
+    }
+    .left40{
+      animation:  left40 8s linear infinite;
+    }
+    .right40{
+      animation:  right40 8s linear infinite;
+    }
+    @keyframes parabola-y80 {
+      0% {transform: translateY(0) scale(0);}
+      9% {transform: translateY(0) scale(0);}
+      10% {transform: translateY(0) scale(.5);}
+      14% {transform: translateY(-80px) scale(1);}
+      20% {transform: translateY(0) scale(.8);}
+      100% {transform: translateY(0) scale(0);}
+    }
+    @keyframes left40 {
+      0% {transform: translateX(0);}
+      10% {transform: translateX(0);}
+      20% {transform: translateX(-40px);}
+      100% {transform: translateX(-40px);}
+    }
+    @keyframes right40 {
+      0% {transform: translateX(0);}
+      10% {transform: translateX(0);}
+      20% {transform: translateX(40px);}
+      100% {transform: translateX(40px);}
+    }
+  </style>
+</head>
+<body bgcolor="#000000">
+<div class="container">
+  <div class="top"></div>
+  <div class="bottom"></div>
+  <div class="water-run"></div>
+  <div class="water-top"></div>
+  <div class="water-fall"></div>
+  <div class="splash left60"><div class="inner inner40"></div></div>
+  <div class="splash right60"><div class="inner inner40"></div></div>
+  <div class="splash left40"><div class="inner inner80"></div></div>
+  <div class="splash right40"><div class="inner inner80"></div></div>
+</div>
+</body>
+</html>
