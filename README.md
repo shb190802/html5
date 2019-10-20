@@ -6,6 +6,7 @@
 
 ## 当前包含：
 
+- [vue-部落吉祥物-景蜂](http://suohb.com/demo/win/bee.html)
 - [vue-3D魔方](http://suohb.com/demo/win/cube/)
 - [css-水滴石穿.html](http://suohb.com/work/dropwater.html)
 - [css-羽毛.html](http://suohb.com/work/feather.html)
