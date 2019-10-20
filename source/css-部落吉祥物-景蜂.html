@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1.0,user-scalable=no"
+    />
+    <title>CSS-景蜂</title>
+    <style type="text/css">
+      html,
+      body {
+        height: 100%;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      #box {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .center {
+        position: relative;
+        width: 0;
+        height: 0;
+      }
+      .header {
+        position: absolute;
+        transform: translate(-50%,-100px);
+        width: 160px;
+        height: 64px;
+        background: black;
+        border-radius: 6px;
+        z-index: 1;
+      }
+      .header::before{
+        position: absolute;
+        top: 63px;
+        left: 2px;
+        border-top: 22px solid black;
+        border-left: 78px solid transparent;
+        border-right: 78px solid transparent;
+        content: '';
+      }
+      .antenna{
+        position: absolute;
+        top: 0;
+        width: 56px;
+        height: 40px;
+        background: black;
+        border-radius: 6px;
+      }
+      .antenna::before{
+        position: absolute;
+        width: 84px;
+        height: 84px;
+        border-radius: 50%;
+        border:solid 4px transparent;
+        content: '';
+      }
+      .antenna::after{
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: black;
+        content: '';
+      }
+      .antenna-left{
+        left: -2px;
+        transform-origin: left top;
+        transform: rotate(-27deg);
+      }
+      .antenna-left::before{
+        left: -42px;
+        top: -42px;
+        transform: rotate(-17deg);
+        border-right: solid 5px black;
+      }
+      .antenna-left::after{
+        transform: translate(15px,-42px);
+      }
+      .antenna-right{
+        right: -2px;
+        transform-origin: right top;
+        transform: rotate(27deg);
+      }
+      .antenna-right::before{
+        right: -42px;
+        top: -42px;
+        transform: rotate(17deg);
+        border-left: solid 5px black;
+      }
+      .antenna-right::after{
+        transform: translate(33px,-42px);
+      }
+      .eye{
+        position: absolute;
+        width: 0;
+        height: 0;
+      }
+      .eye::before{
+        position: absolute;
+        width: 50px;
+        height: 42px;
+        background: white;
+        border-radius: 50%;
+        content: '';
+      }
+      .eye::after{
+        position: absolute;
+        width: 21px;
+        height: 18px;
+        background: black;
+        border-radius: 50%;
+        content: '';
+      }
+      .eye-left{
+        top: 16px;
+        left: 16px;
+        transform: rotate(-12deg);
+        transform-origin: left center;
+        border-left: 40px solid #f4c721;
+        border-top: solid 22px transparent;
+        border-bottom: solid 10px transparent;
+      }
+      .eye-left::before{
+        transform: rotate(12deg);
+        left: -36px;
+        top: -22px;
+      }
+      .eye-left::after{
+        transform: rotate(12deg);
+        left: -17px;
+        top: -5px;
+      }
+      .eye-right{
+        top: 16px;
+        right: 16px;
+        transform: rotate(12deg);
+        transform-origin: right center;
+        border-right: 40px solid #f4c721;
+        border-top: solid 22px transparent;
+        border-bottom: solid 10px transparent;
+      }
+      .eye-right::before{
+        transform: rotate(-12deg);
+        right: -36px;
+        top: -22px;
+      }
+      .eye-right::after{
+        transform: rotate(-12deg);
+        right: -17px;
+        top: -5px;
+      }
+      .body{
+        position: absolute;
+        transform: translate(-50%,-100px);
+        width: 160px;
+        height: 110px;
+        background: #f4c721;
+        border-radius: 10px;
+        overflow: hidden;
+      }
+      .body::after{
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: 15px;
+        background: black;
+        content: '';
+      }
+      .tail{
+        position: absolute;
+        transform-origin: center top;
+        transform: translate(-50%,10px) scaleY(.62);
+        width: 150px;
+        height: 75px;
+        overflow: hidden;
+      }
+      .tail::after{
+        position: absolute;
+        left: 50%;
+        transform: translate(-50%,-50%) rotate(-135deg);
+        width: 104px;
+        height: 104px;
+        background-image: linear-gradient(to right bottom, black 0,black 12%,#f4c721 13%,#f4c721 23%,black 23%,black 36%,#f4c721 37%);
+        border-top-left-radius: 10px;
+        overflow: hidden;
+        content: '';
+      }
+      .wing{
+        position: absolute;
+        right: 80px;
+        top: -100px;
+        width: 100px;
+        height: 100px;
+        z-index: 1;
+        overflow: hidden;
+      }
+      .main{
+        position: absolute;
+        top: 20px;
+        right: -10px;
+        width: 80px;
+        height: 0px;
+        opacity: .3;
+      }
+      .main::before{
+        position: absolute;
+        bottom: 0;
+        border-bottom: solid 20px #f4c721;
+        border-left: solid 36px transparent;
+        border-right: solid 34px transparent;
+        content: '';
+      }
+      .main::after{
+        position: absolute;
+        top: 0;
+        border-top: solid 56px #f4c721;
+        border-left: solid 36px transparent;
+        border-right: solid 84px transparent;
+        content: '';
+      }
+      .winglet{
+        position: absolute;
+        right: 4px;
+        top: 52px;
+        width: 13px;
+        height: 30px;
+        background: #f4c721;
+      }
+      .winglet::before{
+        position: absolute;
+        left: -12px;
+        top: 5px;
+        width: 8px;
+        height: 20px;
+        content: '';
+        background: #f4c721;
+      }
+      .winglet::after{
+        position: absolute;
+        left: -20px;
+        top: 15px;
+        width: 4px;
+        height: 14px;
+        content: '';
+        background: #f4c721;
+      }
+    </style>
+  </head>
+  <body bgcolor="#ddd">
+    <div id="box">
+      <div class="center">
+        <div class="header">
+          <div class="antenna antenna-left"></div>
+          <div class="antenna antenna-right"></div>
+          <div class="eye eye-left"></div>
+          <div class="eye eye-right"></div>
+        </div>
+        <div class="body"></div>
+        <div class="tail"></div>
+      </div>
+    </div>
+  </body>
+</html>
