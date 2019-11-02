@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>CSS-天人菊</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      height: 100%;
+    }
+    .container {
+      position: relative;
+      width: 100%;
+      max-width: 414px;
+      height: 100%;
+      margin: 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform-style: preserve-3d;
+      perspective: 600px;
+      perspective-origin: top center;
+    }
+
+    .box {
+      position: relative;
+      width: 0;
+      height: 0;
+    }
+
+    .petal {
+      position: absolute;
+      left: -12px;
+      top: -150px;
+      width: 24px;
+      height: 100px;
+      background: #F00;
+      border-radius: 10px 15px 10px 10px/ 40px 40px 50px 50px;
+      background: linear-gradient(to bottom, #fdcf17 17%, #e00 40%, #d71f41 100%);
+      box-shadow: rgba(0, 0, 0, .4) 0 1px 3px;
+      transform-origin: center 150px;
+      overflow: hidden;
+    }
+    .petal::after {
+      position: absolute;
+      bottom: 0;
+      left: 2px;
+      width: 26px;
+      height: 81px;
+      border-radius:6px 15px 10px 10px/ 40px 40px 50px 50px;
+      background: linear-gradient(to right, rgba(0,0,0,.3), #000, rgba(0,0,0,.3), #000, rgba(0,0,0,.3), #000, rgba(0,0,0,.3));
+      opacity: .12;
+      filter: blur(1px);
+      content: '';
+    }
+    .heart {
+      position: absolute;
+      width: 100px;
+      height: 100px;
+      left: -50px;
+      top: -50px;
+      border-radius: 50%;
+      z-index: 999;
+    }
+    .heart::before{
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      border-radius: 50%;
+      background: radial-gradient(#cc0, #e00 70%);
+      box-shadow: 0 0 4px rgba(0, 0, 0, .3);
+      content: '';
+      filter: blur(2px);
+    }
+    .dot {
+      position: absolute;
+      left: 0;
+      top: 47px;
+      width: 6px;
+      height: 6px;
+      background: rgba(0, 0, 0, .3);
+      border-radius: 50%;
+      transform-origin: 50px 3px;
+    }
+  </style>
+</head>
+
+<body bgcolor="#5a8625">
+  <div class="container">
+    <div class="box">
+      <div class="heart"></div>
+    </div>
+  </div>
+</body>
+<script>
+  function createEllipse(len, scale,zIndex) {
+    let box = document.querySelector('.box')
+    let fragment = document.createDocumentFragment()
+    for (var i = 0; i < len; i++) {
+      let deg = Math.round(360 / len * i) + Math.round(Math.random() * 5)
+      let div = document.createElement('div')
+      div.classList.add('petal')
+      div.style.transform = 'rotate(' + deg + 'deg) scale(' + (scale + Math.random() * 0.1) + ')'
+      div.style.zIndex =zIndex +  Math.round(Math.random() * 5)
+      fragment.appendChild(div)
+    }
+    box.appendChild(fragment)
+  }
+  function createHeartDot(len, scale) {
+    let box = document.querySelector('.heart')
+    let fragment = document.createDocumentFragment()
+    for (var i = 0; i < len; i++) {
+      let deg = Math.round(360 / len * i)
+      let div = document.createElement('div')
+      div.classList.add('dot')
+      div.style.transform = 'rotate(' + deg + 'deg) scale(' + scale + ')'
+      fragment.appendChild(div)
+    }
+    box.appendChild(fragment)
+  }  
+  window.onload = function () {
+    createEllipse(21, .9, 0)
+    createEllipse(27, .8, 5)
+    createHeartDot(24, .9)
+    createHeartDot(21, .7)
+    createHeartDot(18, .5)
+    createHeartDot(15, .3)
+  }
+</script>
+
+</html>
