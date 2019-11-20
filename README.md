@@ -6,6 +6,7 @@
 
 ## 当前包含：
 
+- [vue-各国历年GDP排行](http://suohb.com/demo/win/gdp/)
 - [css-天人菊](http://suohb.com/demo/win/gaillardia.html)
 - [css-部落吉祥物-景蜂](http://suohb.com/demo/win/bee.html)
 - [vue-3D魔方](http://suohb.com/demo/win/cube/)
@@ -40,6 +41,6 @@
 - [canvas-烟花.html](http://suohb.com/demo/win/firework2.htm)
 - [canvas-焰火.html](http://suohb.com/demo/win/firework.htm)
 - [canvas-秋天的树.html](http://suohb.com/demo/win/tree5.htm)
-- [css-QQ 企鹅.html](http://suohb.com/demo/win/qq.htm)
+- [css-QQ 企鹅.html](http://suohb.com/demo/win/qq.html)
 - [css-世界上第一张黑洞照片.html](http://suohb.com/demo/win/blankHole.html)
 - [css-写轮眼变化.html](http://suohb.com/demo/win/eye.htm)
