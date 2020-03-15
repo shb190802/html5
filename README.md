@@ -6,6 +6,8 @@
 
 ## 当前包含：
 
+- [css+canvas-星空](http://suohb.com/demo/win/starrySky.html)
+- [Three.js-鞭炮](http://suohb.com/demo/win/firecracker/)
 - [Three.js-户型图](http://suohb.com/demo/win/plan/)
 - [css-西安钟楼](http://suohb.com/demo/win/drumtower.html)
 - [css-蒲公英](http://suohb.com/demo/win/dandelion/)
