@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+
+<head>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+	<title>奇异博士-传送门</title>
+</head>
+<style>
+	html,
+	body,
+	canvas {
+		margin: 0;
+		padding: 9;
+	}
+
+	html,
+	body {
+		width: 100%;
+		height: 100%;
+	}
+
+	body {
+		overflow: hidden;
+	}
+
+	canvas {
+		/* filter: blur(5px); */
+	}
+</style>
+
+<body bgcolor="#000000">
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+	var canvas = document.getElementById("canvas");
+	canvas.style.position = "absolute";
+	canvas.style.top = 0;
+	var w = window.innerWidth;
+	var h = window.innerHeight;
+	canvas.width = w;
+	canvas.height = h;
+	ctx = canvas.getContext("2d");
+	ctx.lineWidth = 1
+
+	var g = 0.07
+	var damping = 0.99
+	var MIN_SPEED_X = 0.5
+
+
+	var center = {
+		x: w / 2,
+		y: h / 2
+	}
+	var list = []
+	/**
+	 * 金黄：#FFD700 rgb(225,215,0)
+	 * 深红：#8B0000 rgb(139,0,0)
+	 */
+	var MAX_LIMIT_AND_LEN = 41 // init中 limit + len的最大值，脱离圆周运动的最大步长
+	var START_COLOR = { r: 255, g: 215, b: 80 }
+	var END_COLOR = { r: 139, g: 0, b: 0 }
+	var STEP_COLOR = {
+		r: (START_COLOR.r - END_COLOR.r) / MAX_LIMIT_AND_LEN,
+		g: (START_COLOR.g - END_COLOR.g) / MAX_LIMIT_AND_LEN,
+		b: (START_COLOR.b - END_COLOR.b) / MAX_LIMIT_AND_LEN,
+	}
+	var MAX_RADIUS = 120 // 半径
+	var SKYLINE = h / 2 + MAX_RADIUS + 30 // 地平线高度
+	var MAX_COUNT = 42
+	var STEP_RADIUS = 0.4
+	var STEP_COUNT = 0.3
+	var count = 1
+	var radius = 50
+
+	function init() {
+		if (count < MAX_COUNT) count += STEP_COUNT
+		if (radius < MAX_RADIUS) radius += STEP_RADIUS
+		for (var i = 0; i < count; i++) {
+			var deg = Math.random() * Math.PI * 2 // 角度
+			var x = center.x + Math.cos(deg) * r // x位置
+			var y = center.y + Math.sin(deg) * r // y位置
+			var r = radius + Math.random() * 4 // 半径
+			var step = 0.045 + Math.random() * 0.04 // 角速度
+			var type = 'round' // 圆心运动
+			var limit = ~~(Math.random() * 30) + 18 // 脱离圆心运动后运动的步长
+			var len = 2 + ~~(Math.random() * 3) // 显示长度
+			var color = { r: 255, g: 200 + ~~(Math.random() * 30), b: ~~(Math.random() * START_COLOR.b) } // 初始化颜色
+			list.push({
+				x, y, r, step, deg, type, limit, len, color, trail: [{ x, y }]
+			})
+		}
+	}
+
+	function update() {
+		var init_damping = 0.57 + (MAX_RADIUS - radius) * 0.005 // 脱离圆心运动的元素，速度做一次衰减
+		list.forEach(item => {
+			var random = Math.random()
+			if (item.type === 'round') {
+				item.deg += item.step
+				if (radius < MAX_RADIUS) item.r += STEP_RADIUS
+				item.x = center.x + Math.cos(item.deg) * item.r
+				item.y = center.y + Math.sin(item.deg) * item.r
+				if (random < 0.1) {
+					var speed = item.step * item.r
+					item.type = 'parabola'
+					item.sx = Math.cos(item.deg + Math.PI / 2) * speed * init_damping
+					item.sy = Math.sin(item.deg + Math.PI / 2) * speed * init_damping
+					if (item.sy < 0) { // Y轴方向上收到重力作用，速度变小，这里增加2长度
+						item.len += 2
+					}
+				}
+			} else {
+				item.sx *= damping
+				item.sy *= damping
+				item.sy += g
+				item.x += item.sx
+				item.y += item.sy
+				if (item.y > SKYLINE) {
+					item.sy = - Math.abs(item.sy) // 超过地平线之后，Y方向反弹
+					item.sy *= random * 0.5 + 0.5  // 碰撞之后速度衰减
+					item.sx *= random * 0.5 + 0.5
+				}
+				item.limit -= 1
+				if (random > 0.5) { // 颜色随机衰减
+					item.color.r = Math.max(0, ~~(item.color.r - STEP_COLOR.r))
+					item.color.g = Math.max(0, ~~(item.color.g - STEP_COLOR.g))
+					item.color.b = Math.max(0, ~~(item.color.b - STEP_COLOR.b))
+				}
+			}
+			item.trail.unshift({ x: item.x, y: item.y })
+			item.trail = item.trail.slice(0, Math.max(0, Math.min(item.len, item.len + item.limit)))
+		})
+		list = list.filter(item => item.trail.length > 0)
+	}
+
+	function draw() {
+		ctx.clearRect(0, 0, w, h)
+		list.forEach(item => {
+			ctx.beginPath()
+			item.trail.forEach((trail, index) => {
+				if (index === 0) {
+					ctx.moveTo(trail.x, trail.y)
+				} else {
+					ctx.lineTo(trail.x, trail.y)
+				}
+			})
+			ctx.strokeStyle = 'rgb(' + item.color.r + ',' + item.color.g + ',' + item.color.b + ')'
+			ctx.stroke()
+		})
+	}
+
+	function step() {
+		init()
+		update()
+		draw()
+		requestAnimationFrame(step)
+	}
+	requestAnimationFrame(step)
+</script>
+
+</html>
