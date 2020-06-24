@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>CSS-胡萝卜</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		.container {
+			position: relative;
+			width: 100%;
+			max-width: 414px;
+			height: 100%;
+			margin: 0 auto;
+			overflow: hidden;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.carrot {
+			position: absolute;
+			width: 80px;
+			height: 300px;
+			transform: rotate(20deg);
+			background: linear-gradient(to right, #ff7f50, rgba(255, 99, 71, .45), #ff7f50),
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 10px 31px/30px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 20px 66px/30px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 32px 46px/30px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 17px 93px/30px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 40px 111px/30px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 22px 132px/33px 2px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 32px 155px/21px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 10px 182px/30px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 31px 209px/25px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 35px 231px/17px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 24px 253px/28px 1px,
+				linear-gradient(to right, rgba(255, 99, 71, .1), rgba(255, 99, 71, .5), rgba(255, 99, 71, .1))no-repeat 20px 276px/20px 1px;
+			border-radius: 25px 25px 40px 40px/40px 40px 210px 200px;
+		}
+
+		.carrot::before {
+			position: absolute;
+			top: -120px;
+			left: -10px;
+			width: 100px;
+			height: 120px;
+			content: '';
+			background:
+				radial-gradient(#228b22 14px, transparent 0) no-repeat 39px 55px/28px 70px,
+				radial-gradient(#556b2f 14px, transparent 0) no-repeat 35px 55px/30px 70px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 24px 90px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 40px 70px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 12px 70px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 40px 60px/50px 30px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 9px 55px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 45px 40px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 9px 19px/40px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 35px 10px/50px 60px;
+			filter: drop-shadow(0 0 2px #000);
+			transform-origin: center bottom;
+			transform: rotate(15deg);
+		}
+
+		.carrot::after {
+			position: absolute;
+			top: -120px;
+			left: -10px;
+			width: 100px;
+			height: 120px;
+			content: '';
+			background:
+				radial-gradient(#228b22 14px, transparent 0) no-repeat 39px 55px/28px 70px,
+				radial-gradient(#556b2f 14px, transparent 0) no-repeat 35px 55px/30px 70px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 24px 90px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 40px 70px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 12px 70px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 40px 60px/50px 30px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 9px 55px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 45px 40px/50px 40px,
+				radial-gradient(#228b22 18px, transparent 0) no-repeat 20px 30px/50px 60px;
+			filter: drop-shadow(0 0 3px #000);
+			transform-origin: center bottom;
+			transform: rotate(-10deg);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="carrot"></div>
+	</div>
+</body>
+<script>
+
+</script>
+
+</html>

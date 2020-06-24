@@ -1,196 +1,671 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>水滴石穿</title>
-  <style>
-    *{
+  <meta http-equiv="Pragma" content="no-cache" />
+  <meta http-equiv="Cache-Control" content="no-cache" />
+  <meta http-equiv="Expires" content="0" />
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+  <title>CSS-西安钟楼</title>
+  <style type="text/css">
+    html,
+    body {
+      height: 100%;
+    }
+
+    * {
       margin: 0;
       padding: 0;
     }
-    html,body{
-      height: 100%;
-    }
-    .container{
+
+    .container {
       position: relative;
       margin: 0 auto;
       width: 100%;
       height: 100%;
-      filter: contrast(12);
-      background: #000;
+      max-width: 414px;
+      transform-style: preserve-3d;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1000px;
+      perspective-origin: 100% 30%;
     }
-.top {
-  position: absolute;
-  top: 100px;
-  left: 0;
-  width: 210px;
-  height: 30px;
-  background: #fff;
-  transform-origin: left bottom;
-  transform: skewY(10deg);
-  border-radius: 0 10% 5% 0/50% 50% 50% 50%;
-  filter: blur(5px);
-}
-.bottom {
-  position: absolute;
-  left: 0;
-  top: 500px;
-  width: 100%;
-  height: 60px;
-  background:#FFF;
-  filter: blur(5px);
-}
-.bottom::after{
-  position: absolute;
-  left: 185px;
-  top: -10px;
-  width: 20px;
-  height: 18px;
-  border-radius: 50%;
-  background: #000;
-  content: '';
-}
-.water-run {
-  position: absolute;
-  top: 120px;
-  left: -20px;
-  width: 20px;
-  height: 20px;
-  background: #ccc;
-  border-radius: 50%;
-  animation: run 2s ease-in infinite;
-  filter: blur(5px);
-}
-@keyframes run {
-  0%{transform: translate3d(0,0,0)}
-  100%{transform: translate3d(200px,30px,0)}
-}
-.water-top {
-  position: absolute;
-  left: 185px;
-  top: 150px;
-  width: 20px;
-  height: 20px;
-  background: #ccc;
-  border-radius: 50%;
-  transform-origin: top center;
-  animation: largen 8s linear infinite;
-  filter: blur(5px);
-}
-@keyframes largen {
-  0%{transform: scale(1);}
-  22%{transform: scale(1);}
-  25%{transform: scale(1.2);}
-  47%{transform: scale(1.2);}
-  50%{transform: scale(1.4);}
-  72%{transform: scale(1.4);}
-  75%{transform: scale(1.6);}
-  97%{transform: scale(1.6);}
-  100%{transform: scale(1.8);}
-}
-.water-fall{
-  position: absolute;
-  left: 185px;
-  top: 150px;
-  width: 20px;
-  height: 24px;
-  border-radius: 50%/70% 70% 35% 35%;
-  background: #ccc;
-  transform-origin: top center;
-  animation: fall 8s ease-in infinite;
-  filter: blur(5px);
-}
-@keyframes fall {
-  0%{transform: translate3d(0,0,0) scale(1.8);}
-  10%{transform: translate3d(0,345px,0) scale(1.8);}
-  11%{transform: translate3d(0,345px,0) scale(0);}
-  100%{transform: translate3d(0,345px,0) scale(0);}
-}
-.splash{
-  position: absolute;
-  left: 185px;
-  top: 495px;
-}
-.inner {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #ccc;
-  filter: blur(5px);
-}
-@keyframes parabola-y40 {
-  0% {transform: translateY(0) scale(0);}
-  9% {transform: translateY(0) scale(0);}
-  10% {transform: translateY(0) scale(.5);}
-  14% {transform: translateY(-40px) scale(1);}
-  18% {transform: translateY(0) scale(.8);}
-  100% {transform: translateY(0) scale(0);}
-}
-.inner40 {
-  animation: parabola-y40 8s ease infinite;
-}
-.left60{
-  animation:  left60 8s linear infinite;
-}
-.right60{
-  animation:  right60 8s linear infinite;
-}
-@keyframes left60 {
-  0% {transform: translateX(0);}
-  10% {transform: translateX(0);}
-  18% {transform: translateX(-80px);}
-  100% {transform: translateX(-80px);}
-}
-@keyframes right60 {
-  0% {transform: translateX(0);}
-  10% {transform: translateX(0);}
-  18% {transform: translateX(80px);}
-  100% {transform: translateX(80px);}
-}
-    .inner80 {
-      animation: parabola-y80 8s ease infinite;
+
+    .center {
+      position: absolute;
+      bottom: 200px;
+      width: 0;
+      height: 0;
+      transform-style: preserve-3d;
+      transform: rotateY(45deg);
+      animation: rotate 3s linear infinite;
     }
-    .left40{
-      animation:  left40 8s linear infinite;
+
+    @keyframes rotate {
+      0% {
+        transform: scale(0.9) rotateY(40deg);
+      }
+
+      50% {
+        transform: scale(1) rotateY(46deg);
+      }
+
+      100% {
+        transform: scale(0.9) rotateY(40deg);
+      }
     }
-    .right40{
-      animation:  right40 8s linear infinite;
+
+    .ground {
+      position: absolute;
+      left: -200px;
+      top: -200px;
+      width: 400px;
+      height: 400px;
+      background-color: #ccc;
+      transform: rotateX(90deg);
     }
-    @keyframes parabola-y80 {
-      0% {transform: translateY(0) scale(0);}
-      9% {transform: translateY(0) scale(0);}
-      10% {transform: translateY(0) scale(.5);}
-      14% {transform: translateY(-80px) scale(1);}
-      20% {transform: translateY(0) scale(.8);}
-      100% {transform: translateY(0) scale(0);}
+
+    /* 外墙 */
+    .wall-outer {
+      position: absolute;
+      left: -130px;
+      bottom: 0;
+      width: 260px;
+      height: 70px;
+      transform: translateZ(130px);
+      filter: drop-shadow(0 0 1px #fff);
     }
-    @keyframes left40 {
-      0% {transform: translateX(0);}
-      10% {transform: translateX(0);}
-      20% {transform: translateX(-40px);}
-      100% {transform: translateX(-40px);}
+
+    .wall-outer::before {
+      position: absolute;
+      width: 260px;
+      height: 70px;
+      box-sizing: border-box;
+      border-left: solid #ab1c20 110px;
+      border-right: solid #ab1c20 110px;
+      border-top: solid #ab1c20 50px;
+      -webkit-mask-image: radial-gradient(circle at bottom,
+          transparent 20px,
+          #ab1c20 20px);
+      mask-image: radial-gradient(circle at bottom,
+          transparent 20px,
+          #ab1c20 20px);
+      -webkit-mask-position-y: 50px;
+      mask-position-y: 50px;
+      content: '';
     }
-    @keyframes right40 {
-      0% {transform: translateX(0);}
-      10% {transform: translateX(0);}
-      20% {transform: translateX(40px);}
-      100% {transform: translateX(40px);}
+
+    .wall-outer::after {
+      position: absolute;
+      top: -12px;
+      width: 100%;
+      height: 12px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 11px,
+          #ab1c20 11px,
+          #ab1c20 13px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 13px 12px, 13px 3px;
+      background-position: 0 0, 0 5px;
+      background-repeat: repeat-x;
+    }
+
+    .wall-outer.left {
+      transform: rotateY(90deg) translateZ(130px);
+    }
+
+    .wall-outer.back {
+      transform: rotateY(180deg) translateZ(130px);
+    }
+
+    .wall-outer.right {
+      transform: rotateY(270deg) translateZ(130px);
+    }
+
+    /* 内墙 */
+    .wall-inner {
+      position: absolute;
+      left: -100px;
+      bottom: 0;
+      width: 200px;
+      height: 90px;
+      transform: translateZ(100px);
+      filter: drop-shadow(0 0 1px #fff);
+    }
+
+    .wall-inner::before {
+      position: absolute;
+      width: 200px;
+      height: 90px;
+      box-sizing: border-box;
+      border-left: solid #ab1c20 80px;
+      border-right: solid #ab1c20 80px;
+      border-top: solid #ab1c20 70px;
+      -webkit-mask-image: radial-gradient(circle at bottom,
+          transparent 20px,
+          #ab1c20 20px);
+      mask-image: radial-gradient(circle at bottom,
+          transparent 30px,
+          #ab1c20 30px);
+      -webkit-mask-position-y: 70px;
+      mask-position-y: 70px;
+      content: '';
+    }
+
+    .wall-inner::after {
+      position: absolute;
+      top: -30px;
+      width: 100%;
+      height: 30px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 18px,
+          #ab1c20 18px,
+          #ab1c20 20px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 20px 30px, 20px 4px;
+      background-position: 0 0, 0 0;
+      background-repeat: repeat-x;
+    }
+
+    .wall-inner.left {
+      transform: rotateY(90deg) translateZ(100px);
+    }
+
+    .wall-inner.back {
+      transform: rotateY(180deg) translateZ(100px);
+    }
+
+    .wall-inner.right {
+      transform: rotateY(270deg) translateZ(100px);
+    }
+
+    /* 内墙2 */
+    .wall-inner2 {
+      position: absolute;
+      left: -85px;
+      bottom: 0;
+      width: 170px;
+      height: 140px;
+      transform: translateZ(85px);
+      filter: drop-shadow(0 0 1px #fff);
+    }
+
+    .wall-inner2::before {
+      position: absolute;
+      width: 170px;
+      height: 140px;
+      box-sizing: border-box;
+      background-color: #ab1c20;
+      content: '';
+    }
+
+    .wall-inner2::after {
+      position: absolute;
+      top: -14px;
+      width: 100%;
+      height: 14px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 8px,
+          #ab1c20 8px,
+          #ab1c20 10px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 10px 14px, 10px 3px;
+      background-position: 0 0, 0 6px;
+      background-repeat: repeat-x;
+    }
+
+    .wall-inner2.left {
+      transform: rotateY(90deg) translateZ(85px);
+    }
+
+    .wall-inner2.back {
+      transform: rotateY(180deg) translateZ(85px);
+    }
+
+    .wall-inner2.right {
+      transform: rotateY(270deg) translateZ(85px);
+    }
+
+    /* 内墙3 */
+    .wall-inner3 {
+      position: absolute;
+      left: -75px;
+      bottom: 0;
+      width: 150px;
+      height: 180px;
+      transform: translateZ(75px);
+      filter: drop-shadow(0 0 1px #fff);
+    }
+
+    .wall-inner3::before {
+      position: absolute;
+      width: 150px;
+      height: 180px;
+      box-sizing: border-box;
+      background-color: #ab1c20;
+      content: '';
+    }
+
+    .wall-inner3::after {
+      position: absolute;
+      top: -14px;
+      width: 100%;
+      height: 14px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 13px,
+          #ab1c20 13px,
+          #ab1c20 15px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 15px 14px, 15px 4px;
+      background-position: 0 0, 0 0;
+      background-repeat: repeat-x;
+    }
+
+    .wall-inner3.left {
+      transform: rotateY(90deg) translateZ(75px);
+    }
+
+    .wall-inner3.back {
+      transform: rotateY(180deg) translateZ(75px);
+    }
+
+    .wall-inner3.right {
+      transform: rotateY(270deg) translateZ(75px);
+    }
+
+    /* 最底层房檐 */
+    .eaves {
+      position: absolute;
+      top: -130px;
+      left: -120px;
+      width: 240px;
+      height: 20px;
+      transform: translateZ(120px) rotateX(60deg);
+      transform-origin: center bottom;
+    }
+
+    .eaves::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 204px;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-bottom: 20px solid #ab1c20;
+      filter: drop-shadow(0 0 1px #fff);
+      content: '';
+    }
+
+    .eaves.left {
+      transform: rotateY(90deg) translateZ(120px) rotateX(60deg);
+    }
+
+    .eaves.back {
+      transform: rotateY(180deg) translateZ(120px) rotateX(60deg);
+    }
+
+    .eaves.right {
+      transform: rotateY(270deg) translateZ(120px) rotateX(60deg);
+    }
+
+    /* 第二层房檐 */
+    .eaves2 {
+      position: absolute;
+      top: -190px;
+      left: -98px;
+      width: 196px;
+      height: 20px;
+      transform: translateZ(98px) rotateX(60deg);
+      transform-origin: center bottom;
+    }
+
+    .eaves2::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 160px;
+      border-left: 18px solid transparent;
+      border-right: 18px solid transparent;
+      border-bottom: 20px solid #ab1c20;
+      filter: drop-shadow(0 0 1px #fff);
+      content: '';
+    }
+
+    .eaves2.left {
+      transform: rotateY(90deg) translateZ(98px) rotateX(60deg);
+    }
+
+    .eaves2.back {
+      transform: rotateY(180deg) translateZ(98px) rotateX(60deg);
+    }
+
+    .eaves2.right {
+      transform: rotateY(270deg) translateZ(98px) rotateX(60deg);
+    }
+
+    /* 屋顶 */
+    .roof {
+      position: absolute;
+      top: -295px;
+      left: -85px;
+      width: 170px;
+      height: 98px;
+      transform: translateZ(85px) rotateX(60deg);
+      transform-origin: center bottom;
+    }
+
+    .roof::before {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0px;
+      border-left: 85px solid transparent;
+      border-right: 85px solid transparent;
+      border-bottom: 98px solid #ab1c20;
+      filter: drop-shadow(0 0 1px #fff);
+      content: '';
+    }
+
+    .roof.left {
+      transform: rotateY(90deg) translateZ(85px) rotateX(60deg);
+    }
+
+    .roof.back {
+      transform: rotateY(180deg) translateZ(85px) rotateX(60deg);
+    }
+
+    .roof.right {
+      transform: rotateY(270deg) translateZ(85px) rotateX(60deg);
+    }
+
+    /* 外墙 */
+    .door {
+      position: absolute;
+      left: -50px;
+      bottom: 0;
+      width: 100px;
+      height: 50px;
+      transform: translateZ(140px);
+      filter: drop-shadow(0 0 1px #fff);
+    }
+
+    .door::before {
+      position: absolute;
+      width: 100px;
+      height: 50px;
+      box-sizing: border-box;
+      border-left: solid #ab1c20 30px;
+      border-right: solid #ab1c20 30px;
+      border-top: solid #ab1c20 30px;
+      -webkit-mask-image: radial-gradient(circle at bottom,
+          transparent 20px,
+          #ab1c20 20px);
+      mask-image: radial-gradient(circle at bottom,
+          transparent 20px,
+          #ab1c20 20px);
+      -webkit-mask-position-y: 30px;
+      mask-position-y: 30px;
+      content: '';
+    }
+
+    .door::after {
+      position: absolute;
+      top: -12px;
+      width: 100%;
+      height: 12px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 8px,
+          #ab1c20 8px,
+          #ab1c20 10px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 10px 12px, 10px 3px;
+      background-position: 0 0, 0 5px;
+      background-repeat: repeat-x;
+    }
+
+    /* 右侧楼梯1 */
+    .door-right {
+      position: absolute;
+      left: 50px;
+      bottom: 0;
+      width: 50px;
+      height: 62px;
+      transform-origin: left -12px;
+      transform: translateZ(140px);
+      filter: drop-shadow(0 0 1px #fff);
+      overflow: hidden;
+    }
+
+    .door-right::before {
+      position: absolute;
+      top: 12px;
+      width: 50px;
+      height: 50px;
+      background-color: #ab1c20;
+      content: '';
+      transform-origin: left -12px;
+      transform: skewY(20deg);
+    }
+
+    .door-right::after {
+      position: absolute;
+      top: -0px;
+      width: 100%;
+      height: 12px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 8px,
+          #ab1c20 8px,
+          #ab1c20 10px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 10px 12px, 10px 3px;
+      background-position: 0 0, 0 5px;
+      background-repeat: repeat-x;
+      transform-origin: left -12px;
+      transform: skewY(20deg);
+    }
+
+    /* 左侧楼梯1 */
+    .door-left {
+      position: absolute;
+      left: -100px;
+      bottom: 0;
+      width: 50px;
+      height: 62px;
+      transform-origin: right -12px;
+      transform: translateZ(140px);
+      filter: drop-shadow(0 0 1px #fff);
+      overflow: hidden;
+    }
+
+    .door-left::before {
+      position: absolute;
+      top: 12px;
+      width: 50px;
+      height: 50px;
+      background-color: #ab1c20;
+      content: '';
+      transform-origin: right -12px;
+      transform: skewY(-20deg);
+    }
+
+    .door-left::after {
+      position: absolute;
+      top: -0px;
+      width: 100%;
+      height: 12px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 8px,
+          #ab1c20 8px,
+          #ab1c20 10px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 10px 12px, 10px 3px;
+      background-position: 0 0, 0 5px;
+      background-repeat: repeat-x;
+      transform-origin: right -12px;
+      transform: skewY(-20deg);
+    }
+
+    /* 右侧楼梯1 */
+    .door-right2 {
+      position: absolute;
+      left: 50px;
+      bottom: 0;
+      width: 50px;
+      height: 42px;
+      transform-origin: right -12px;
+      transform: translateZ(150px);
+      filter: drop-shadow(0 0 1px #fff);
+      overflow: hidden;
+    }
+
+    .door-right2::before {
+      position: absolute;
+      top: 12px;
+      width: 50px;
+      height: 30px;
+      background-color: #ab1c20;
+      content: '';
+      transform-origin: right -12px;
+      transform: skewY(-20deg);
+    }
+
+    .door-right2::after {
+      position: absolute;
+      top: -0px;
+      width: 100%;
+      height: 12px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 8px,
+          #ab1c20 8px,
+          #ab1c20 10px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 10px 12px, 10px 3px;
+      background-position: 0 0, 0 5px;
+      background-repeat: repeat-x;
+      transform-origin: right -12px;
+      transform: skewY(-20deg);
+    }
+
+    /* 左侧楼梯1 */
+    .door-left2 {
+      position: absolute;
+      left: -100px;
+      bottom: 0;
+      width: 50px;
+      height: 42px;
+      transform-origin: left -12px;
+      transform: translateZ(150px);
+      filter: drop-shadow(0 0 1px #fff);
+      overflow: hidden;
+    }
+
+    .door-left2::before {
+      position: absolute;
+      top: 12px;
+      width: 50px;
+      height: 30px;
+      background-color: #ab1c20;
+      content: '';
+      transform-origin: left -12px;
+      transform: skewY(20deg);
+    }
+
+    .door-left2::after {
+      position: absolute;
+      top: -0px;
+      width: 100%;
+      height: 12px;
+      content: '';
+      background-image: linear-gradient(to right,
+          #ab1c20 2px,
+          transparent 2px,
+          transparent 8px,
+          #ab1c20 8px,
+          #ab1c20 10px),
+        linear-gradient(to right, #ab1c20 0px, #ab1c20 32px);
+      background-size: 10px 12px, 10px 3px;
+      background-position: 0 0, 0 5px;
+      background-repeat: repeat-x;
+      transform-origin: left -12px;
+      transform: skewY(20deg);
     }
   </style>
 </head>
+
 <body bgcolor="#000000">
-<div class="container">
-  <div class="top"></div>
-  <div class="bottom"></div>
-  <div class="water-run"></div>
-  <div class="water-top"></div>
-  <div class="water-fall"></div>
-  <div class="splash left60"><div class="inner inner40"></div></div>
-  <div class="splash right60"><div class="inner inner40"></div></div>
-  <div class="splash left40"><div class="inner inner80"></div></div>
-  <div class="splash right40"><div class="inner inner80"></div></div>
-</div>
+  <div class="container">
+    <div class="center">
+      <div class="ground"></div>
+
+      <div class="wall-outer"></div>
+      <div class="wall-outer left"></div>
+      <div class="wall-outer back"></div>
+      <div class="wall-outer right"></div>
+
+      <div class="wall-inner"></div>
+      <div class="wall-inner left"></div>
+      <div class="wall-inner back"></div>
+      <div class="wall-inner right"></div>
+
+      <div class="wall-inner2"></div>
+      <div class="wall-inner2 left"></div>
+      <div class="wall-inner2 back"></div>
+      <div class="wall-inner2 right"></div>
+
+      <div class="wall-inner3"></div>
+      <div class="wall-inner3 left"></div>
+      <div class="wall-inner3 back"></div>
+      <div class="wall-inner3 right"></div>
+
+      <div class="eaves"></div>
+      <div class="eaves left"></div>
+      <div class="eaves back"></div>
+      <div class="eaves right"></div>
+
+      <div class="eaves2"></div>
+      <div class="eaves2 left"></div>
+      <div class="eaves2 back"></div>
+      <div class="eaves2 right"></div>
+
+      <div class="roof"></div>
+      <div class="roof left"></div>
+      <div class="roof back"></div>
+      <div class="roof right"></div>
+
+      <div class="door-left2"></div>
+      <div class="door-left"></div>
+      <div class="door"></div>
+      <div class="door-right"></div>
+      <div class="door-right2"></div>
+      <!-- -->
+    </div>
+  </div>
 </body>
+
 </html>
