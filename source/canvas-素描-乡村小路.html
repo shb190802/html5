@@ -1,0 +1,353 @@
+<!--
+ * @Author: suo
+ * @Date: 2020-07-28 16:23:06
+ * @LastEditTime: 2020-08-08 00:15:44
+ * @LastEditors: suo
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta http-equiv="Pragma" content="no-cache" />
+	<meta http-equiv="Cache-Control" content="no-cache" />
+	<meta http-equiv="Expires" content="0" />
+	<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no" />
+	<title>Canvas-素描-乡村小路</title>
+	<style>
+		html,
+		body,
+		canvas {
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			height: 100%;
+		}
+
+		body {
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#canvas {
+			margin-top: -40px;
+			/* background-image: url(./images/1.jpg); */
+			background-position: 0 -40px;
+			background-size: 100% auto;
+			border: solid 1px #ccc;
+			background-color: #f1f1f1;
+		}
+	</style>
+</head>
+
+<body bgcolor="#000000">
+	<canvas id="canvas"></canvas>
+</body>
+<script>
+	var canvas = document.getElementById('canvas')
+	var W = 360,
+		H = 480
+	canvas.width = W
+	canvas.height = H
+	var ctx = canvas.getContext('2d')
+	// ctx.strokeStyle = 'red'
+
+
+	// 远方地平线
+	function drawSkyline() {
+		ctx.beginPath()
+		ctx.lineWidth = 0.5
+		ctx.moveTo(0, 206)
+		ctx.lineTo(W, 206)
+		ctx.stroke()
+		randomLine({
+			sx: -5, sy: 206, ex: 149, ey: 206, len: 5, count: 150, deg: -Math.PI / 2, width: 0.3,
+			rx: 3, ry: 1, rDeg: 1, rLen: 7, persp: 0
+		})
+		randomLine({
+			sx: 162, sy: 206, ex: W, ey: 206, len: 5, count: 200, deg: -Math.PI / 2, width: 0.3,
+			rx: 3, ry: 1, rDeg: 1, rLen: 7, persp: 0
+		})
+	}
+
+	// 左侧路边
+	function drawRoadLeft() {
+		randomLine({
+			sx: 149, sy: 206, ex: 0, ey: 400, len: 4, count: 200, deg: -Math.PI / 2, width: 0.4,
+			rx: 3, ry: 3, rDeg: 0.9, rLen: 5, persp: 12
+		})
+		randomLine({
+			sx: 149, sy: 206, ex: -3, ey: 390, len: 4, count: 200, deg: -Math.PI / 2, width: 0.4,
+			rx: 3, ry: 3, rDeg: 0.9, rLen: 3, persp: 12
+		})
+	}
+
+	// 右侧路边
+	function drawRoadRight() {
+		randomLine({
+			sx: 162, sy: 206, ex: 260, ey: H, len: 3, count: 450, deg: -Math.PI / 2, width: 0.4,
+			rx: 5, ry: 3, rDeg: 1, rLen: 3, persp: 15
+		})
+		randomLine({
+			sx: 162, sy: 206, ex: 290, ey: H, len: 3, count: 450, deg: -Math.PI / 2, width: 0.4,
+			rx: 5, ry: 3, rDeg: 1, rLen: 3, persp: 15
+		})
+	}
+
+	// 左侧田埂
+	function drawLeftRidge() {
+		// 左侧第一条田埂
+		randomLine({
+			sx: -5, sy: 234, ex: 120, ey: 236, len: 4, count: 200, deg: -Math.PI / 2, width: 0.4,
+			rx: 3, ry: 3, rDeg: 1.5, rLen: 3, persp: 0
+		})
+		// 左侧第二条田埂
+		randomLine({
+			sx: -5, sy: 275, ex: 80, ey: 278, len: 6, count: 150, deg: -Math.PI / 2, width: 0.42,
+			rx: 3, ry: 3, rDeg: 1.5, rLen: 5, persp: 0
+		})
+		// 左侧第三条田埂
+		randomLine({
+			sx: -5, sy: 345, ex: 30, ey: 345, len: 8, count: 80, deg: -Math.PI / 2, width: 0.45,
+			rx: 3, ry: 3, rDeg: 1.5, rLen: 7, persp: 0
+		})
+	}
+	// 右侧田埂
+	function drawRightRidge() {
+		ctx.beginPath()
+		ctx.moveTo(220, 318)
+		ctx.lineTo(W, 318)
+		ctx.stroke()
+		// 右侧第一条田埂
+		randomLine({
+			sx: 180, sy: 247, ex: W, ey: 246, len: 4, count: 240, deg: -Math.PI / 2, width: 0.42,
+			rx: 3, ry: 3, rDeg: 2, rLen: 3, persp: 0
+		})
+		// 右侧第二条田埂
+		randomLine({
+			sx: 220, sy: 315, ex: W, ey: 315, len: 7, count: 180, deg: -Math.PI / 2, width: 0.45,
+			rx: 3, ry: 3, rDeg: 1.5, rLen: 5, persp: 0
+		})
+	}
+
+	// 左侧田野
+	function drawLeftField() {
+		var roadLine = { sx: 149, sy: 206, ex: 0, ey: 400 }
+		var i, sx, sy, ex, ey
+		// 左侧第一行植物
+		for (i = 0; i < 4; i++) {
+			ey = 206 + i * 7 + Math.random() * 2 - 1
+			ex = getPoint(roadLine, { y: sy }) + Math.random() * 2 - 15
+			sx = 0
+			sy = ey - 1
+			randomLine({ sx, sy, ex, ey, len: 2, count: 45, deg: -Math.PI / 2, width: 0.2, rx: 2, ry: 2, rDeg: 0.8, rLen: 1, persp: 0 })
+		}
+		// 左侧第二行植物
+		for (i = 0; i < 4; i++) {
+			ey = 238 + i * 9 + Math.random() * 2 - 1
+			ex = getPoint(roadLine, { y: ey }) + Math.random() * 2 - 15
+			sx = 0
+			sy = ey - 1
+			randomLine({ sx, sy, ex, ey, len: 2, count: 40, deg: -Math.PI / 2, width: 0.2, rx: 2, ry: 2, rDeg: 0.8, rLen: 1, persp: 0 })
+		}
+		// 左侧第三行植物
+		for (i = 0; i < 7; i++) {
+			ey = 278 + i * 9 + Math.random() * 2 - 1
+			ex = getPoint(roadLine, { y: ey }) + Math.random() * 2 - 15
+			sx = 0
+			sy = ey - 1
+			randomLine({ sx, sy, ex, ey, len: 2, count: 35, deg: -Math.PI / 2, width: 0.2, rx: 2, ry: 2, rDeg: 0.8, rLen: 1, persp: 0 })
+		}
+	}
+
+	// 右侧田野
+	function drawRightField() {
+		var roadLine = { sx: 162, sy: 206, ex: 290, ey: H }
+		var i, sx, sy, ex, ey
+		// 右侧第一行植物
+		for (i = 0; i < 4; i++) {
+			sy = 214 + i * 7 + Math.random() * 2 - 1
+			sx = getPoint(roadLine, { y: sy }) + Math.random() * 4
+			ex = sx + 130 + Math.random() * 20
+			ey = sy
+			randomLine({ sx, sy, ex, ey, len: 2, count: 35, deg: -Math.PI / 2, width: 0.2, rx: 3, ry: 2, rDeg: 0.8, rLen: 1, persp: 0 })
+		}
+		// 右侧第二行植物
+		for (i = 0; i < 6; i++) {
+			sy = 257 + i * 8 + Math.random() * 2 - 1
+			sx = getPoint(roadLine, { y: sy }) + Math.random() * 4
+			ex = sx + 140 + Math.random() * 15
+			ey = sy
+			randomLine({ sx, sy, ex, ey, len: 2, count: 39, deg: -Math.PI / 2, width: 0.24, rx: 3, ry: 2, rDeg: 0.4, rLen: 1, persp: 0 })
+		}
+		// 右侧第三行植物
+		for (i = 0; i < 16; i++) {
+			sy = 319 + i * 10 + Math.random() * 2 - 1
+			sx = getPoint(roadLine, { y: sy }) + Math.random() * 2
+			ex = sx + 140 + Math.random()
+			ey = sy
+			randomLine({ sx, sy, ex, ey, len: 2, count: 39, deg: -Math.PI / 2, width: 0.3, rx: 3, ry: 2, rDeg: 0.4, rLen: 1.5, persp: 0 })
+		}
+	}
+
+	// 路中间的细节
+	function drawRoad() {
+		var count = 7
+		var stepSX = (162 - 149) / count
+		var stepEX = 260 / count
+		for (var i = 0; i < 8; i++) {
+			var sx = 149 + stepSX * i,
+				sy = 206,
+				ex = -20 + stepEX * i,
+				ey = H,
+				deg = Math.atan2(ey - sy, ex - sx)
+
+			randomLine({ sx, sy, ex, ey, len: 20, count: 40 + Math.random() * 20, deg, width: 0.1, rx: 8, ry: 1, rDeg: 0, rLen: 3, persp: 0 })
+		}
+	}
+	// 画电线
+	function drawWire() {
+		ctx.lineWidth = 0.3
+		ctx.beginPath()
+		ctx.moveTo(248, 0)
+		ctx.bezierCurveTo(225, 80, 223, 80, 202, 122)
+		ctx.bezierCurveTo(189, 140, 189, 140, 175, 150)
+		ctx.bezierCurveTo(170, 166, 170, 166, 163, 178)
+		ctx.stroke()
+		ctx.beginPath()
+		ctx.moveTo(285, 0)
+		ctx.bezierCurveTo(230, 120, 226, 116, 187, 145)
+		ctx.bezierCurveTo(178, 166, 176, 166, 168, 176)
+		ctx.stroke()
+		ctx.lineWidth = 0.2
+		ctx.beginPath()
+		ctx.moveTo(285, 0)
+		ctx.bezierCurveTo(230, 120, 226, 116, 187, 145)
+		ctx.bezierCurveTo(178, 166, 176, 166, 168, 176)
+		ctx.stroke()
+		ctx.lineWidth = 0.3
+		ctx.beginPath()
+		ctx.moveTo(313, 0)
+		ctx.bezierCurveTo(245, 130, 240, 130, 197, 150)
+		ctx.bezierCurveTo(188, 166, 189, 163, 171, 178)
+		ctx.stroke()
+	}
+	/**
+	* 画电线杆
+	*/
+	function drawAllPole() {
+		// 第一个电线杆
+		ctx.save()
+		ctx.translate(5, 0)
+		drawPole()
+		ctx.restore()
+		// 第二根
+		ctx.save()
+		ctx.scale(0.5, 0.45)
+		ctx.translate(150, 210)
+		drawPole()
+		ctx.restore()
+		// 第二根
+		ctx.save()
+		ctx.scale(0.2, 0.15)
+		ctx.translate(610, 1070)
+		drawPole()
+		ctx.restore()
+	}
+	function drawPole() {
+		ctx.fillStyle = '#ccc'
+		// 左边斜杆
+		randomLine({ sx: 202, sy: 120, ex: 222, ey: 140, len: 10, count: 15, deg: Math.atan2(140 - 120, 222 - 202), width: 0.4, rx: 0, ry: 6, rDeg: 0, rLen: 3, persp: 0, minX: 202, maxX: 222, maxY: 140, minY: 120 })
+		// 右边斜杆
+		randomLine({ sx: 247, sy: 120, ex: 222, ey: 140, len: 10, count: 15, deg: Math.atan2(140 - 120, 222 - 247), width: 0.4, rx: 0, ry: 6, rDeg: 0, rLen: 3, persp: 0, minX: 222, maxX: 247, maxY: 140, minY: 120 })
+		//第一个电线杆 横杆
+		ctx.fillRect(197, 120, 55, 6)
+		randomLine({ sx: 177, sy: 120, ex: 242, ey: 120, len: 10, count: 30, deg: 0, width: 0.4, rx: 0, ry: 6, rDeg: 0, rLen: 3, persp: 0, minX: 197, maxX: 252, maxY: 126, minY: 120 })
+		// 影子
+		randomLine({ sx: 30, sy: 445, ex: 220, ey: 365, len: 20, count: 34, deg: Math.atan2(365 - 445, 220 - 30), width: 0.22, rx: 4, ry: 6, rDeg: 0, rLen: 3, persp: 0 })
+		// 竖杆
+		ctx.fillRect(220, 105, 10, 260)
+		randomLine({ sx: 220, sy: 85, ex: 220, ey: 365, len: 20, count: 60, deg: Math.PI / 2, width: 0.4, rx: 10, ry: 0, rDeg: 0, rLen: 3, persp: 0, minY: 105, maxY: 365 })
+	}
+	/**
+	* 获取直线上的某个点
+	*/
+	function getPoint(line, point) {
+		// (y - sy)/(ey - sy) = (x - sx)/(ex - sx)
+		if (point.x) {
+			return (line.sx - line.ex) / (line.sy - line.ey) * point.x - point.x
+		} else {
+			return (line.ex - line.sx) * (point.y - line.sy) / (line.ey - line.sy) + line.sx
+		}
+	}
+	/**
+	* sx sy 起始位置
+	* ex ey 结束位置
+	* count 数量
+	* 方向
+	*/
+	function randomLine({ sx, sy, ex, ey, len, deg, count, width, rLen, rDeg, rx, ry, persp, maxX, maxY, minX, minY }) {
+		var stepX = (ex - sx) / count
+		var stepY = (ey - sy) / count
+		var perspY = persp / count
+		ctx.lineWidth = width
+		for (var i = 0; i < count; i++) {
+			var x = sx + stepX * i + Math.random() * rx
+			var y = sy + stepY * i + Math.random() * ry
+			var moveX = (len + perspY * i + Math.random() * rLen) * Math.cos(deg + Math.random() * rDeg - rDeg / 2)
+			var moveY = (len + perspY * i + Math.random() * rLen) * Math.sin(deg + Math.random() * rDeg - rDeg / 2)
+			var endX = x + moveX
+			var endY = y + moveY
+			ctx.beginPath()
+			if (maxX !== undefined) {
+				x = Math.min(maxX, x)
+				endX = Math.min(maxX, endX)
+			}
+			if (minX !== undefined) {
+				x = Math.max(minX, x)
+				endX = Math.max(minX, endX)
+			}
+			if (maxY !== undefined) {
+				y = Math.min(maxY, y)
+				endY = Math.min(maxY, endY)
+			}
+			if (minY !== undefined) {
+				y = Math.max(minY, y)
+				endY = Math.max(minY, endY)
+			}
+			ctx.moveTo(x, y)
+			ctx.lineTo(endX, endY)
+			ctx.stroke()
+		}
+	}
+
+	function draw() {
+		var fnList = [
+			drawSkyline,
+			drawRoadLeft,
+			drawRoadRight,
+			drawLeftRidge,
+			drawRightRidge,
+			drawLeftField,
+			drawRightField,
+			drawRoad,
+			drawWire,
+			drawAllPole
+		]
+
+		for (let i = 0; i < fnList.length; i++) {
+			setTimeout(() => {
+				fnList[i]()
+			}, (i + 1) * 300)
+		}
+	}
+	draw()
+</script>
+
+</html>
