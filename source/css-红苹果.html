@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>css-苹果</title>
+</head>
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	html {
+		height: 100%;
+	}
+
+	body {
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		background: radial-gradient(rgb(241, 209, 172), rgb(189, 125, 96)) -20px -20px;
+	}
+
+	.apple {
+		position: relative;
+		width: 300px;
+		height: 270px;
+		background: radial-gradient(#0000, rgba(0, 0, 0, .1)),
+			radial-gradient(rgba(239, 156, 109, .2), #0000);
+		background-color: #bf2934;
+		border-radius: 160px 150px 145px 150px/160px 140px 210px 190px;
+		box-shadow: inset 30px -20px 30px 20px rgba(0, 0, 0, .15),
+			inset 10px -10px 15px 0 rgba(0, 0, 0, .15),
+			inset 10px 10px 5px 0 rgba(255, 255, 255, .05),
+			inset -10px 10px 30px 10px rgba(237, 115, 84, .3);
+	}
+
+	.apple::before {
+		position: absolute;
+		left: 135px;
+		top: 50px;
+		content: '';
+		width: 80px;
+		height: 30px;
+		transform: skew(-20deg) rotate(10deg);
+		border-radius: 45%;
+		background: rgba(255, 255, 255, .65);
+		box-shadow: 2px 10px 30px 22px rgba(239, 156, 109, 1);
+		filter: blur(5px);
+	}
+
+	.apple::after {
+		position: absolute;
+		left: 90px;
+		top: 2px;
+		width: 120px;
+		background: radial-gradient(rgba(0, 0, 0, .3), rgba(239, 156, 109, .2));
+		height: 30px;
+		content: '';
+		border-radius: 50%;
+		filter: blur(2px);
+		clip-path: polygon(50% 55%, 150% 0, -50% 0);
+		filter: blur(1px);
+	}
+
+	.stripe {
+		position: absolute;
+		width: 300px;
+		height: 270px;
+		border-radius: 160px 150px 145px 150px/160px 140px 210px 190px;
+		border-right: solid 2px rgba(239, 156, 109, .2);
+		transform: scaleX(.9);
+		filter: blur(4px);
+	}
+
+	.spot {
+		position: absolute;
+		width: 4px;
+		height: 4px;
+		border-radius: 50%;
+		background: rgba(239, 156, 109, .6);
+		filter: blur(1px);
+	}
+
+	.shadow {
+		position: absolute;
+		width: 300px;
+		height: 270px;
+		background-color: rgba(0, 0, 0, .15);
+		transform-origin: 50% 100%;
+		transform: translate(5px, 5px) skew(60deg) scaleY(.25);
+		border-radius: 160px 150px 145px 150px/160px 140px 210px 190px;
+		box-shadow: 0 0 20px rgba(0, 0, 0, .15);
+		filter: blur(4px);
+	}
+
+	.petiole {
+		position: absolute;
+		transform: translate(155px, -48px) rotate(35deg);
+		width: 20px;
+		height: 60px;
+		border-top: solid 15px transparent;
+		border-left: solid 10px rgb(162, 76, 9);
+		border-bottom: solid 8px transparent;
+		border-radius: 50%;
+	}
+
+	.petiole.left {
+		transform: translate(154px, -49px) rotate(35deg);
+		border-left-color: rgb(123, 48, 24);
+	}
+</style>
+
+<body>
+	<div class="shadow"></div>
+	<div class="apple">
+		<div class="petiole left"></div>
+		<div class="petiole"></div>
+	</div>
+	<script>
+		function addStripe() {
+			var fragment = document.createDocumentFragment()
+			var count = 15
+			for (var i = -count; i < count; i++) {
+				var stripe = document.createElement('div')
+				stripe.className = 'stripe'
+				stripe.style.opacity = Math.max(1, 0.5 + Math.random())
+				stripe.style.transform = `scaleX(${(i / count + Math.random() * 0.2).toFixed(2)})`
+				fragment.appendChild(stripe)
+			}
+			document.querySelector('.apple').appendChild(fragment)
+		}
+
+		function addSpot() {
+			var count = 60
+			var fragment = document.createDocumentFragment()
+			for (var i = 0; i < count; i++) {
+				var spot = document.createElement('div')
+				spot.className = 'spot'
+				spot.style.left = 5 + ~~(Math.random() * 90) + '%'
+				spot.style.top = 5 + ~~(Math.random() * 90) + '%'
+				spot.style.opacity = 0.2 + Math.random() * 0.4
+				spot.style.transform = `scaleX(${Math.random() * 0.8 + 0.2}) scaleY(${Math.random() * 0.8 + 0.2}) rotate(${~~(360 * Math.random())}deg)`
+				fragment.appendChild(spot)
+			}
+			document.querySelector('.apple').appendChild(fragment)
+		}
+		window.onload = function () {
+			addStripe()
+			addSpot()
+		}
+	</script>
+</body>
+
+</html>
