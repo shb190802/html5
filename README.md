@@ -6,6 +6,8 @@
 
 ## 当前包含：
 
+- [css-地球3D](http://suohb.com/demo/win/globe2.html)
+- [css-地球-线框](http://suohb.com/demo/win/globe.html)
 - [css-红苹果](http://suohb.com/demo/win/apple.html)
 - [canvas-素描-乡村小路](http://suohb.com/demo/win/sketch.html)
 - [css-胡萝卜](http://suohb.com/demo/win/carrot.html)
