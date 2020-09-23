@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>css-足球</title>
+</head>
+
+<style>
+	* {
+		margin: 0;
+		padding: 0;
+	}
+
+	html,
+	body,
+	.container,
+	.box {
+		height: 100%;
+	}
+
+	body {
+		position: fixed;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.container,
+	.box {
+		position: relative;
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform-style: preserve-3d;
+	}
+
+	.container {
+		perspective: 2500px;
+		transform: scale(.6);
+	}
+
+	.box {
+		animation: rotate 6s linear infinite;
+	}
+
+	.box>div {
+		position: absolute;
+		border-radius: 50%;
+	}
+
+	.box>div::before {
+		position: absolute;
+		content: '';
+		display: block;
+		width: 100%;
+		height: 100%;
+		background: #ccc;
+		transform: scale(1.08);
+	}
+
+	.box>div::after {
+		position: absolute;
+		content: '';
+		display: block;
+		width: 100%;
+		height: 100%;
+	}
+
+	.polygon6 {
+		width: 200px;
+		height: 200px;
+		/* background: rgba(255, 0, 0, .3); */
+	}
+
+	.polygon6::before {
+		clip-path: polygon(0 50%, 25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%);
+	}
+
+	.polygon6::after {
+		background: #fff;
+		clip-path: polygon(0 50%, 25% 6.7%, 75% 6.7%, 100% 50%, 75% 93.3%, 25% 93.3%);
+	}
+
+	.polygon5 {
+		width: 170px;
+		height: 170px;
+		/* background: rgba(0, 255, 0, .3); */
+	}
+
+	.polygon5::before {
+		clip-path: polygon(50% 0, 97.55% 34.55%, 79.39% 90.45%, 20.6% 90.45%, 2.45% 34.55%);
+	}
+
+	.polygon5::after {
+		background: #000;
+		clip-path: polygon(50% 0, 97.55% 34.55%, 79.39% 90.45%, 20.6% 90.45%, 2.45% 34.55%);
+	}
+
+	@keyframes rotate {
+		0% {
+			transform: rotateZ(0deg) rotateY(0deg);
+		}
+
+		100% {
+			transform: rotateZ(360deg) rotateY(360deg);
+		}
+	}
+</style>
+
+<body bgcolor="#0c0">
+	<div class="container">
+		<div class="box"></div>
+	</div>
+	<script>
+		/**
+		* deg 纬度
+		* len 图形个数
+		* className 图形是5边形还是6边形
+		* Y轴上偏移角度
+		* Z轴上旋转角度
+		*/
+		function draw(deg, len, className, startDeg = 0, rotateDeg = 0) {
+			var fragment = document.createDocumentFragment()
+			for (var i = 0; i < len; i++) {
+				var div = document.createElement('div')
+				div.className = className
+				div.style.transform = 'rotateY(' + ~~(360 / len * i + startDeg) + 'deg) rotateX(' + deg + 'deg) rotateZ(' + rotateDeg + 'deg) translateZ(238px)'
+				fragment.appendChild(div)
+			}
+			document.querySelector('.box').appendChild(fragment)
+		}
+		window.onload = function () {
+			draw(-90, 1, 'polygon5')
+			draw(-53, 5, 'polygon6', 36)
+			draw(-28, 5, 'polygon5', 0, 180)
+			draw(-11, 5, 'polygon6', 36)
+			draw(11, 5, 'polygon6')
+			draw(28, 5, 'polygon5', 36, 0)
+			draw(53, 5, 'polygon6', 72)
+			draw(90, 1, 'polygon5')
+		}
+
+		/*let startPos = null
+		let tempDeg = {
+			x: 0,
+			y: 0
+		}
+		let degObj = {
+			x: 0,
+			y: 0
+		}
+		let box = document.querySelector('.box')
+		document.addEventListener('mousedown', (e) => {
+			startPos = {
+				x: e.pageX,
+				y: e.pageY
+			}
+			tempDeg.x = 0
+			tempDeg.y = 0
+		})
+		document.addEventListener('mouseup', () => {
+			startPos = null
+			degObj.x += tempDeg.x
+			degObj.y += tempDeg.y
+			tempDeg.x = 0
+			tempDeg.y = 0
+		})
+		document.addEventListener('mousemove', (e) => {
+			if (startPos) {
+				let _x = e.pageX - startPos.x
+				let _y = e.pageY - startPos.y
+				tempDeg.x = ~~(_x / 5)
+				tempDeg.y = ~~(_y / 5)
+				box.style.transform = `rotateY(${tempDeg.x + degObj.x}deg) rotateX(${tempDeg.y + degObj.y}deg) `
+			}
+		})*/
+	</script>
+</body>
+
+</html>
