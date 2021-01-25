@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>css-二七纪念塔</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		.container {
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			overflow: hidden;
+			perspective: 2000px;
+			perspective-origin: 50% 20%;
+			background: #000;
+		}
+
+		.box {
+			position: absolute;
+			top: 120px;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform: scale(.4);
+			/* animation: rotate 16s linear infinite; */
+		}
+
+		@keyframes rotate {
+			0% {
+				transform: scale(.4) rotateY(0deg) rotateX(0deg);
+			}
+
+			100% {
+				transform: scale(.4)rotateY(360deg) rotateX(0deg);
+			}
+		}
+
+		.left {
+			position: absolute;
+			left: 0;
+			width: 100%;
+			height: 100%;
+			transform-style: preserve-3d;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			transform: translateX(-86px) rotateY(30deg);
+		}
+
+		.right {
+			transform: translateX(86px) rotateY(210deg);
+		}
+
+		.level {
+			position: absolute;
+			width: 0;
+			height: 0;
+			transform-style: preserve-3d;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.level-1 {
+			top: 450px;
+		}
+
+		.level-2 {
+			top: 370px;
+		}
+
+		.level-3 {
+			top: 290px;
+		}
+
+		.level-4 {
+			top: 210px;
+		}
+
+		.level-5 {
+			top: 130px;
+		}
+
+		.level-6 {
+			top: 50px;
+		}
+
+		.level-7 {
+			top: -30px;
+		}
+
+		.level-8 {
+			top: -110px;
+		}
+
+		.level-9 {
+			top: -190px;
+		}
+
+		.level-10 {
+			top: -270px;
+		}
+
+		.level-11 {
+			top: -350px;
+		}
+
+		.level-12 {
+			top: -440px;
+		}
+
+		.level-13 {
+			top: -500px;
+		}
+
+		.wall {
+			position: absolute;
+			width: 100px;
+			height: 80px;
+			background: #bdafa2;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			box-shadow: inset 0 0 15px rgba(0, 0, 0, .2), inset 0 0 3px rgba(0, 0, 0, .2);
+			transform-style: preserve-3d;
+		}
+
+		.wall-1 {
+			transform: rotateY(0) translateZ(86px);
+		}
+
+		.wall-2 {
+			transform: rotateY(60deg) translateZ(86px);
+			display: none;
+		}
+
+		.wall-3 {
+			transform: rotateY(120deg) translateZ(86px);
+		}
+
+		.wall-4 {
+			transform: rotateY(180deg) translateZ(86px);
+		}
+
+		.wall-5 {
+			transform: rotateY(240deg) translateZ(86px);
+		}
+
+		.wall-6 {
+			transform: rotateY(300deg) translateZ(86px);
+		}
+
+		.wall::before {
+			position: absolute;
+			top: 30px;
+			width: 30px;
+			height: 40px;
+			border: solid 2px #715e5a;
+			content: '';
+			background-color: #715e5a;
+			background-image: linear-gradient(to right, #cdc8cf 14px, 0, #715e5a 16px 0, #cdc8cf 0), linear-gradient(to right, #cdc8cf 14px, 0, #715e5a 16px 0, #cdc8cf 0), linear-gradient(to right, #cdc8cf 7px, 0, #715e5a 9px, 0, #cdc8cf 21px, 0, #715e5a 23px, 0, #cdc8cf 0);
+			background-size: 100% 20%, 100% 20%, 100% 50%;
+			background-repeat: no-repeat;
+			background-position: 0 0, 0 100%, 0 50%;
+		}
+
+		.wall::after {
+			position: absolute;
+			top: 0;
+			left: -20px;
+			width: 140px;
+			height: 40px;
+			content: '';
+			background: #053f17;
+			transform-origin: center 0;
+			transform: rotateX(60deg);
+			clip-path: polygon(20px 0, 120px 0, 100% 100%, 0 100%);
+			box-shadow: inset 0px -1px 30px rgba(255, 255, 255, .4);
+		}
+
+		.level-12 .wall-2,
+		.level-13 .wall-2 {
+			display: flex;
+		}
+
+		/* 顶部钟表*/
+		.clock {
+			transform: scale3d(.7, 1, .7);
+			height: 40px;
+		}
+
+		.clock>.wall::before {
+			top: 10px;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			background-image: conic-gradient(#333 4%, 0, #0000 30%, 0, #333 34%, 0, #0000 0), radial-gradient(#000 5px, 0, #715e5a 20px, 0, #0000), conic-gradient(#cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a, #cdc8cf, #715e5a);
+			background-size: 100%, 100%, 100%;
+		}
+
+		.clock>.wall::after {
+			top: -70px;
+			height: 140px;
+			transform: translateZ(-100px) rotateX(60deg);
+			clip-path: polygon(50% 0, 100% 100%, 0 100%);
+		}
+
+		.clock.level-13 {
+			transform: scale3d(.7, .7, .6);
+		}
+
+		.clock.level-13>.wall {
+			height: 40px;
+		}
+
+		.clock.level-13>.wall::before {
+			background: none;
+			border: none;
+		}
+
+		/*五角星*/
+		.middle {
+			position: absolute;
+			top: -600px;
+			transform: rotateY(0);
+		}
+
+		.middle::before,
+		.middle::after {
+			position: absolute;
+			top: 0;
+			width: 0;
+			height: 0;
+			border-left: 8px solid transparent;
+			border-right: 8px solid transparent;
+			border-bottom: 210px solid #715e5a;
+			content: "";
+		}
+
+		.middle::after {
+			transform: rotateY(90deg);
+		}
+
+		.star::before,
+		.star::after,
+		.star {
+			position: absolute;
+			top: -20px;
+			width: 0;
+			height: 0;
+			border-left: 30px solid transparent;
+			border-right: 30px solid transparent;
+			border-top: 20px solid red;
+		}
+
+		.star::before,
+		.star::after {
+			left: -30px;
+			content: '';
+		}
+
+		.star:before {
+			transform: rotate(71deg);
+		}
+
+		.star:after {
+			transform: rotate(-71deg);
+		}
+
+		/* 地基*/
+		.base {
+			transform: rotateY(0) translateY(200px);
+		}
+
+		.group {
+			position: absolute;
+			width: 0;
+			height: 0;
+			transform-style: preserve-3d;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.group::before {
+			position: absolute;
+			width: 700px;
+			height: 500px;
+			background: #bdafa2;
+			box-shadow: inset 0 0 5px rgba(0, 0, 0, .2);
+			content: '';
+			transform: rotateX(90deg);
+		}
+
+		.base-2 {
+			transform: translateY(-30px) scale3D(.82, .9, .82);
+		}
+
+		.base-3 {
+			transform: translateY(-60px) scale3D(.72, .9, .72);
+		}
+
+		.handrail {
+			position: absolute;
+			width: 700px;
+			height: 50px;
+			background: #cdc8cf;
+			border-top: solid 10px #053f17;
+			box-shadow: inset 0 0 5px rgba(0, 0, 0, .4);
+		}
+
+		.handrail::before,
+		.handrail::after {
+			position: absolute;
+			top: -30px;
+			width: 100%;
+			height: 20px;
+			content: '';
+			background-image: linear-gradient(90deg, #cdc8cf 4px, 0, #0000 12px 0);
+			background-size: 12px;
+		}
+
+		.handrail::before {
+			top: -20px;
+			height: 4px;
+			background: #cdc8cf;
+		}
+
+		.handrail-1 {
+			transform: translateZ(250px);
+		}
+
+		.handrail-2 {
+			width: 500px;
+			transform: rotateY(90deg) translateZ(350px);
+		}
+
+		.handrail-3 {
+			transform: rotateY(180deg) translateZ(250px);
+		}
+
+		.handrail-4 {
+			width: 500px;
+			transform: rotateY(270deg) translateZ(350px);
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container">
+		<div class="box">
+			<div class="left">
+				<div class="level level-1">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-2">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-3">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-4">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-5">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-6">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-7">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-8">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-9">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-10">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-11">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-12 clock">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-13 clock">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+			</div>
+			<div class="left right">
+				<div class="level level-1">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-2">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-3">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-4">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-5">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-6">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-7">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-8">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-9">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-10">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-11">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-12 clock">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+				<div class="level level-13 clock">
+					<div class="wall wall-1"></div>
+					<div class="wall wall-2"></div>
+					<div class="wall wall-3"></div>
+					<div class="wall wall-4"></div>
+					<div class="wall wall-5"></div>
+					<div class="wall wall-6"></div>
+				</div>
+			</div>
+			<div class="left middle">
+				<div class="star"></div>
+			</div>
+			<div class="left base">
+				<div class="group ">
+					<div class="handrail handrail-1"></div>
+					<div class="handrail handrail-2"></div>
+					<div class="handrail handrail-3"></div>
+					<div class="handrail handrail-4"></div>
+				</div>
+				<div class="group base-2">
+					<div class="handrail handrail-1"></div>
+					<div class="handrail handrail-2"></div>
+					<div class="handrail handrail-3"></div>
+					<div class="handrail handrail-4"></div>
+				</div>
+				<div class="group base-3">
+					<div class="handrail handrail-1"></div>
+					<div class="handrail handrail-2"></div>
+					<div class="handrail handrail-3"></div>
+					<div class="handrail handrail-4"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>
