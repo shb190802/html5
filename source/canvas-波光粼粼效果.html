@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>canvas-水波纹效果（横屏观看）</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+		}
+
+		html,
+		body {
+			width: 100%;
+			height: 100%;
+		}
+
+		.container {
+			position: relative;
+			width: 100%;
+			height: 100%;
+		}
+
+		#canvas {
+			width: 100%;
+			height: 100%;
+		}
+	</style>
+</head>
+
+<body bgcolor="#000000">
+	<div class="container">
+		<canvas id="canvas"></canvas>
+	</div>
+	<script>
+		const WIDTH = 200
+		const HEIGHT = 150
+		let canvas = document.querySelector('#canvas')
+		let ctx = canvas.getContext('2d')
+		canvas.width = WIDTH
+		canvas.height = HEIGHT
+		ctx.fillRect(0, 0, WIDTH, HEIGHT)
+		let imgData = ctx.getImageData(0, 0, WIDTH, HEIGHT)
+		// let source = [{
+		// 	x: -WIDTH, // 起点
+		// 	y: HEIGHT / 2,
+		// 	len: 100, // 波长
+		// 	height: 60, // 波峰
+		// 	speed: 0.2, // 传播速度
+		// 	start: 0 // 当前起始点角度
+		// }]
+		let random = Math.random
+		let PI = Math.PI
+		let max = Math.max
+		let min = Math.min
+		let sqrt = Math.sqrt
+		let sin = Math.sin
+		let pow = Math.pow
+
+
+		let source = [{ "x": -200, "y": 75, "len": 100, "height": 60, "speed": 0.2, "start": 615.0000000000028 }, { "x": 11.728961090957654, "y": 88.43010441971052, "len": 33.35332180516125, "height": 55.735663515821145, "speed": -0.0679612478228754, "start": -208.9808370553311 }, { "x": -170.97633153057305, "y": -23.866102801883613, "len": 25.020744974235487, "height": 59.83068346055568, "speed": -0.1606240352880161, "start": -493.9189085106735 }, { "x": 425.0382126474895, "y": 148.18281343545914, "len": 36.91165840325617, "height": 63.57540550856211, "speed": -0.06832098194490127, "start": -210.08701948058413 }, { "x": -85.67391305134251, "y": 237.84639114144943, "len": 34.57325947877587, "height": 42.99201994102336, "speed": -0.11598086181448418, "start": -356.6411500795235 }, { "x": -245.94136768288251, "y": 238.49068918745144, "len": 22.993058372551996, "height": 32.98275416037371, "speed": -0.12058873487397166, "start": -370.8103597374731 }, { "x": 493.2731180658571, "y": -100.37664140750525, "len": 33.07192620775272, "height": 58.107343956492734, "speed": -0.11021940763610719, "start": -338.92467848102825 }, { "x": -264.8610623478755, "y": 102.34249219503619, "len": 33.57551782534476, "height": 51.26685000484692, "speed": -0.1130999674912763, "start": -347.7824000356831 }]
+		// 初始化波纹的原点
+		function initSource(count) {
+			for (let i = 0; i < count; i++) {
+				let x = 1.5 * (random() * WIDTH * 3 - WIDTH)
+				let y = 1 * (random() * HEIGHT * 3 - HEIGHT)
+				let len = 22 + random() * 20
+				let height = 25 + random() * 40
+				let speed = -PI / 180 * (random() * 7 + 3)
+				let start = 0
+				source.push({ x, y, len, height, speed, start })
+			}
+		}
+		// 更新波纹起始角度
+		function updateSource() {
+			source.forEach(item => {
+				item.start += item.speed
+			})
+		}
+		// 根据高度设置颜色
+		function draw() {
+			for (let i = 0; i < HEIGHT; i++) {
+				for (let j = 0; j < WIDTH; j++) {
+					let height = 0
+					source.forEach(item => {
+						let len = sqrt(pow(j - item.x, 2) + pow(i - item.y, 2))
+						let deg = len / item.len * 2 * PI + item.start
+						height += sin(deg) * item.height
+					})
+					let pos = (i * WIDTH + j) * 4
+					imgData.data[pos] = max(0, min(255, ~~height / 2))
+					imgData.data[pos + 1] = max(0, min(255, ~~height))
+					imgData.data[pos + 2] = max(0, min(255, ~~height / 2))
+				}
+			}
+			ctx.putImageData(imgData, 0, 0)
+		}
+		function step() {
+			updateSource()
+			draw()
+			requestAnimationFrame(step)
+		}
+		// initSource(7)
+		requestAnimationFrame(step)
+	</script>
+</body>
+
+</html>
