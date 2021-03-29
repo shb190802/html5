@@ -6,6 +6,7 @@
 
 ## 当前包含：
 
+- [canvas-阿凡达-神树精灵](http://suohb.com/demo/win/elf.html)
 - [canvas-波光粼粼效果](http://suohb.com/demo/win/wave.html)
 - [css-二七纪念塔](http://suohb.com/demo/win/erqi.html)
 - [css-iPhone12](http://suohb.com/demo/win/iphone12.html)
