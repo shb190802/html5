@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CSS水墨画虾</title>
+    <style>
+      .shrimp {
+        position: absolute;
+        top: 50px;
+        filter: drop-shadow(1px 1px 1px #ccc) blur(0.5px);
+      }
+      .body {
+        position: absolute;
+        left: 200px;
+        top: 150px;
+        transform: rotate(-30deg);
+      }
+      .joint {
+        position: absolute;
+        width: 20px;
+        height: 30px;
+        background: linear-gradient(#2d2d2d 60%, #666);
+        border-radius: 30% 30% 20% 60%/49% 50%;
+        transform: skewX(2deg) rotate(-9deg);
+      }
+      .joint2 {
+        background: linear-gradient(#2d2d2d 60%, #666);
+        transform: translate(15px, -3px) scale(0.95) skewX(4deg) rotate(-5deg);
+      }
+      .joint3 {
+        background: linear-gradient(#333 55%, #777);
+        transform: translate(30px, -5px) scale(0.88) skewX(8deg);
+      }
+      .joint4 {
+        background: linear-gradient(#444 60%, #888);
+        transform: translate(44px, -4px) scale(0.85) skewX(12deg);
+      }
+      .joint5 {
+        background: linear-gradient(#555 63%, #999);
+        transform: translate(58px, -2px) scale(0.8) skewX(16deg);
+      }
+      .joint6 {
+        background: linear-gradient(#666 61%, #aaa);
+        transform: translate(71px, -0px) scale(0.75) skewX(20deg);
+      }
+      .joint7 {
+        background: linear-gradient(#777 50%, #bbb);
+        transform: translate(84px, 3px) scale(0.7) skewX(24deg);
+      }
+      .joint8 {
+        background: linear-gradient(#888 40%, #ccc);
+        transform: translate(96px, 6px) scale(0.65) skewX(28deg);
+      }
+      .joint::before {
+        position: absolute;
+        left: 10px;
+        top: 32px;
+        display: block;
+        content: "";
+        width: 10px;
+        height: 10px;
+        border: solid #bbb9 3px;
+        border-radius: 20% 0 50% 50%;
+        border-top-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+        transform-origin: 0 center;
+        transform: rotate(45deg);
+      }
+      .joint::after {
+        position: absolute;
+        left: 10px;
+        top: 32px;
+        display: block;
+        content: "";
+        width: 10px;
+        height: 10px;
+        border: solid #bbb6 3px;
+        border-radius: 20% 0 50% 50%;
+        border-top-width: 0;
+        border-right-width: 0;
+        border-bottom-width: 0;
+      }
+      .tail {
+        position: absolute;
+        left: 300px;
+        top: 110px;
+        width: 40px;
+        height: 10px;
+        background: linear-gradient(#888 40%, #ccc);
+        border-radius: 10% 80% 80% 10%/50%;
+      }
+      .tail::before {
+        position: absolute;
+        left: 0;
+        top: -10px;
+        width: 20px;
+        height: 10px;
+        display: block;
+        background: linear-gradient(#ccc 60%, #888);
+        content: "";
+        transform-origin: 0 100%;
+        transform: skewX(-60deg);
+        border-radius: 30%;
+      }
+      .tail::after {
+        position: absolute;
+        left: 0;
+        top: 5px;
+        width: 20px;
+        height: 16px;
+        display: block;
+        background: linear-gradient(to right, #888 20%, #ccc);
+        content: "";
+        transform-origin: 0 0;
+        transform: skewX(50deg) scale(1.1);
+        border-radius: 30%;
+      }
+      .header {
+        position: absolute;
+        left: 126px;
+        top: 152px;
+        width: 80px;
+        height: 18px;
+        background: linear-gradient(#ccc5, #333, #9999);
+        border-radius: 60%40%40%60%/50%40%40%50%;
+        transform-origin: 100% center;
+        transform: rotate(-14deg);
+      }
+      .eye {
+        position: absolute;
+        left: 20px;
+        top: 20px;
+        width: 10px;
+        height: 6px;
+        background: #000;
+        border-radius: 50%;
+      }
+      .header::before {
+        position: absolute;
+        left: 4px;
+        top: -6px;
+        width: 80px;
+        height: 18px;
+        display: block;
+        content: "";
+        background: linear-gradient(80deg, #444b, #ddd2);
+        border-radius: 60%40%40%60%/50%40%40%50%;
+        transform: skewY(4deg);
+        -webkit-box-reflect: below -10px;
+      }
+      .header::after {
+        position: absolute;
+        left: 3px;
+        top: 12px;
+        display: block;
+        content: "";
+        width: 70px;
+        height: 32px;
+        background: linear-gradient(80deg, #444c, #777a);
+        border-radius: 30%40%60%40%/50%;
+        transform: skewY(-2deg);
+        -webkit-box-reflect: above -23px;
+      }
+      .beard {
+        position: absolute;
+        left: 150px;
+        top: 170px;
+        width: 0;
+        height: 0;
+      }
+      .beard1 {
+        position: absolute;
+        right: 0;
+        top: 6px;
+        width: 60px;
+        height: 20px;
+        color: #6666;
+        border-radius: 60%/50% 20%;
+        border: solid 2px;
+        border-left-width: 0;
+        border-bottom-width: 0;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(-7deg);
+      }
+      .beard2 {
+        position: absolute;
+        top: 4px;
+        right: 0;
+        width: 50px;
+        height: 16px;
+        color: #6666;
+        border-radius: 60%/50% 50%;
+        border: solid 1px;
+        border-left-width: 0;
+        border-bottom-width: 0;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(1deg);
+      }
+      .beard3 {
+        position: absolute;
+        top: -26px;
+        right: -60px;
+        width: 80px;
+        height: 160px;
+        color: #3339;
+        border-radius: 60%/50% 50%;
+        border: solid 2px;
+        border-left-width: 1px;
+        border-bottom-width: 0;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(-45deg);
+      }
+      .beard4 {
+        position: absolute;
+        top: -18px;
+        right: -24px;
+        width: 110px;
+        height: 80px;
+        color: #6666;
+        border-radius: 50%;
+        border: solid 2px;
+        border-left-width: 1px;
+        border-bottom-width: 1px;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(-45deg);
+      }
+      .beard5 {
+        position: absolute;
+        right: -5px;
+        top: 1px;
+        width: 60px;
+        height: 20px;
+        color: #6666;
+        border-radius: 60%/50% 20%;
+        border: solid 1px;
+        border-left-width: 0;
+        border-bottom-width: 0;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(4deg);
+        -webkit-box-reflect: above -3px;
+      }
+      .beard6 {
+        position: absolute;
+        right: 0;
+        top: 5px;
+        width: 60px;
+        height: 20px;
+        color: #6666;
+        border-radius: 60%/50% 20%;
+        border: solid 2px;
+        border-left-width: 0;
+        border-bottom-width: 0;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(0deg);
+      }
+      .beard7 {
+        position: absolute;
+        top: -100px;
+        right: -30px;
+        width: 130px;
+        height: 130px;
+        color: #3336;
+        border-radius: 60%/50% 50% 50% 60%;
+        border: solid 2px;
+        border-left-width: 1px;
+        border-top-width: 0;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(25deg);
+      }
+      .beard8 {
+        position: absolute;
+        top: -76px;
+        right: -30px;
+        width: 150px;
+        height: 80px;
+        color: #3336;
+        border-radius: 50%;
+        border: solid 2px;
+        border-left-width: 2px;
+        border-top-width: 0px;
+        border-right-color: #0000;
+        transform-origin: right center;
+        transform: rotate(-10deg);
+      }
+      .hand {
+        position: absolute;
+        left: 180px;
+        top: 180px;
+        width: 0;
+        height: 0;
+      }
+      .hand-right {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 180px;
+        height: 30px;
+        border: solid 4px #ccc6;
+        transform-origin: right top;
+        transform: skewX(56deg) rotate(-15deg);
+        border-top-width: 0;
+        border-left-width: 2px;
+        border-radius: 10px;
+      }
+      .hand-right::before {
+        position: absolute;
+        content: "";
+        display: block;
+        right: 1px;
+        top: 0;
+        width: 180px;
+        height: 30px;
+        border: solid 2px #6665;
+        transform-origin: right top;
+        border-top-width: 0;
+        border-left-width: 2px;
+        border-radius: 10px;
+      }
+      .hand-right::after {
+        position: absolute;
+        content: "";
+        display: block;
+        right: -2px;
+        top: 2px;
+        width: 180px;
+        height: 30px;
+        border: solid 1px #3339;
+        transform-origin: right top;
+        border-top-width: 0;
+        border-left-width: 2px;
+        border-radius: 10px;
+      }
+      .hand-left {
+        position: absolute;
+        right: 0;
+        top: -50px;
+        width: 100px;
+        height: 30px;
+        border: solid 4px #ccc6;
+        transform-origin: right bottom;
+        transform: rotate(-10deg) skewX(-30deg);
+        border-bottom-width: 0;
+        border-left-width: 2px;
+        border-radius: 10px;
+      }
+      .hand-left::before {
+        position: absolute;
+        content: "";
+        display: block;
+        right: 1px;
+        top: 0;
+        width: 100px;
+        height: 30px;
+        border: solid 2px #6665;
+        transform-origin: right top;
+        border-bottom-width: 0;
+        border-left-width: 2px;
+        border-radius: 10px;
+      }
+      .hand-left::after {
+        position: absolute;
+        content: "";
+        display: block;
+        right: -1px;
+        top: -2px;
+        width: 100px;
+        height: 30px;
+        border: solid 1px #3339;
+        transform-origin: right top;
+        border-bottom-width: 0;
+        border-left-width: 2px;
+        border-radius: 10px;
+      }
+    </style>
+  </head>
+
+  <body bgcolor="#dddddd">
+    <div class="shrimp">
+      <div class="body">
+        <div class="joint"></div>
+        <div class="joint joint2"></div>
+        <div class="joint joint3"></div>
+        <div class="joint joint4"></div>
+        <div class="joint joint5"></div>
+        <div class="joint joint6"></div>
+        <div class="joint joint7"></div>
+        <div class="joint joint8"></div>
+      </div>
+      <div class="tail"></div>
+      <div class="beard">
+        <div class="beard1"></div>
+        <div class="beard2"></div>
+        <div class="beard3"></div>
+        <div class="beard4"></div>
+        <div class="beard5"></div>
+        <div class="beard6"></div>
+        <div class="beard7"></div>
+        <div class="beard8"></div>
+      </div>
+      <div class="hand">
+        <div class="hand-left"></div>
+        <div class="hand-right"></div>
+      </div>
+      <div class="header">
+        <div class="eye"></div>
+      </div>
+    </div>
+  </body>
+</html>
