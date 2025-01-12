@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<!-- saved from url=(0038)https://suohb.com/demo/win/tree24.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEBGL TREE</title>
+    <style>
+        * {margin: 0;padding: 0;}
+        body,html {
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+<script>
+    const canvas = document.createElement('canvas')
+    canvas.width = window.innerWidth
+    canvas.height = window.innerHeight
+    document.body.appendChild(canvas)
+    const gl = canvas.getContext('webgl');
+
+    if (!gl) {
+        alert('WebGL not supported');
+        throw new Error('WebGL not supported');
+    }
+
+    // 顶点着色器源码
+    const vertexShaderSource = `
+        attribute vec3 aPosition;
+        uniform mat4 uProjectionMatrix;
+        uniform mat4 uViewMatrix;
+        void main() {
+            gl_Position = uProjectionMatrix * uViewMatrix * vec4(aPosition, 1.0);
+        }
+    `;
+
+    // 片段着色器源码
+    const fragmentShaderSource = `
+        precision mediump float;
+        uniform vec4 uColor;
+        void main() {
+            gl_FragColor = uColor;
+        }
+    `;
+
+    // 创建着色器
+    function createShader(gl, type, source) {
+        const shader = gl.createShader(type);
+        gl.shaderSource(shader, source);
+        gl.compileShader(shader);
+        if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+            console.error(gl.getShaderInfoLog(shader));
+            gl.deleteShader(shader);
+            throw new Error('Shader compile error');
+        }
+        return shader;
+    }
+
+    const vertexShader = createShader(gl, gl.VERTEX_SHADER, vertexShaderSource);
+    const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fragmentShaderSource);
+
+    // 创建 WebGL 程序
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+    if (!gl.getProgramParameter(program, gl.LINK_STATUS)) {
+        console.error(gl.getProgramInfoLog(program));
+        throw new Error('Program link error');
+    }
+    gl.useProgram(program);
+    
+    /**
+     * 主要代码开始========================================
+     */
+    
+    function buildTree2(level, len,radius){
+        var count = 0;
+        var list = []
+        for(var i = 0 ; i < level; i ++) {
+            var yPos = len * i - 0.8
+            var r = radius / level * (level - i)
+            var circle = 2 * r * Math.PI
+            count = circle / len + 1
+            var startDeg = Math.random()
+            for(var j = 0 ; j < count ; j ++) {
+                var stepDeg = Math.PI * 2 / count * j + startDeg
+                var p = [
+                    Math.cos(stepDeg) * r,
+                    yPos,
+                    Math.sin(stepDeg) * r
+                ]
+                list.push(...createRadialtingLine(p, len ,50 + Math.random() * 150,true))
+            }
+        }
+        return list
+    }
+
+    function buildTree(height, radius, count){
+        var list = []
+        var heightStep = height / count
+        var radiusStep = radius / count
+        var startY = -0.8
+        var startDeg = Math.random()
+        var stepDeg = 10 * Math.PI * 2 / count
+        for(var i = 0 ; i < count; i ++) {
+            var yPos = heightStep * i + startY
+            var r = radiusStep * (count - i)
+            var deg = startDeg + stepDeg * i
+
+            var p = [
+                Math.cos(deg) * r,
+                yPos,
+                Math.sin(deg) * r
+            ]
+            list.push(...createRadialtingLine(p, 0.03 ,50 + Math.random() * 150,true))
+        }
+        return list
+    }
+
+    function createRadialtingLine(center,length,count,line) {
+        var list = []
+        for(var i = 0 ; i < count ; i ++) {
+            var theta = Math.random() * Math.PI * 2
+            var phi = Math.random() * Math.PI
+            var p = [
+                center[0] + Math.sin(phi) * Math.cos(theta) * length,
+                center[1] + Math.cos(phi) * length ,
+                center[2] + Math.sin(phi) * Math.sin(theta) * length
+            ]
+            if(line) {
+                list.push(...center,...p)
+
+            }else {
+                list.push(...p)
+            }
+        }
+        return list
+    }
+    
+    var base = []
+    var list1 = buildTree(1.6,0.5,300)
+    var list2 = buildTree2(27, 0.06, 0.45)
+    var list3 = buildTree(1.8,0.51,400)
+
+    const vertices = new Float32Array([
+        ...list1,...list2,...list3
+    ]);
+
+    
+    /**
+     * 主要代码结束========================================
+     */
+
+    // 创建顶点缓冲区
+    const vertexBuffer = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, vertexBuffer);
+    gl.bufferData(gl.ARRAY_BUFFER, vertices, gl.STATIC_DRAW);
+
+    // 获取属性位置并启用
+    const aPosition = gl.getAttribLocation(program, 'aPosition');
+    gl.vertexAttribPointer(aPosition, 3, gl.FLOAT, false, 0, 0);
+    gl.enableVertexAttribArray(aPosition);
+
+    // 创建投影矩阵
+    function createProjectionMatrix(aspect, fov, near, far) {
+        const f = 1.0 / Math.tan(fov / 2);
+        return new Float32Array([
+            f / aspect, 0, 0, 0,
+            0, f, 0, 0,
+            0, 0, (far + near) / (near - far), -1,
+            0, 0, (2 * far * near) / (near - far), 0
+        ]);
+    }
+
+    // 创建视图矩阵
+    function createViewMatrix(eye, target, up) {
+        const zAxis = normalize(subtractVectors(eye, target));
+        const xAxis = normalize(cross(up, zAxis));
+        const yAxis = cross(zAxis, xAxis);
+
+        return new Float32Array([
+            xAxis[0], yAxis[0], zAxis[0], 0,
+            xAxis[1], yAxis[1], zAxis[1], 0,
+            xAxis[2], yAxis[2], zAxis[2], 0,
+            -dot(xAxis, eye), -dot(yAxis, eye), -dot(zAxis, eye), 1
+        ]);
+    }
+
+    function subtractVectors(a, b) {
+        return [a[0] - b[0], a[1] - b[1], a[2] - b[2]];
+    }
+
+    function normalize(v) {
+        const length = Math.sqrt(v[0] * v[0] + v[1] * v[1] + v[2] * v[2]);
+        return [v[0] / length, v[1] / length, v[2] / length];
+    }
+
+    function cross(a, b) {
+        return [
+            a[1] * b[2] - a[2] * b[1],
+            a[2] * b[0] - a[0] * b[2],
+            a[0] * b[1] - a[1] * b[0],
+        ];
+    }
+
+    function dot(a, b) {
+        return a[0] * b[0] + a[1] * b[1] + a[2] * b[2];
+    }
+
+    // 设置矩阵
+    const uProjectionMatrix = gl.getUniformLocation(program, 'uProjectionMatrix');
+    const uViewMatrix = gl.getUniformLocation(program, 'uViewMatrix');
+    const aspect = canvas.width / canvas.height;
+    const projectionMatrix = createProjectionMatrix(aspect, Math.PI / 4, 0.1, 100.0);
+    const target = [0, 0, 0]; // 目标点
+    const up = [0, 1, 0]; // 上方向
+
+    gl.uniformMatrix4fv(uProjectionMatrix, false, projectionMatrix);
+
+    // 设置颜色
+    const uColor = gl.getUniformLocation(program, 'uColor');
+
+
+    // 动态更新摄像机位置并绘制
+    let angle = 0;
+
+    function draw() {
+        angle += 0.008; // 每帧增加旋转角度
+        const eye = [
+            Math.sin(angle) * 3, // 动态计算摄像机 x 坐标
+            2,                   // 摄像机 y 坐标保持不变
+            Math.cos(angle) * 3  // 动态计算摄像机 z 坐标
+        ];
+
+        const viewMatrix = createViewMatrix(eye, target, up);
+        gl.uniformMatrix4fv(uViewMatrix, false, viewMatrix);
+
+        gl.clearColor(0, 0, 0, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+
+
+        gl.enable(gl.BLEND);
+        gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+        var len1 = list1.length / 3
+        var len2 = list2.length / 3
+        var len3 = list3.length / 3
+        gl.uniform4f(uColor, 1, 1, 0, 0.03 * Math.sin(angle*6)); 
+        gl.drawArrays(gl.LINES, 0, len1);
+        gl.uniform4f(uColor, 0, 1, 0, 0.015); 
+        gl.drawArrays(gl.LINES, len1, len2);
+        gl.uniform4f(uColor, 1, 0, 1, 0.012); 
+        gl.drawArrays(gl.LINES, len1 + len2, len3);
+
+        requestAnimationFrame(draw); // 请求下一帧绘制
+    }
+
+    draw();
+</script><canvas width="2560" height="1271"></canvas>
+
+
+</body></html>
